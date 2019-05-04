@@ -69,3 +69,26 @@ template<class Value>
 Edge Node<Value>::getAnyIngoingAnyEdge() {
     return _graph->getAnyIngoingEdgeAtNode(_id);
 }
+
+template<class Value>
+void Node<Value>::setId(id_t newId, bool commit) {
+    id = newId;
+    if (commit) {
+        save();
+    }
+}
+
+template<class Value>
+void Node<Value>::save() {
+    if (_commit) {
+        Node<Value> newNode = _graph->setNode(_id, id, value);
+        _id = id = newNode.id;
+        value = newNode.value;
+        _commit = true;
+    } else {
+        Node<Value> newNode = _graph->createNode(id, value);
+        _id = id = newNode.id;
+        value = newNode.value;
+        _commit = true;
+    }
+}

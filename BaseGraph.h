@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Edge.h"
+#include "Node.h"
 
 
 using namespace std;
@@ -19,6 +20,7 @@ enum EXCEPTIONS {
 typedef unsigned int id_t;
 
 
+template <class Value>
 class BaseGraph {
 public:
     /// Получить соседние ребра для узла
@@ -115,6 +117,15 @@ public:
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
     virtual vector<Edge> getMaxEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
         throw "ERROR! Method getMaxEdgesAtNode not implemented.";
+    }
+
+    /// Изменить узел
+    /// \param nodeId Идентификатор узла в БД
+    /// \param newId Новый идентификатор
+    /// \param newValue Новое значение
+    /// \return Узел соответствующий БД
+    Node <Value> setNode(id_t nodeId, id_t newId, Value newValue) {
+        throw "ERROR! Method setNode not implemented.";
     }
 };
 
