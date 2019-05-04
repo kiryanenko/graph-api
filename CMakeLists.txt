@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.14)
+project(graph_api)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_library(graph_api BaseGraph.cpp BaseGraph.h Node.cpp Node.h Edge.cpp Edge.h)
+
+
+set(SOURCE_EXE main.cpp)
+add_executable(main ${SOURCE_EXE})
+target_link_libraries(main graph_api)		# Линковка программы с библиотекой
