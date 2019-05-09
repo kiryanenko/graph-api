@@ -5,7 +5,7 @@
 //
 
 #include "Node.h"
-
+#include <stdexcept>
 
 template<class Value>
 vector<Edge> Node<Value>::getEdges(Edge::ORDER orderBy, size_t limit) {
@@ -78,6 +78,16 @@ void Node<Value>::setId(id_t newId, bool commit) {
     }
 }
 
+
+template<class Value>
+void Node<Value>::setValue(Value newValue, bool commit) {
+    value = newValue;
+    if (commit) {
+        save();
+    }
+}
+
+
 template<class Value>
 void Node<Value>::save() {
     if (_commit) {
@@ -91,4 +101,96 @@ void Node<Value>::save() {
         value = newNode.value;
         _commit = true;
     }
+}
+
+template<class Value>
+void Node<Value>::remove() {
+    if (_commit) {
+        _graph->removeNode(_id);
+        _commit = false;
+    }
+}
+
+template<class Value>
+Edge Node<Value>::connectToNode(id_t nodeId, weight_t weight, bool oriented) {
+    if (_commit) {
+        return _graph->connectNodes(_id, nodeId, weight, oriented);
+    } else {
+        throw MethodNotAllowed();
+    }
+}
+
+template<class Value>
+Edge Node<Value>::getMinOutgoingEdge() {
+    return _graph->getMinOutgoingEdgeAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getMaxOutgoingEdge() {
+    return _graph->getMaxOutgoingEdgeAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getMinIngoingEdge() {
+    return _graph->getMinIngoingEdgeAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getMaxIngoingEdge() {
+    return _graph->getMaxIngoingEdgeAtNode(_id);
+}
+
+template<class Value>
+vector<Edge> Node<Value>::getMinOutgoingEdges(Edge::ORDER orderBy, size_t limit) {
+    return _graph->getMinOutgoingEdgesAtNode(_id);
+}
+
+template<class Value>
+vector<Edge> Node<Value>::getMaxOutgoingEdges(Edge::ORDER orderBy, size_t limit) {
+    return _graph->getMaxOutgoingEdgesAtNode(_id);
+}
+
+template<class Value>
+vector<Edge> Node<Value>::getMinIngoingEdges(Edge::ORDER orderBy, size_t limit) {
+    return _graph->getMinIngoingEdgesAtNode(_id);
+}
+
+template<class Value>
+vector<Edge> Node<Value>::getMaxIngoingEdges(Edge::ORDER orderBy, size_t limit) {
+    return _graph->getMaxIngoingEdgesAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getFirstOutgoingEdge() {
+    return _graph->getFirstOutgoingEdgesAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getLastOutgoingEdge() {
+    return _graph->getLastOutgoingEdgesAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getFirstIngoingEdge() {
+    return _graph->getFirstIngoingEdgesAtNode(_id);
+}
+
+template<class Value>
+Edge Node<Value>::getLastIngoingEdge() {
+    return _graph->getLastIngoingEdgesAtNode(_id);
+}
+
+template<class Value>
+size_t Node<Value>::edgesCount() {
+    return _graph->edgesCountAtNode(_id);
+}
+
+template<class Value>
+size_t Node<Value>::outgoingEdgesCount() {
+    return _graph->outgoingEdgesCountAtNode(_id);
+}
+
+template<class Value>
+size_t Node<Value>::ingoingEdgesCount() {
+    return _graph->ingoingEdgesCountAtNode(_id);
 }

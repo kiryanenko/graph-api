@@ -12,6 +12,10 @@
 
 using namespace std;
 
+
+template <class Value> class BaseGraph;
+
+
 template <class Value>
 class Node {
     BaseGraph<Value> *_graph;
@@ -38,9 +42,9 @@ public:
         _graph(graph), _id(id), id(id), value(value), _commit(commit) {}
 
 
-    BaseGraph getGraph() { return _graph; }
-    int getId() { return id; }
-    Value getValue() { return value; }
+    BaseGraph<Value>* getGraph() const { return _graph; }
+    int getId() const { return id; }
+    Value getValue() const { return value; }
 
     /// Изменить id узла
     /// \param newId Новый идентификтор узла
@@ -49,12 +53,20 @@ public:
     /// Изменить value узла
     /// \param newId Новое значение
     /// \param commit Записать измения в БД
-    void setValue(id_t newId, bool commit=false);
+    void setValue(Value newValue, bool commit=false);
 
     /// Сохранить измения в БД
     void save();
     /// Удалить узел
     void remove();
+
+    /// Создать ребро от текущего узла к узлу nodeId
+    /// \param nodeId Идентификатор узла
+    /// \param weight Вес ребра
+    /// \param oriented Ориентированное ребро
+    /// \throw MethodNotAllowed Если узел не связан с БД. Вероятно нужно перед выполнить save().
+    /// \return Созданное ребро
+    Edge connectToNode(id_t nodeId, weight_t weight, bool oriented=true);
 
     /// Получить соседние ребра.
     /// \param orderBy Сортировка
@@ -70,33 +82,33 @@ public:
     vector<Edge> getIngoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
 
     /// Получить любое соседнее ребро
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия соседних ребер
+    /// \throw NotFound В случае отсутствия соседних ребер
     Edge getAnyEdge();
     /// Получить любое исходящие ребро
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия исходящих ребер
+    /// \throw NotFound В случае отсутствия исходящих ребер
     Edge getAnyOutgoingEdge();
     /// Получить любое входящие ребро
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getAnyIngoingAnyEdge();
 
 
     /// Получить соседнее ребро с минимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия соседних ребер
+    /// \throw NotFound В случае отсутствия соседних ребер
     Edge getMinEdge();
     /// Получить соседние ребро с максимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия соседних ребер
+    /// \throw NotFound В случае отсутствия соседних ребер
     Edge getMaxEdge();
     /// Получить исходящее ребро с минимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия исходящих ребер
+    /// \throw NotFound В случае отсутствия исходящих ребер
     Edge getMinOutgoingEdge();
     /// Получить исходящее ребро с максимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия исходящих ребер
+    /// \throw NotFound В случае отсутствия исходящих ребер
     Edge getMaxOutgoingEdge();
     /// Получить входящих ребро с минимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getMinIngoingEdge();
     /// Получить соседние ребро с максимальным весом
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getMaxIngoingEdge();
 
     /// Получить соседние ребра с минимальным весом
@@ -125,22 +137,22 @@ public:
     vector<Edge> getMaxIngoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
 
     /// Получить соседнее ребро с минимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия соседних ребер
+    /// \throw NotFound В случае отсутствия соседних ребер
     Edge getFirstEdge();
     /// Получить соседнее ребро с максимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия соседних ребер
+    /// \throw NotFound В случае отсутствия соседних ребер
     Edge getLastEdge();
     /// Получить исходящих ребро с минимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия исходящих ребер
+    /// \throw NotFound В случае отсутствия исходящих ребер
     Edge getFirstOutgoingEdge();
     /// Получить входящих ребро с максимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getLastOutgoingEdge();
     /// Получить входящих ребро с минимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getFirstIngoingEdge();
     /// Получить входящих ребро с максимальным идентификатором
-    /// \throw EXCEPTIONS::NOT_FOUND В случае отсутствия входящих ребер
+    /// \throw NotFound В случае отсутствия входящих ребер
     Edge getLastIngoingEdge();
 
     /// Количество соседних ребер

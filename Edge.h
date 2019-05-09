@@ -6,6 +6,9 @@
 #define GRAPH_API_EDGE_H
 
 
+typedef unsigned int weight_t;
+
+
 class Edge {
 public:
     enum ORDER {
