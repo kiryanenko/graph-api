@@ -8,7 +8,7 @@
 typedef unsigned int id_t;
 typedef unsigned int weight_t;
 
-enum EDGES_ORDER_BY {
+enum ORDER_BY {
     NOTHING,
     ID,
     ID_DESC,

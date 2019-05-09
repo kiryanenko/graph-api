@@ -10,6 +10,7 @@
 
 
 template <class Value> class BaseGraph;
+template <class Value> class Node;
 
 
 template <class Value>
@@ -56,6 +57,51 @@ public:
     void save();
     /// Удалить ребро
     void remove();
+
+
+    /// Добавить узел. Узел будет добавлен как источник - приемник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addNode(id_t nodeId);
+    /// Добавить узел. Узел будет добавлен как источник - приемник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addNode(Node<Value> node) { addNode(node.id); }
+    /// Добавить узел источник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addSrcNode(id_t nodeId);
+    /// Добавить узел источник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addSrcNode(Node<Value> node) { addSrcNode(node.id); }
+    /// Добавить узел приемник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addDstNode(id_t nodeId);
+    /// Добавить узел приемник
+    /// \throw MethodNotAllowed Если ребро не связано с БД. Вероятно нужно перед выполнить save().
+    void addDstNode(Node<Value> node) { addDstNode(node.id); }
+
+
+    /// Получить все соединяемые узлы
+    /// \param order Сортировка
+    /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
+    /// \param offset Смещение относительно начала получаемого списка
+    vector<Node<Value>> getNodes(ORDER_BY order = ORDER_BY::NOTHING, size_t limit = 0, size_t offset = 0);
+
+    /// Получить узел от которого идет ребро.
+    /// Если таких узлов несколько, то вернет любое из них
+    Node<Value> getSrcNode();
+    /// Получить узлы от которых идет данное ребро.
+    /// \param order Сортировка
+    /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
+    /// \param offset Смещение относительно начала получаемого списка
+    vector<Node<Value>> getSrcNodes(ORDER_BY order = ORDER_BY::NOTHING, size_t limit = 0, size_t offset = 0);
+
+    /// Получить узел к которому идет ребро.
+    /// Если таких узлов несколько, то вернет любое из них
+    Node<Value> getDstNode();
+    /// Получить узлы к которым идет данное ребро.
+    /// \param order Сортировка
+    /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
+    /// \param offset Смещение относительно начала получаемого списка
+    vector<Node<Value>> getDstNodes(ORDER_BY order = ORDER_BY::NOTHING, size_t limit = 0, size_t offset = 0);
 };
 
 

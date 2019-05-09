@@ -8,17 +8,17 @@
 #include <stdexcept>
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getEdgesAtNode(_id, orderBy, limit);
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getOutgoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getOutgoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getOutgoingEdgesAtNode(_id, orderBy, limit);
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getIngoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getIngoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getIngoingEdgesAtNode(_id, orderBy, limit);
 }
 
@@ -48,7 +48,7 @@ Edge<Value> Node<Value>::getLastEdge() {
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMinEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMinEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMinEdgesAtNode(_id, orderBy, limit);
 }
 
@@ -56,7 +56,7 @@ vector<Edge<Value>> Node<Value>::getMinEdges(EDGES_ORDER_BY orderBy, size_t limi
 /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
 /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMaxEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMaxEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMaxEdgesAtNode(_id, orderBy, limit);
 }
 
@@ -140,22 +140,22 @@ Edge<Value> Node<Value>::getMaxIngoingEdge() {
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMinOutgoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMinOutgoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMinOutgoingEdgesAtNode(_id);
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMaxOutgoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMaxOutgoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMaxOutgoingEdgesAtNode(_id);
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMinIngoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMinIngoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMinIngoingEdgesAtNode(_id);
 }
 
 template<class Value>
-vector<Edge<Value>> Node<Value>::getMaxIngoingEdges(EDGES_ORDER_BY orderBy, size_t limit) {
+vector<Edge<Value>> Node<Value>::getMaxIngoingEdges(ORDER_BY orderBy, size_t limit) {
     return _graph->getMaxIngoingEdgesAtNode(_id);
 }
 

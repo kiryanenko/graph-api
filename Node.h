@@ -72,15 +72,15 @@ public:
     /// Получить соседние ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить исходящие ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getOutgoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getIngoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
 
     /// Получить любое соседнее ребро
     /// \throw NotFound В случае отсутствия соседних ребер
@@ -115,27 +115,27 @@ public:
     /// Получить соседние ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMinEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить соседние ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMaxEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить исходящие ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMinOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinOutgoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMaxOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxOutgoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящих ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMinIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinIngoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge<Value>> getMaxIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxIngoingEdges(ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0);
 
     /// Получить соседнее ребро с минимальным идентификатором
     /// \throw NotFound В случае отсутствия соседних ребер

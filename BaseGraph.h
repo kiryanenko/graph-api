@@ -145,7 +145,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector <Edge<Value>> getEdgesAtNode(id_t nodeId, EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING,
+    virtual vector <Edge<Value>> getEdgesAtNode(id_t nodeId, ORDER_BY orderBy = ORDER_BY::NOTHING,
                                          size_t limit = 0) {
         throw NotImplemented();
     }
@@ -154,7 +154,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничени
-    virtual vector<Edge<Value>> getOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getOutgoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -162,7 +162,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничени
-    virtual vector<Edge<Value>> getIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getIngoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -257,7 +257,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMinEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMinEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -265,7 +265,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMaxEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -273,7 +273,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMinOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMinOutgoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -281,7 +281,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMaxOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxOutgoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -289,7 +289,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMinIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMinIngoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -297,7 +297,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge<Value>> getMaxIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxIngoingEdgesAtNode(id_t nodeId, ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 

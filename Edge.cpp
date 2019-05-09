@@ -41,3 +41,57 @@ void Edge<Value>::remove() {
         _commit = false;
     }
 }
+
+
+template<class Value>
+void Edge<Value>::addNode(id_t nodeId) {
+    if (_commit) {
+        _graph->addEdgeToNode(nodeId, _id);
+    } else {
+        throw MethodNotAllowed();
+    }
+}
+
+template<class Value>
+void Edge<Value>::addSrcNode(id_t nodeId) {
+    if (_commit) {
+        _graph->addOutgoingEdgeToNode(nodeId, _id);
+    } else {
+        throw MethodNotAllowed();
+    }
+}
+
+template<class Value>
+void Edge<Value>::addDstNode(id_t nodeId) {
+    if (_commit) {
+        _graph->addIngoingEdgeToNode(nodeId, _id);
+    } else {
+        throw MethodNotAllowed();
+    }
+}
+
+template<class Value>
+vector<Node<Value>> Edge<Value>::getNodes(ORDER_BY order, size_t limit, size_t offset) {
+    return _graph->getNodesForEdge(_id,  order, limit, offset);
+}
+
+template<class Value>
+Node<Value> Edge<Value>::getSrcNode() {
+    return _graph->getSrcNodeForEdge(_id);
+}
+
+template<class Value>
+vector<Node<Value>> Edge<Value>::getSrcNodes(ORDER_BY order, size_t limit, size_t offset) {
+    return _graph->getSrcNodesForEdge(_id,  order, limit, offset);
+}
+
+template<class Value>
+Node<Value> Edge<Value>::getDstNode() {
+    return _graph->getDstNodeForEdge(_id);
+}
+
+template<class Value>
+vector<Node<Value>> Edge<Value>::getDstNodes(ORDER_BY order, size_t limit, size_t offset) {
+    return _graph->getDstNodesForEdge(_id,  order, limit, offset);
+}
+
