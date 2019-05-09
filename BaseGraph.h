@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "exceptions.h"
+#include "types.h"
 #include "Edge.h"
 #include "Node.h"
 
@@ -14,9 +15,7 @@
 using namespace std;
 
 
-typedef unsigned int id_t;
-
-
+template <class Value> class Edge;
 template <class Value> class Node;
 
 
@@ -24,6 +23,8 @@ template <class Value>
 class BaseGraph {
 public:
     virtual ~BaseGraph() {}
+
+    ///////////////  Базовые операции с узлом  //////////////////////////
 
     /// Создать узел
     /// \param id идентификатор. Если id = 0 то узлу присвоится свободный идентификатор
@@ -75,13 +76,68 @@ public:
         throw NotImplemented();
     }
 
+
+    ///////////////  Базовые операции с ребром  //////////////////////////
+
+    /// Создать ребро
+    /// \param id идентификатор. Если id = 0 то узлу присвоится свободный идентификатор
+    /// \param value значение
+    /// \throw Conflict Если есть узел с таким же id
+    /// \return Созданный ребро
+    virtual Edge<Value> createEdge(id_t id, weight_t weight) {
+        throw NotImplemented();
+    }
+
+    /// Создать ребро. Ребру будет назначен свободный идентификатор
+    /// \param weight вес
+    /// \return Созданный ребро
+    virtual Edge<Value> createEdge(weight_t weight) {
+        throw NotImplemented();
+    }
+
+    /// Изменить ребро
+    /// \param nodeId Идентификатор узла в БД
+    /// \param newId Новый идентификатор
+    /// \param newWeight Новый вес
+    /// \throw NotFound Если узел не найден
+    /// \return Узел соответствующий БД
+    virtual Edge<Value> setEdge(id_t edgeId, id_t newId, weight_t newWeight) {
+        throw NotImplemented();
+    }
+
+    /// Изменить ребро
+    /// \param edgeId Идентификатор ребра в БД
+    /// \param newId Новый идентификатор
+    /// \param newWeight Новое значение
+    /// \throw NotFound Если узел не найден
+    /// \return Узел соответствующий БД
+    Edge<Value> updateEdge(id_t edgeId, id_t newId, weight_t newWeight) {
+        setEdge(edgeId, newId, newWeight);
+    }
+
+    /// Обновить ребро, если его нет то добавить
+    /// \param nodeId Идентификатор узла
+    /// \param weight Новое значение
+    /// \return Ребро соответствующее БД
+    Edge<Value> updateOrCreateEdge(id_t nodeId, weight_t weight) {
+        throw NotImplemented();
+    }
+
+    /// Обновить ребро, если его нет то добавить
+    /// \param edgeId Идентификатор
+    void removeEdge(id_t edgeId) {
+        throw NotImplemented();
+    }
+
+
+
     /// Создать ребро от узла srcNodeId к узлу dstNodeId
     /// \param srcNodeId Идентификатор узла источника
     /// \param dstNodeId Идентификатор узла цели
     /// \param weight Вес ребра
     /// \param oriented Ориентированное ребро
     /// \return Созданное ребро
-    Edge connectNodes(id_t srcNodeId, id_t dstNodeId, weight_t weight, bool oriented) {
+    Edge<Value> connectNodes(id_t srcNodeId, id_t dstNodeId, weight_t weight, bool oriented) {
         throw NotImplemented();
     }
 
@@ -89,7 +145,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector <Edge> getEdgesAtNode(id_t nodeId, Edge::ORDER orderBy = Edge::ORDER::NOTHING,
+    virtual vector <Edge<Value>> getEdgesAtNode(id_t nodeId, EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING,
                                          size_t limit = 0) {
         throw NotImplemented();
     }
@@ -98,7 +154,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничени
-    virtual vector<Edge> getOutgoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -106,7 +162,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничени
-    virtual vector<Edge> getIngoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -114,21 +170,21 @@ public:
     /// Если соседних ребер нет, бросается исключение NotFound
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getAnyEdgeForNode(id_t nodeId) {
+    Edge<Value> getAnyEdgeForNode(id_t nodeId) {
         throw NotImplemented();
     }
     /// Получить любое ребро исходящее из узла.
     /// Если соседних ребер нет, бросается исключение NotFound
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getAnyOutgoingEdgeAtNode(id_t nodeId) {
+    Edge<Value> getAnyOutgoingEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
     /// Получить любое ребро входящее в узел.
     /// Если соседних ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getAnyIngoingEdgeAtNode(id_t nodeId) {
+    Edge<Value> getAnyIngoingEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
 
@@ -136,7 +192,7 @@ public:
     /// Если соседних ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    virtual Edge getMinEdgeAtNode(id_t nodeId) {
+    virtual Edge<Value> getMinEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
 
@@ -144,7 +200,7 @@ public:
     /// Если соседних ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    virtual Edge getMaxEdgeAtNode(id_t nodeId) {
+    virtual Edge<Value> getMaxEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
 
@@ -152,7 +208,7 @@ public:
     /// Если исходящих ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия исходящих ребер
-    virtual Edge getMinOutgoingEdgeAtNode(id_t node_id) {
+    virtual Edge<Value> getMinOutgoingEdgeAtNode(id_t node_id) {
         throw NotImplemented();
     }
 
@@ -160,7 +216,7 @@ public:
     /// Если исходящих ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия исходящих ребер
-    virtual Edge getMaxOutgoingEdgeAtNode(id_t node_id) {
+    virtual Edge<Value> getMaxOutgoingEdgeAtNode(id_t node_id) {
         throw NotImplemented();
     }
 
@@ -168,7 +224,7 @@ public:
     /// Если входящих ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия входящих ребер
-    virtual Edge getMinIngoingEdgeAtNode(id_t node_id) {
+    virtual Edge<Value> getMinIngoingEdgeAtNode(id_t node_id) {
         throw NotImplemented();
     }
 
@@ -176,7 +232,7 @@ public:
     /// Если входящих ребер нет, бросается исключение NotFound.
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия входящих ребер
-    virtual Edge getMaxIngoingEdgeAtNode(id_t node_id) {
+    virtual Edge<Value> getMaxIngoingEdgeAtNode(id_t node_id) {
         throw NotImplemented();
     }
 
@@ -185,7 +241,7 @@ public:
     /// Если соседних ребер нет, бросается исключение NotFound
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    virtual Edge getFirstEdgeAtNode(id_t nodeId) {
+    virtual Edge<Value> getFirstEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
 
@@ -193,7 +249,7 @@ public:
     /// Если соседних ребер нет, бросается исключение NotFound
     /// \param nodeId Идентификатор узла
     /// \throw NotFound В случае отсутствия соседних ребер
-    virtual Edge getLastEdgeAtNode(id_t nodeId) {
+    virtual Edge<Value> getLastEdgeAtNode(id_t nodeId) {
         throw NotImplemented();
     }
 
@@ -201,7 +257,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMinEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMinEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -209,7 +265,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMaxEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -217,7 +273,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMinOutgoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMinOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -225,7 +281,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMaxOutgoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxOutgoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -233,7 +289,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMinIngoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMinIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 
@@ -241,7 +297,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector<Edge> getMaxIngoingEdgesAtNode(id_t nodeId, Edge::ORDER order, size_t limit) {
+    virtual vector<Edge<Value>> getMaxIngoingEdgesAtNode(id_t nodeId, EDGES_ORDER_BY order, size_t limit) {
         throw NotImplemented();
     }
 

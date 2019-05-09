@@ -14,6 +14,7 @@ using namespace std;
 
 
 template <class Value> class BaseGraph;
+template <class Value> class Edge;
 
 
 template <class Value>
@@ -66,94 +67,94 @@ public:
     /// \param oriented Ориентированное ребро
     /// \throw MethodNotAllowed Если узел не связан с БД. Вероятно нужно перед выполнить save().
     /// \return Созданное ребро
-    Edge connectToNode(id_t nodeId, weight_t weight, bool oriented=true);
+    Edge<Value> connectToNode(id_t nodeId, weight_t weight, bool oriented=true);
 
     /// Получить соседние ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить исходящие ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getOutgoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра.
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getIngoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
 
     /// Получить любое соседнее ребро
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getAnyEdge();
+    Edge<Value> getAnyEdge();
     /// Получить любое исходящие ребро
     /// \throw NotFound В случае отсутствия исходящих ребер
-    Edge getAnyOutgoingEdge();
+    Edge<Value> getAnyOutgoingEdge();
     /// Получить любое входящие ребро
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getAnyIngoingAnyEdge();
+    Edge<Value> getAnyIngoingAnyEdge();
 
 
     /// Получить соседнее ребро с минимальным весом
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getMinEdge();
+    Edge<Value> getMinEdge();
     /// Получить соседние ребро с максимальным весом
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getMaxEdge();
+    Edge<Value> getMaxEdge();
     /// Получить исходящее ребро с минимальным весом
     /// \throw NotFound В случае отсутствия исходящих ребер
-    Edge getMinOutgoingEdge();
+    Edge<Value> getMinOutgoingEdge();
     /// Получить исходящее ребро с максимальным весом
     /// \throw NotFound В случае отсутствия исходящих ребер
-    Edge getMaxOutgoingEdge();
+    Edge<Value> getMaxOutgoingEdge();
     /// Получить входящих ребро с минимальным весом
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getMinIngoingEdge();
+    Edge<Value> getMinIngoingEdge();
     /// Получить соседние ребро с максимальным весом
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getMaxIngoingEdge();
+    Edge<Value> getMaxIngoingEdge();
 
     /// Получить соседние ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMinEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить соседние ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMaxEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить исходящие ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMinOutgoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMaxOutgoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxOutgoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящих ребра с минимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMinIngoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMinIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
     /// Получить входящие ребра с максимальным весом
     /// \param orderBy Сортировка [NOTHING, BY_ID, BY_ID_DESC]
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    vector<Edge> getMaxIngoingEdges(Edge::ORDER orderBy = Edge::ORDER::NOTHING, size_t limit = 0);
+    vector<Edge<Value>> getMaxIngoingEdges(EDGES_ORDER_BY orderBy = EDGES_ORDER_BY::NOTHING, size_t limit = 0);
 
     /// Получить соседнее ребро с минимальным идентификатором
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getFirstEdge();
+    Edge<Value> getFirstEdge();
     /// Получить соседнее ребро с максимальным идентификатором
     /// \throw NotFound В случае отсутствия соседних ребер
-    Edge getLastEdge();
+    Edge<Value> getLastEdge();
     /// Получить исходящих ребро с минимальным идентификатором
     /// \throw NotFound В случае отсутствия исходящих ребер
-    Edge getFirstOutgoingEdge();
+    Edge<Value> getFirstOutgoingEdge();
     /// Получить входящих ребро с максимальным идентификатором
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getLastOutgoingEdge();
+    Edge<Value> getLastOutgoingEdge();
     /// Получить входящих ребро с минимальным идентификатором
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getFirstIngoingEdge();
+    Edge<Value> getFirstIngoingEdge();
     /// Получить входящих ребро с максимальным идентификатором
     /// \throw NotFound В случае отсутствия входящих ребер
-    Edge getLastIngoingEdge();
+    Edge<Value> getLastIngoingEdge();
 
     /// Количество соседних ребер
     size_t edgesCount();
