@@ -12,6 +12,16 @@
 
 using namespace std;
 
+
+class BadRequest: public exception
+{
+    string _error;
+public:
+    explicit BadRequest(string error = "400 Bad Request") : _error(std::move(error)) {}
+    const char* what() const noexcept override { return _error.c_str(); }
+};
+
+
 class NotFound: public exception
 {
     string _error;
@@ -35,6 +45,15 @@ class Conflict: public exception
     string _error;
 public:
     explicit Conflict(string error = "409 Conflict") : _error(std::move(error)) {}
+    const char* what() const noexcept override { return _error.c_str(); }
+};
+
+
+class PayloadTooLarge: public exception
+{
+    string _error;
+public:
+    explicit PayloadTooLarge(string error = "413 Payload Too Large") : _error(std::move(error)) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 

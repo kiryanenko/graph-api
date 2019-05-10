@@ -1,0 +1,3 @@
+[submodule "spu-api"]
+	path = spu-api
+	url = https://bmstu.codes/twobrowin/spu-api.git

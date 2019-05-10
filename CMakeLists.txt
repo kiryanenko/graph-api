@@ -3,7 +3,7 @@ project(graph_api)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(graph_api BaseGraph.cpp BaseGraph.h Node.cpp Node.h Edge.cpp Edge.h exceptions.h types.h)
+add_library(graph_api BaseGraph.cpp BaseGraph.h Node.cpp Node.h Edge.cpp Edge.h exceptions.h types.h SpuUltraGraph.cpp SpuUltraGraph.h)
 
 
 set(SOURCE_EXE main.cpp)
