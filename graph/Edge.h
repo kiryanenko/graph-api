@@ -6,16 +6,16 @@
 #define GRAPH_API_EDGE_H
 
 
-#include "BaseGraph.h"
+#include "../BaseGraph.h"
 
 
-template <class Value> class BaseGraph;
+template <class Value> class AbstractGraph;
 template <class Value> class Node;
 
 
 template <class Value>
 class Edge {
-    BaseGraph<Value> *_graph;
+    AbstractGraph<Value> *_graph;
     /// Идентификатор узла, значение соответствует значению в БД
     id_t _id = 0;
     /// Ребро соответсвует хранящиемуся в БД
@@ -29,17 +29,17 @@ public:
     weight_t weight;
 
 
-    Edge(BaseGraph<Value> *graph, weight_t weight) : _graph(graph), weight(weight) {}
+    Edge(AbstractGraph<Value> *graph, weight_t weight) : _graph(graph), weight(weight) {}
     /// Конструктор ребра
     /// \param graph Указатель на граф
     /// \param id Идентификатор ребра
     /// \param weight Вес ребра
     /// \param commit Узел соответствует узлу находящимуся в БД. Не рекомендуется выставлять в true.
-    Edge(BaseGraph<Value> *graph, id_t id, weight_t weight, bool commit=false) :
+    Edge(AbstractGraph<Value> *graph, id_t id, weight_t weight, bool commit=false) :
         _graph(graph), _id(id), id(id), weight(weight), _commit(commit) {}
 
 
-    BaseGraph<Value>* getGraph() const { return _graph; }
+    AbstractGraph<Value>* getGraph() const { return _graph; }
     int getId() const { return id; }
     weight_t getWeight() const { return weight; }
 

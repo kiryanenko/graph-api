@@ -11,7 +11,7 @@
 #define KEY_DEPTH 64
 
 template <class Value>
-class SpuUltraGraph : public BaseGraph<Value> {
+class SpuUltraGraph : public AbstractGraph<Value> {
     size_t _maxNodesCount;
     size_t _maxEdgesCount;
     weight_t _maxWeight;

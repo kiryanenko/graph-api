@@ -5,8 +5,8 @@
 #ifndef GRAPH_API_TYPES_H
 #define GRAPH_API_TYPES_H
 
-typedef unsigned int id_t;
-typedef unsigned int weight_t;
+typedef unsigned long id_t;
+typedef unsigned long weight_t;
 
 enum ORDER_BY {
     NOTHING,

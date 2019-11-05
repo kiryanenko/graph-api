@@ -7,19 +7,19 @@
 
 #include <vector>
 
-#include "BaseGraph.h"
+#include "../BaseGraph.h"
 #include "Edge.h"
 
 using namespace std;
 
 
-template <class Value> class BaseGraph;
+template <class Value> class AbstractGraph;
 template <class Value> class Edge;
 
 
 template <class Value>
 class Node {
-    BaseGraph<Value> *_graph;
+    AbstractGraph<Value> *_graph;
     /// Идентификатор узла, значение соответствует значению в БД
     id_t _id = 0;
     /// Узел соответсвует узлу хранящиемуся в БД
@@ -33,17 +33,17 @@ public:
     Value value;
 
 
-    Node(BaseGraph<Value> *graph, Value value) : _graph(graph), value(value) {}
+    Node(AbstractGraph<Value> *graph, Value value) : _graph(graph), value(value) {}
     /// Конструктор узла
     /// \param graph Указатель на граф
     /// \param id Идентификатор узла
     /// \param value Значение узла
     /// \param commit Узел соответствует узлу находящимуся в БД. Не рекомендуется выставлять в true.
-    Node(BaseGraph<Value> *graph, id_t id, Value value, bool commit=false) :
+    Node(AbstractGraph<Value> *graph, id_t id, Value value, bool commit=false) :
         _graph(graph), _id(id), id(id), value(value), _commit(commit) {}
 
 
-    BaseGraph<Value>* getGraph() const { return _graph; }
+    AbstractGraph<Value>* getGraph() const { return _graph; }
     int getId() const { return id; }
     Value getValue() const { return value; }
 
