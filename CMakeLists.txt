@@ -12,6 +12,6 @@ add_library(graph_api
         SpuUltraGraph.cpp SpuUltraGraph.h)
 
 
-set(SOURCE_EXE main.cpp)
+set(SOURCE_EXE main.cpp graph/AbstractGraph.cpp)
 add_executable(main ${SOURCE_EXE})
 target_link_libraries(main graph_api)		# Линковка программы с библиотекой

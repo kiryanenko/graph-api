@@ -22,15 +22,14 @@ class AbstractGraph {
 public:
     virtual ~AbstractGraph() = default;
 
+
+
     ///////////////  Базовые операции с узлом  //////////////////////////
 
     /// Создать узел. Узлу будет назначен свободный идентификатор
     /// \param value значение
     /// \return Созданный узел
-    virtual Node <Value> createNode(Value value) {
-        auto id = getFreeNodeId();
-        putNode(id, value);
-    }
+    virtual Node <Value> createNode(Value value);
 
     /// Вставить узел, если узел был, то он обновится
     /// \param id идентификатор
@@ -43,42 +42,50 @@ public:
     /// \param value значение
     /// \return Вставленный узел
     inline Node<Value> insertNode(id_t id, Value value) {
-        return putNode(id, value)
+        return putNode(id, value);
     }
+
+    /// Получить узел
+    /// \param id Идентификатор узла
+    /// \return Объект узла
+    virtual Node<Value> getNode(id_t id) = 0;
 
     /// Изменить узел
     /// \param nodeId Идентификатор узла в БД
-    /// \param newId Новый идентификатор
+    /// \param newId Новый идентификатор узла
     /// \param newValue Новое значение
     /// \throw NotFound Если узел не найден
     /// \return Узел соответствующий БД
     virtual Node<Value> setNode(id_t nodeId, id_t newId, Value newValue) = 0;
 
-    /// Обновить узел, если его нет то добавить
+    /// Удалить узел
     /// \param nodeId Идентификатор узла
-    void removeNode(id_t nodeId) = 0;
+    virtual void removeNode(id_t nodeId) = 0;
+
 
 
     ///////////////  Базовые операции с ребром  //////////////////////////
 
     /// Создать ребро. Ребру будет назначен свободный идентификатор
     /// \return Созданный ребро
-    virtual Edge<Value> createEdge() {
-        auto id = getFreeEdgeId();
-        putEdge(id);
-    }
+    virtual Edge<Value> createEdge();
 
     /// Вставить ребро
-    /// \param id идентификатор
+    /// \param id Идентификатор ребра
     /// \return Вставленное ребро
     virtual Edge<Value> putEdge(id_t id) = 0;
 
     /// Вставить ребро
-    /// \param id идентификатор
+    /// \param id Идентификатор ребра
     /// \return Вставленное ребро
     inline Edge<Value> insertEdge(id_t id) {
-        return putEdge(id, value)
+        return putEdge(id);
     }
+
+    /// Получить ребро
+    /// \param id Идентификато
+    /// \return Объект ребра
+    virtual Edge<Value> getEdge(id_t id) = 0;
 
     /// Изменить ребро
     /// \param nodeId Идентификатор узла в БД
@@ -93,6 +100,8 @@ public:
 
 
 
+    //////////////////// Операции с узлами и ребрами ////////////////////////////
+
     /// Создать неориентированное ребро между узлами
     /// \param firstNode Идентификатор первого узла
     /// \param secondNode Идентификатор второго узла
@@ -104,7 +113,7 @@ public:
     /// \param nodeId Идентификатор узла
     /// \param orderBy Сортировка
     /// \param limit Ограничение по количеству, 0 означает, что ограничения нет
-    virtual vector <Edge<Value>> getEdgesForNode(id_t nodeId, ORDER_BY orderBy = ORDER_BY::NOTHING, size_t limit = 0) = 0;
+    virtual vector<Edge<Value>> getEdgesForNode(id_t nodeId, ORDER_BY orderBy, size_t limit) = 0;
 
     /// Получить любое ребро соединенное с узлом.
     /// Если соседних ребер нет, бросается исключение NotFound
