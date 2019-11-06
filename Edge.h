@@ -6,7 +6,7 @@
 #define GRAPH_API_EDGE_H
 
 
-#include "../BaseGraph.h"
+#include "BaseGraph.h"
 
 
 template <class Value> class AbstractGraph;

@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "../BaseGraph.h"
+#include "BaseGraph.h"
 #include "Edge.h"
 
 using namespace std;
