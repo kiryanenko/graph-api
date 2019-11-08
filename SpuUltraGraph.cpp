@@ -5,18 +5,22 @@
 #include "SpuUltraGraph.h"
 #include <math.h>
 
-template<class Value>
-SpuUltraGraph<Value>::SpuUltraGraph(size_t maxNodesCount, size_t maxEdgesCount, weight_t maxWeight) :
-    _maxNodesCount(maxNodesCount), _maxEdgesCount(maxEdgesCount), _maxWeight(maxWeight) {
-    if (not maxNodesCount or not maxEdgesCount or not maxWeight) {
-        throw BadRequest("maxNodesCount and maxEdgesCount and maxWeight should be > 0");
+SPU_GRAPH::SpuUltraGraph::SpuUltraGraph(id_t graph_id, size_t graph_id_depth, size_t node_id_depth, size_t edge_id_depth,
+                                        size_t weight_depth) {
+    if (!node_id_depth || !edge_id_depth) {
+        throw BadRequest("graph_id_depth and edge_id_depth should be > 0");
     }
 
-    size_t nodeIdDepth = ceil(log2(maxNodesCount));
-    size_t edgeIdDepth = ceil(log2(maxEdgesCount));
-    size_t weightDepth = ceil(log2(maxWeight));
+    if (graph_id_depth + node_id_depth + edge_id_depth + weight_depth > KEY_DEPTH) {
+        throw PayloadTooLarge();
+    }
 
-    if (nodeIdDepth + edgeIdDepth + weightDepth > KEY_DEPTH) {
+    _graph_id_depth = graph_id_depth;
+    _vertex_id_depth = node_id_depth;
+    _edge_id_depth = edge_id_depth;
+    _weight_id_depth = weight_depth;
+
+    if (graph_id >= pow(2, graph_id_depth)) {
         throw PayloadTooLarge();
     }
 }

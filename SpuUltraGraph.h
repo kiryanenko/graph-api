@@ -5,25 +5,79 @@
 #ifndef GRAPH_API_SPUULTRAGRAPH_H
 #define GRAPH_API_SPUULTRAGRAPH_H
 
+#include <boost/graph/graph_traits.hpp>
+#include <libspu.hpp>
+#include "exceptions.h"
 
-#include "BaseGraph.h"
 
 #define KEY_DEPTH 64
 
-template <class Value>
-class SpuUltraGraph : public AbstractGraph<Value> {
-    size_t _maxNodesCount;
-    size_t _maxEdgesCount;
-    weight_t _maxWeight;
-//    Structure<string> _edgeStructure; TODO
 
-public:
-    explicit SpuUltraGraph(size_t maxNodesCount = 0xFFFF, size_t maxEdgesCount = 0xFFFFFF, weight_t maxWeight = 0xFF);
+namespace SPU_GRAPH
+{
+    using namespace SPU;
+    using namespace boost;
 
-    Node<Value> createNode(id_t id, Value value) {
-        throw NotImplemented();
+
+    typedef unsigned long id_t;
+    typedef unsigned long weight_t;
+
+
+    class SpuUltraGraph {
+        size_t _graph_id_depth = 3;
+        size_t _vertex_id_depth = 28;
+        size_t _edge_id_depth = 28;
+        size_t _weight_id_depth = 4;
+
+        id_t _graph_id = 0;
+
+    public:
+        /////////// Описание свойств графа для BOOST ////////////////
+
+        // Тип объектов, используемых для идентификации вершин в графе
+        typedef id_t vertex_descriptor;
+        /// Тип объектов, используемых для идентификации ребер в графе.
+        typedef id_t edge_descriptor;
+
+        /// Категория обхода отражает поддерживаемые графовым классом виды итераторов
+        struct spu_ultra_graph_traversal_category :
+                public virtual bidirectional_graph_tag,
+                public virtual adjacency_graph_tag,
+                public virtual vertex_list_graph_tag,
+                public virtual edge_list_graph_tag { };
+
+        /// Предоставляет информацию о том, что граф ориентированный
+        typedef directed_tag directed_category;
+        /// Дает информацию о том, что граф позволяет вставку параллельных ребер
+        /// (ребер, у которых одна и та же начальная и конечная вершины)
+        typedef allow_parallel_edge_tag edge_parallel_category;
+        /// Категория обхода отражает поддерживаемые графовым классом виды итераторов
+        typedef spu_ultra_graph_traversal_category traversal_category;
+
+        /// Тип, используемый для представления числа вершин в графе
+        typedef size_t vertices_size_type;
+        /// Тип, используемый для представления числа ребер в графе
+        typedef size_t edges_size_type;
+        /// Тип, используемый для представления числа исходящих ребер в графе
+        typedef size_t degree_size_type;
+
+        //////////////////////////////////////////////////////////////
+
+        explicit SpuUltraGraph(id_t graph_id = 0, size_t graph_id_depth = 3,
+                size_t node_id_depth = 28, size_t edge_id_depth = 28, size_t weight_depth=4);
+
+        vertex_descriptor add_vertex();
+    };
+
+
+    SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
+        return 1;
     }
-};
 
+    std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        std::pair<SpuUltraGraph::edge_descriptor, bool> p(u + v, true);
+        return p;
+    }
+}
 
 #endif //GRAPH_API_SPUULTRAGRAPH_H

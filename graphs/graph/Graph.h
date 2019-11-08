@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "../types.h"
-#include "../exceptions.h"
+#include "../../exceptions.h"
 
 
 using namespace std;

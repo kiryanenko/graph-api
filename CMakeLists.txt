@@ -1,17 +1,25 @@
 cmake_minimum_required(VERSION 3.14)
 project(graph_api)
 
+set(SPU_ARCH 64)
+set(SPU_SIMULATOR ON)
+
 set(CMAKE_CXX_STANDARD 14)
 
+if(${SPU_SIMULATOR})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSPU_SIMULATOR")
+endif(${SPU_SIMULATOR})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -Wall -ggdb -DSPU${SPU_ARCH}")
+
+
 add_library(graph_api
-        graphs/graph/Graph.h graphs/graph/Graph.cpp
-        graphs/graph/Node.h graphs/graph/Node.cpp
-        graphs/graph/Edge.h graphs/graph/Edge.cpp
-        graphs/exceptions.h
-        graph/types.h
         SpuUltraGraph.cpp SpuUltraGraph.h)
 
+include_directories(spu-api/libspu)
+add_subdirectory(spu-api)
+target_link_libraries(graph_api libspu)
 
-set(SOURCE_EXE main.cpp graph/Graph.cpp graphs/graph/Node.cpp graphs/graph/Node.h graphs/graph/GraphApi.cpp graphs/graph/GraphApi.h)
-add_executable(main ${SOURCE_EXE})
-target_link_libraries(main graph_api)		# Линковка программы с библиотекой
+set(SOURCE_EXE main.cpp)
+add_executable(graph_main ${SOURCE_EXE})
+target_link_libraries(graph_main graph_api)		# Линковка программы с библиотекой
