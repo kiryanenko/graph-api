@@ -7,6 +7,7 @@
 
 #include <boost/graph/graph_traits.hpp>
 #include <libspu.hpp>
+#include <structure.hpp>
 #include "exceptions.h"
 
 
@@ -23,13 +24,34 @@ namespace SPU_GRAPH
     typedef unsigned long weight_t;
 
 
-    class SpuUltraGraph {
-        size_t _graph_id_depth = 3;
-        size_t _vertex_id_depth = 28;
-        size_t _edge_id_depth = 28;
-        size_t _weight_id_depth = 4;
+    enum SPU_STRUCTURE_ATTRS {
+        GRAPH_ID,
+        INCIDENCE,
+        VERTEX_ID,
+        EDGE_ID,
+        WEIGHT
+    };
 
+
+    struct SpuUltraGraphTraits {
+        size_t graph_id_depth = 3;
+        size_t vertex_id_depth = 28;
+        size_t edge_id_depth = 28;
+        size_t weight_id_depth = 4;
+
+        Structure<> *vertex_edge_struct = nullptr;
+        Structure<> *edge_vertex_struct = nullptr;
+
+        inline size_t sum_depth() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_id_depth; }
+    };
+
+
+
+    class SpuUltraGraph {
         id_t _graph_id = 0;
+        SpuUltraGraphTraits _graph_traits;
+        Fields<SPU_STRUCTURE_ATTRS> _vertex_edge_fields;
+        Fields<SPU_STRUCTURE_ATTRS> _edge_vertex_fields;
 
     public:
         /////////// Описание свойств графа для BOOST ////////////////
@@ -63,21 +85,20 @@ namespace SPU_GRAPH
 
         //////////////////////////////////////////////////////////////
 
-        explicit SpuUltraGraph(id_t graph_id = 0, size_t graph_id_depth = 3,
-                size_t node_id_depth = 28, size_t edge_id_depth = 28, size_t weight_depth=4);
+        explicit SpuUltraGraph(id_t graph_id = 0, SpuUltraGraphTraits spu_graph_traits = SpuUltraGraphTraits());
 
-        vertex_descriptor add_vertex();
+//        vertex_descriptor add_vertex();
     };
 
 
-    SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
-        return 1;
-    }
-
-    std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
-        std::pair<SpuUltraGraph::edge_descriptor, bool> p(u + v, true);
-        return p;
-    }
+//    SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
+//        return 1;
+//    }
+//
+//    std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+//        std::pair<SpuUltraGraph::edge_descriptor, bool> p(u + v, true);
+//        return p;
+//    }
 }
 
 #endif //GRAPH_API_SPUULTRAGRAPH_H

@@ -15,7 +15,8 @@ using namespace boost;
 using namespace SPU_GRAPH;
 
 int main() {
-    BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
+//    BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
+    SpuUltraGraph g;
 
     return 0;
 }

@@ -18,7 +18,7 @@ add_library(graph_api
 
 include_directories(spu-api/libspu)
 add_subdirectory(spu-api)
-target_link_libraries(graph_api libspu)
+target_link_libraries(graph_api spu-api)
 
 set(SOURCE_EXE main.cpp)
 add_executable(graph_main ${SOURCE_EXE})
