@@ -39,6 +39,8 @@ namespace SPU_GRAPH
         size_t edge_id_depth = 28;
         size_t weight_id_depth = 4;
 
+        data_t default_vertex_value = 0;
+
         Structure<> *vertex_struct = nullptr;
         Structure<> *edge_struct = nullptr;
 
@@ -51,11 +53,13 @@ namespace SPU_GRAPH
         id_t _graph_id = 0;
         SpuUltraGraphTraits _graph_traits;
 
-        Fields<SPU_STRUCTURE_ATTRS> _vertex_fields;
-        Fields<SPU_STRUCTURE_ATTRS> _edge_fields;
+        FieldsLength<SPU_STRUCTURE_ATTRS> _vertex_fields_len;
+        FieldsLength<SPU_STRUCTURE_ATTRS> _edge_fields_len;
 
         bool _should_free_vertex_struct = false;
         bool _should_free_edge_struct = false;
+
+        typedef Fields<SPU_STRUCTURE_ATTRS> Fields;
 
     public:
         /////////// Описание свойств графа для BOOST ////////////////
@@ -92,7 +96,12 @@ namespace SPU_GRAPH
         explicit SpuUltraGraph(id_t graph_id = 0, SpuUltraGraphTraits spu_graph_traits = SpuUltraGraphTraits());
         ~SpuUltraGraph();
 
-//        vertex_descriptor add_vertex();
+        vertex_descriptor add_vertex();
+        vertices_size_type vertices_count();
+
+    protected:
+        bool is_vertex_id_valid(id_t id);
+        id_t get_free_vertex_id();
     };
 
 

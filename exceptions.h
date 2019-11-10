@@ -66,4 +66,14 @@ public:
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
+
+class InsufficientStorage: public exception
+{
+    string _error;
+public:
+    explicit InsufficientStorage(string error = "507 Insufficient Storage") : _error(std::move(error)) {}
+    const char* what() const noexcept override { return _error.c_str(); }
+};
+
+
 #endif //GRAPH_API_EXCEPTIONS_H
