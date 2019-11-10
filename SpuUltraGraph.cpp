@@ -35,7 +35,7 @@ namespace SPU_GRAPH
                                                                             {GRAPH_ID, 0},
                                                                             {INCIDENCE, 1},
                                                                             {VERTEX_ID, 0},
-                                                                            {WEIGHT, 1},
+                                                                            {WEIGHT, 0},
                                                                             {EDGE_ID, 0}
                                                                     });
         vertex_edge_fields_length[GRAPH_ID] = _graph_traits.graph_id_depth;
@@ -54,8 +54,6 @@ namespace SPU_GRAPH
         edge_vertex_fields_length[VERTEX_ID] = _graph_traits.vertex_id_depth;
         edge_vertex_fields_length[EDGE_ID] = _graph_traits.edge_id_depth;
         _edge_vertex_fields = Fields<SPU_STRUCTURE_ATTRS>(edge_vertex_fields_length);
-
-        cout << int(edge_vertex_fields_length[VERTEX_ID]);
 
         if (!_graph_traits.vertex_edge_struct) {
             _graph_traits.vertex_edge_struct = new Structure<>;
