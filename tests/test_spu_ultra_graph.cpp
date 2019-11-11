@@ -36,6 +36,9 @@ BOOST_FIXTURE_TEST_CASE(test_add_vertex, Fixture)
     BOOST_CHECK(id2 > 0);
     BOOST_CHECK(id2 != id);
     BOOST_CHECK_EQUAL(graph.vertices_count(), 2);
+
+    auto id3 = graph.add_vertex(42);
+    BOOST_CHECK_EQUAL(id3, 42);
 }
 
 

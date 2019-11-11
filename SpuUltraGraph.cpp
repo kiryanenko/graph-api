@@ -69,18 +69,28 @@ namespace SPU_GRAPH
         }
     }
 
+
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex() {
         return add_vertex(_graph_traits.default_vertex_value);
     }
 
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(value_t value) {
         auto id = get_free_vertex_id();
+        return add_vertex(id, value);
+    }
+
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id) {
+        return add_vertex(id, _graph_traits.default_vertex_value);
+    }
+
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id, value_t value) {
         auto key = graph_fields();
         key[VERTEX_ID] = id;
         _graph_traits.vertex_struct->insert(key, value);
         inc_verteces_cnt();
         return id;
     }
+
 
     SpuUltraGraph::vertices_size_type SpuUltraGraph::vertices_count() {
         auto key = graph_fields();

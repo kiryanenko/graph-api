@@ -101,6 +101,8 @@ namespace SPU_GRAPH
 
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);
+        vertex_descriptor add_vertex(id_t id);
+        vertex_descriptor add_vertex(id_t id, value_t value);
         vertices_size_type vertices_count();
 
     protected:
