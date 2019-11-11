@@ -100,6 +100,7 @@ namespace SPU_GRAPH
         ~SpuUltraGraph();
 
         vertex_descriptor add_vertex();
+        vertex_descriptor add_vertex(value_t value);
         vertices_size_type vertices_count();
 
     protected:

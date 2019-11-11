@@ -70,10 +70,14 @@ namespace SPU_GRAPH
     }
 
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex() {
+        return add_vertex(_graph_traits.default_vertex_value);
+    }
+
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(value_t value) {
         auto id = get_free_vertex_id();
         auto key = graph_fields();
         key[VERTEX_ID] = id;
-        _graph_traits.vertex_struct->insert(key, _graph_traits.default_vertex_value);
+        _graph_traits.vertex_struct->insert(key, value);
         inc_verteces_cnt();
         return id;
     }
