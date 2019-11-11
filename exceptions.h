@@ -57,6 +57,13 @@ public:
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
+class InternalServerError : public exception
+{
+    string _error;
+public:
+    explicit InternalServerError(string error = "500 Internal Server Error") : _error(std::move(error)) {}
+    const char* what() const noexcept override { return _error.c_str(); }
+};
 
 class NotImplemented: public exception
 {

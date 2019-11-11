@@ -20,6 +20,16 @@ include_directories(spu-api/libspu)
 add_subdirectory(spu-api)
 target_link_libraries(graph_api spu-api)
 
-set(SOURCE_EXE main.cpp)
-add_executable(graph_main ${SOURCE_EXE})
-target_link_libraries(graph_main graph_api)		# Линковка программы с библиотекой
+
+# Тесты
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+find_package (Boost REQUIRED COMPONENTS unit_test_framework REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
+set(TEST test_graph_api)
+add_executable(${TEST} tests/test_spu_ultra_graph.cpp)
+target_link_libraries(${TEST} graph_api ${Boost_LIBRARIES})
+
+enable_testing()
+add_test (${TEST} ${TEST})

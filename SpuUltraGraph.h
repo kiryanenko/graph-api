@@ -53,13 +53,16 @@ namespace SPU_GRAPH
         id_t _graph_id = 0;
         SpuUltraGraphTraits _graph_traits;
 
+        typedef SPU::Fields<SPU_STRUCTURE_ATTRS> Fields;
+
         FieldsLength<SPU_STRUCTURE_ATTRS> _vertex_fields_len;
         FieldsLength<SPU_STRUCTURE_ATTRS> _edge_fields_len;
 
         bool _should_free_vertex_struct = false;
         bool _should_free_edge_struct = false;
 
-        typedef Fields<SPU_STRUCTURE_ATTRS> Fields;
+        id_t _free_vertex_id = 1;
+        id_t _free_edge_id = 1;
 
     public:
         /////////// Описание свойств графа для BOOST ////////////////
@@ -100,14 +103,23 @@ namespace SPU_GRAPH
         vertices_size_type vertices_count();
 
     protected:
+        static void check_spu_resp(pair_t resp);
+
         bool is_vertex_id_valid(id_t id);
+
         id_t get_free_vertex_id();
+        id_t get_free_vertex_id(id_t min, id_t max);
+
+        void inc_verteces_cnt();
+        void dec_verteces_cnt();
+
+        Fields graph_fields();
     };
 
 
-//    SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
-//        return 1;
-//    }
+    inline SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
+        return g.add_vertex();
+    }
 //
 //    std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
 //        std::pair<SpuUltraGraph::edge_descriptor, bool> p(u + v, true);

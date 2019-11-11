@@ -3,7 +3,6 @@
 //
 
 #include "SpuUltraGraph.h"
-#include <math.h>
 #include <iostream>
 
 
@@ -38,10 +37,6 @@ namespace SPU_GRAPH
             throw PayloadTooLarge();
         }
 
-        if (graph_id >= pow(2, _graph_traits.graph_id_depth)) {
-            throw PayloadTooLarge();
-        }
-
         _vertex_fields_len[GRAPH_ID] = _graph_traits.graph_id_depth;
         _vertex_fields_len[VERTEX_ID] = _graph_traits.vertex_id_depth;
         _vertex_fields_len[WEIGHT] = _graph_traits.weight_id_depth;
@@ -50,6 +45,10 @@ namespace SPU_GRAPH
         _edge_fields_len[GRAPH_ID] = _graph_traits.graph_id_depth;
         _edge_fields_len[VERTEX_ID] = _graph_traits.vertex_id_depth;
         _edge_fields_len[EDGE_ID] = _graph_traits.edge_id_depth;
+
+        if (graph_id >= (id_t) _vertex_fields_len.fieldMask(GRAPH_ID)) {
+            throw PayloadTooLarge();
+        }
 
         if (!_graph_traits.vertex_struct) {
             _graph_traits.vertex_struct = new Structure<>;
@@ -71,16 +70,18 @@ namespace SPU_GRAPH
     }
 
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex() {
-        auto key = Fields(_vertex_fields_len);
-        key[GRAPH_ID] = _graph_id;
-        key[VERTEX_ID] = get_free_vertex_id();
+        auto id = get_free_vertex_id();
+        auto key = graph_fields();
+        key[VERTEX_ID] = id;
         _graph_traits.vertex_struct->insert(key, _graph_traits.default_vertex_value);
+        inc_verteces_cnt();
+        return id;
     }
 
     SpuUltraGraph::vertices_size_type SpuUltraGraph::vertices_count() {
-        auto key = Fields(_vertex_fields_len);
-        key[GRAPH_ID] = _graph_id;
+        auto key = graph_fields();
         auto res = _graph_traits.vertex_struct->search(key);
+        check_spu_resp(res);
         if (res.status == OK) {
             return res.value;
         } else {
@@ -89,30 +90,72 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::get_free_vertex_id() {
-        id_t id = vertices_count();
-        if (id == 0) ++id;
-        if (!is_vertex_id_valid(id)) {
-            throw InsufficientStorage();
+        if (is_vertex_id_valid(_free_vertex_id)) {
+            auto key = graph_fields();
+            key[VERTEX_ID] = _free_vertex_id;
+            auto is_free = _graph_traits.vertex_struct->search(key);
+            if (is_free.status == ERR) {
+                return _free_vertex_id++;
+            }
         }
 
-        auto key = Fields(_vertex_fields_len);
-        key[GRAPH_ID] = _graph_id;
-        key[VERTEX_ID] = id;
-        auto is_free = _graph_traits.vertex_struct->search(key);
+        auto id = get_free_vertex_id(1, _vertex_fields_len.fieldMask(VERTEX_ID));
+        if (id == 0) {
+            throw InsufficientStorage();
+        }
+        _free_vertex_id = id + 1;
+        return id;
+    }
 
-        while (is_free.status == OK) {
-            ++id;
-            if (!is_vertex_id_valid(id)) {
-                id = 1;
+    id_t SpuUltraGraph::get_free_vertex_id(id_t min, id_t max) {
+        auto key_f = graph_fields();
+        key_f[VERTEX_ID] = max;
+        auto key = ((data_t) key_f) + 1;
+
+        auto vertex = _graph_traits.vertex_struct->nsm(key);
+        check_spu_resp(vertex);
+        key_f = vertex.value;
+        id_t id = key_f[VERTEX_ID];
+
+        if (vertex.status == ERR || (id_t) key_f[GRAPH_ID] != _graph_id || id < min) {
+            return min;
+        }
+        if (id == max) {
+            id = get_free_vertex_id(min, min + (max - min) / 2);
+            if (!id) {
+                id = get_free_vertex_id(min + (max - min) / 2 + 1, max);
             }
-
-            key[VERTEX_ID] = id;
-            is_free = _graph_traits.vertex_struct->search(key);
         }
         return id;
     }
 
     bool SpuUltraGraph::is_vertex_id_valid(id_t id) {
-        return id > 0 && id < pow(2, _graph_traits.vertex_id_depth) - 1;
+        return id > 0 && id < (id_t) _vertex_fields_len.fieldMask(VERTEX_ID);
+    }
+
+    void SpuUltraGraph::check_spu_resp(pair_t resp) {
+        if (resp.status == QERR) {
+            throw InternalServerError("500 Queue error");
+        } else if (resp.status == OERR) {
+            throw InternalServerError("500 Command overflow error");
+        }
+    }
+
+    void SpuUltraGraph::inc_verteces_cnt() {
+        auto cnt = vertices_count();
+        auto key = graph_fields();
+        _graph_traits.vertex_struct->insert(key, cnt + 1);
+    }
+
+    void SpuUltraGraph::dec_verteces_cnt() {
+        auto cnt = vertices_count();
+        auto key = graph_fields();
+        _graph_traits.vertex_struct->insert(key, cnt - 1);
+    }
+
+    SpuUltraGraph::Fields SpuUltraGraph::graph_fields() {
+        auto key = Fields(_vertex_fields_len);
+        key[GRAPH_ID] = _graph_id;
+        return key;
     }
 }
