@@ -51,10 +51,11 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         auto id3 = graph.add_vertex(3);
         BOOST_CHECK_EQUAL(id3, 3);
 
+        auto max_id = graph.add_vertex(268435454);
         auto id4 = graph.add_vertex();
-        BOOST_CHECK(id4 > 0);
         BOOST_CHECK(id4 > id3);
-        BOOST_CHECK_EQUAL(graph.num_vertices(), 4);
+        BOOST_CHECK(id4 < max_id);
+        BOOST_CHECK_EQUAL(graph.num_vertices(), 5);
     }
 
 
@@ -72,10 +73,11 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         auto id3 = graph.add_edge(3);
         BOOST_CHECK_EQUAL(id3, 3);
 
+        auto max_id = graph.add_edge(268435454);
         auto id4 = graph.add_edge();
-        BOOST_CHECK(id4 > 0);
         BOOST_CHECK(id4 > id3);
-        BOOST_CHECK_EQUAL(graph.num_edges(), 4);
+        BOOST_CHECK(id4 < max_id);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 5);
     }
 
 
