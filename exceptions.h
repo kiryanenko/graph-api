@@ -17,7 +17,7 @@ class BadRequest: public exception
 {
     string _error;
 public:
-    explicit BadRequest(string error = "400 Bad Request") : _error(std::move(error)) {}
+    explicit BadRequest(const string& error = "Bad Request") : _error("400 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
@@ -26,16 +26,7 @@ class NotFound: public exception
 {
     string _error;
 public:
-    explicit NotFound(string error = "404 Not Found") : _error(std::move(error)) {}
-    const char* what() const noexcept override { return _error.c_str(); }
-};
-
-
-class MethodNotAllowed: public exception
-{
-    string _error;
-public:
-    explicit MethodNotAllowed(string error = "405 Method Not Allowed") : _error(std::move(error)) {}
+    explicit NotFound(const string& error = "Not Found") : _error("404 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
@@ -44,32 +35,25 @@ class Conflict: public exception
 {
     string _error;
 public:
-    explicit Conflict(string error = "409 Conflict") : _error(std::move(error)) {}
+    explicit Conflict(const string& error = "Conflict") : _error("409 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
 
-class PayloadTooLarge: public exception
+class QueueError: public exception
 {
     string _error;
 public:
-    explicit PayloadTooLarge(string error = "413 Payload Too Large") : _error(std::move(error)) {}
+    explicit QueueError(const string& error = "Queue error") : _error("500 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
-class InternalServerError : public exception
-{
-    string _error;
-public:
-    explicit InternalServerError(string error = "500 Internal Server Error") : _error(std::move(error)) {}
-    const char* what() const noexcept override { return _error.c_str(); }
-};
 
-class NotImplemented: public exception
+class CommandOverflowError: public exception
 {
     string _error;
 public:
-    explicit NotImplemented(string error = "501 Not Implemented") : _error(std::move(error)) {}
+    explicit CommandOverflowError(const string& error = "500 Command overflow error") : _error("500 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 
@@ -78,7 +62,7 @@ class InsufficientStorage: public exception
 {
     string _error;
 public:
-    explicit InsufficientStorage(string error = "507 Insufficient Storage") : _error(std::move(error)) {}
+    explicit InsufficientStorage(const string& error = "Insufficient Storage") : _error("507 " + error) {}
     const char* what() const noexcept override { return _error.c_str(); }
 };
 

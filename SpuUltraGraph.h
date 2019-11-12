@@ -40,6 +40,7 @@ namespace SPU_GRAPH
         size_t weight_id_depth = 4;
 
         data_t default_vertex_value = 0;
+        data_t default_weight = 0;
 
         Structure<> *vertex_struct = nullptr;
         Structure<> *edge_struct = nullptr;
@@ -103,10 +104,20 @@ namespace SPU_GRAPH
         vertex_descriptor add_vertex(value_t value);
         vertex_descriptor add_vertex(id_t id);
         vertex_descriptor add_vertex(id_t id, value_t value);
-        vertices_size_type vertices_count();
+        vertices_size_type num_vertices();
+
+        edge_descriptor add_edge();
+        edge_descriptor add_weight_edge(weight_t weight);
+        edge_descriptor add_edge(id_t id);
+        edge_descriptor add_edge(id_t id, weight_t weight);
+        edges_size_type num_edges();
 
     protected:
+        Fields vertex_fields();
+        Fields edge_fields();
+
         static void check_spu_resp(pair_t resp);
+
 
         bool is_vertex_id_valid(id_t id);
 
@@ -116,7 +127,14 @@ namespace SPU_GRAPH
         void inc_verteces_cnt();
         void dec_verteces_cnt();
 
-        Fields graph_fields();
+
+        bool is_edge_id_valid(id_t id);
+
+        id_t get_free_edge_id();
+        id_t get_free_edge_id(id_t min, id_t max);
+
+        void inc_edges_cnt();
+        void dec_edges_cnt();
     };
 
 
