@@ -9,6 +9,7 @@
 #include <libspu.hpp>
 #include <structure.hpp>
 #include "exceptions.h"
+#include "StructureDecorator.h"
 
 
 #define KEY_DEPTH 64
@@ -61,6 +62,9 @@ namespace SPU_GRAPH
 
         bool _should_free_vertex_struct = false;
         bool _should_free_edge_struct = false;
+
+        StructureDecorator _vertex_struct;
+        StructureDecorator _edge_struct;
 
         id_t _free_vertex_id = 1;
         id_t _free_edge_id = 1;

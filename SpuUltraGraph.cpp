@@ -58,6 +58,9 @@ namespace SPU_GRAPH
             _graph_traits.edge_struct = new Structure<>;
             _should_free_edge_struct = true;
         }
+        
+        _vertex_struct.set(_graph_traits.vertex_struct);
+        _edge_struct.set(_graph_traits.edge_struct);
     }
 
     SpuUltraGraph::~SpuUltraGraph() {
@@ -78,7 +81,7 @@ namespace SPU_GRAPH
         auto id = get_free_vertex_id();
         auto key = vertex_fields();
         key[VERTEX_ID] = id;
-        _graph_traits.vertex_struct->insert(key, value);
+        _vertex_struct.insert(key, value);
         inc_verteces_cnt();
         return id;
     }
@@ -95,13 +98,12 @@ namespace SPU_GRAPH
         auto key = vertex_fields();
         key[VERTEX_ID] = id;
 
-        auto conflict = _graph_traits.vertex_struct->search(key);
-        check_spu_resp(conflict);
+        auto conflict = _vertex_struct.search(key);
         if (conflict.status == OK) {
             throw Conflict();
         }
 
-        _graph_traits.vertex_struct->insert(key, value);
+        _vertex_struct.insert(key, value);
         inc_verteces_cnt();
         return id;
     }
@@ -109,8 +111,7 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::vertices_size_type SpuUltraGraph::num_vertices() {
         auto key = vertex_fields();
-        auto res = _graph_traits.vertex_struct->search(key);
-        check_spu_resp(res);
+        auto res = _vertex_struct.search(key);
         if (res.status == OK) {
             return res.value;
         } else {
@@ -122,7 +123,7 @@ namespace SPU_GRAPH
         if (is_vertex_id_valid(_free_vertex_id)) {
             auto key = vertex_fields();
             key[VERTEX_ID] = _free_vertex_id;
-            auto is_free = _graph_traits.vertex_struct->search(key);
+            auto is_free = _vertex_struct.search(key);
             if (is_free.status == ERR) {
                 return _free_vertex_id++;
             }
@@ -141,8 +142,7 @@ namespace SPU_GRAPH
         key_f[VERTEX_ID] = max;
         auto key = (data_t) key_f + 1;
 
-        auto vertex = _graph_traits.vertex_struct->nsm(key);
-        check_spu_resp(vertex);
+        auto vertex = _vertex_struct.nsm(key);
         key_f = vertex.value;
         id_t id = key_f[VERTEX_ID];
 
@@ -162,25 +162,16 @@ namespace SPU_GRAPH
         return id > 0 && id < (id_t) _vertex_fields_len.fieldMask(VERTEX_ID);
     }
 
-    void SpuUltraGraph::check_spu_resp(pair_t resp) {
-        if (resp.status == QERR) {
-            throw QueueError();
-        } else if (resp.status == OERR) {
-            throw CommandOverflowError();
-        }
-    }
-
-
     void SpuUltraGraph::inc_verteces_cnt() {
         auto cnt = num_vertices();
         auto key = vertex_fields();
-        _graph_traits.vertex_struct->insert(key, cnt + 1);
+        _vertex_struct.insert(key, cnt + 1);
     }
 
     void SpuUltraGraph::dec_verteces_cnt() {
         auto cnt = num_vertices();
         auto key = vertex_fields();
-        _graph_traits.vertex_struct->insert(key, cnt - 1);
+        _vertex_struct.insert(key, cnt - 1);
     }
 
 
@@ -205,7 +196,7 @@ namespace SPU_GRAPH
         auto id = get_free_edge_id();
         auto key = edge_fields();
         key[EDGE_ID] = id;
-        _graph_traits.edge_struct->insert(key, weight);
+        _edge_struct.insert(key, weight);
         inc_edges_cnt();
         return id;
     }
@@ -223,12 +214,12 @@ namespace SPU_GRAPH
         auto key = edge_fields();
         key[EDGE_ID] = id;
 
-        auto conflict = _graph_traits.edge_struct->search(key);
+        auto conflict = _edge_struct.search(key);
         if (conflict.status == OK) {
             throw Conflict();
         }
 
-        _graph_traits.edge_struct->insert(key, weight);
+        _edge_struct.insert(key, weight);
         inc_edges_cnt();
         return id;
     }
@@ -236,8 +227,7 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::num_edges() {
         auto key = edge_fields();
-        auto res = _graph_traits.edge_struct->search(key);
-        check_spu_resp(res);
+        auto res = _edge_struct.search(key);
         if (res.status == OK) {
             return res.value;
         } else {
@@ -254,7 +244,7 @@ namespace SPU_GRAPH
         if (is_edge_id_valid(_free_edge_id)) {
             auto key = edge_fields();
             key[EDGE_ID] = _free_edge_id;
-            auto is_free = _graph_traits.edge_struct->search(key);
+            auto is_free = _edge_struct.search(key);
             if (is_free.status == ERR) {
                 return _free_edge_id++;
             }
@@ -273,8 +263,7 @@ namespace SPU_GRAPH
         key_f[EDGE_ID] = max;
         auto key = (data_t) key_f + 1;
 
-        auto edge = _graph_traits.edge_struct->nsm(key);
-        check_spu_resp(edge);
+        auto edge = _edge_struct.nsm(key);
         key_f = edge.value;
         id_t id = key_f[EDGE_ID];
 
@@ -294,12 +283,12 @@ namespace SPU_GRAPH
     void SpuUltraGraph::inc_edges_cnt() {
         auto cnt = num_edges();
         auto key = edge_fields();
-        _graph_traits.edge_struct->insert(key, cnt + 1);
+        _edge_struct.insert(key, cnt + 1);
     }
 
     void SpuUltraGraph::dec_edges_cnt() {
         auto cnt = num_edges();
         auto key = edge_fields();
-        _graph_traits.edge_struct->insert(key, cnt + 1);
+        _edge_struct.insert(key, cnt + 1);
     }
 }
