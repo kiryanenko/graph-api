@@ -121,6 +121,13 @@ namespace SPU_GRAPH
         edge_descriptor add_weight_edge(id_t id, weight_t weight, bool safe=false);
         edge_descriptor add_weight_edge(vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
         edge_descriptor add_weight_edge(id_t id, vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
+
+        void add_target(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
+        void add_source(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
+
+        bool has_edge(id_t id);
+        weight_t get_weight(edge_descriptor edge);
+
         edges_size_type num_edges();
 
     protected:
@@ -143,17 +150,20 @@ namespace SPU_GRAPH
 
         void inc_edges_cnt();
         void dec_edges_cnt();
+
+        void add_target(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
+        void add_source(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
     };
 
 
     inline SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) {
         return g.add_vertex();
     }
-//
-//    std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
-//        std::pair<SpuUltraGraph::edge_descriptor, bool> p(u + v, true);
-//        return p;
-//    }
+
+    inline std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        std::pair<SpuUltraGraph::edge_descriptor, bool> res(g.add_edge(u, v), true);
+        return res;
+    }
 }
 
 #endif //GRAPH_API_SPUULTRAGRAPH_H
