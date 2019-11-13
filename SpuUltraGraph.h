@@ -106,22 +106,26 @@ namespace SPU_GRAPH
 
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);
-        vertex_descriptor add_vertex(id_t id);
-        vertex_descriptor add_vertex(id_t id, value_t value);
+        vertex_descriptor add_vertex(id_t id, bool safe=false);
+        vertex_descriptor add_vertex(id_t id, value_t value, bool safe=false);
+
+        bool has_vertex(id_t id);
+
         vertices_size_type num_vertices();
 
         edge_descriptor add_edge();
+        edge_descriptor add_edge(id_t id, bool safe=false);
+        edge_descriptor add_edge(vertex_descriptor u, vertex_descriptor v, bool safe=false);
+        edge_descriptor add_edge(id_t id, vertex_descriptor u, vertex_descriptor v, bool safe=false);
         edge_descriptor add_weight_edge(weight_t weight);
-        edge_descriptor add_edge(id_t id);
-        edge_descriptor add_edge(id_t id, weight_t weight);
+        edge_descriptor add_weight_edge(id_t id, weight_t weight, bool safe=false);
+        edge_descriptor add_weight_edge(vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
+        edge_descriptor add_weight_edge(id_t id, vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
         edges_size_type num_edges();
 
     protected:
         Fields vertex_fields();
         Fields edge_fields();
-
-        static void check_spu_resp(pair_t resp);
-
 
         bool is_vertex_id_valid(id_t id);
 

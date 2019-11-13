@@ -79,18 +79,14 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(value_t value) {
         auto id = get_free_vertex_id();
-        auto key = vertex_fields();
-        key[VERTEX_ID] = id;
-        _vertex_struct.insert(key, value);
-        inc_verteces_cnt();
-        return id;
+        return add_vertex(id, value, true);
     }
 
-    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id) {
-        return add_vertex(id, _graph_traits.default_vertex_value);
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id, bool safe) {
+        return add_vertex(id, _graph_traits.default_vertex_value, safe);
     }
 
-    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id, value_t value) {
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex(id_t id, value_t value, bool safe) {
         if (!is_vertex_id_valid(id)) {
             throw BadRequest("Invalid ID");
         }
@@ -98,9 +94,11 @@ namespace SPU_GRAPH
         auto key = vertex_fields();
         key[VERTEX_ID] = id;
 
-        auto conflict = _vertex_struct.search(key);
-        if (conflict.status == OK) {
-            throw Conflict();
+        if (!safe) {
+            auto conflict = _vertex_struct.search(key);
+            if (conflict.status == OK) {
+                throw Conflict();
+            }
         }
 
         _vertex_struct.insert(key, value);
@@ -197,19 +195,15 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::edge_descriptor SpuUltraGraph::add_weight_edge(weight_t weight) {
         auto id = get_free_edge_id();
-        auto key = edge_fields();
-        key[EDGE_ID] = id;
-        _edge_struct.insert(key, weight);
-        inc_edges_cnt();
-        return id;
+        return add_weight_edge(id, weight, true);
     }
 
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_edge(id_t id) {
-        return add_edge(id, _graph_traits.default_weight);
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_edge(id_t id, bool safe) {
+        return add_weight_edge(id, _graph_traits.default_weight, safe);
     }
 
 
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_edge(id_t id, weight_t weight) {
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_weight_edge(id_t id, weight_t weight, bool safe) {
         if (!is_edge_id_valid(id)) {
             throw BadRequest("Invalid ID");
         }
@@ -217,13 +211,60 @@ namespace SPU_GRAPH
         auto key = edge_fields();
         key[EDGE_ID] = id;
 
-        auto conflict = _edge_struct.search(key);
-        if (conflict.status == OK) {
-            throw Conflict();
+        if (!safe) {
+            auto conflict = _edge_struct.search(key);
+            if (conflict.status == OK) {
+                throw Conflict();
+            }
         }
 
         _edge_struct.insert(key, weight);
         inc_edges_cnt();
+        return id;
+    }
+
+    SpuUltraGraph::edge_descriptor
+    SpuUltraGraph::add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, bool safe) {
+        return add_weight_edge(u, v, _graph_traits.default_weight, safe);
+
+    }
+
+    SpuUltraGraph::edge_descriptor
+    SpuUltraGraph::add_weight_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v,
+                                   weight_t weight, bool safe) {
+        auto id = get_free_edge_id();
+        if (!safe && (!has_vertex(u) || !has_vertex(v))) {
+            throw NotFound();
+        }
+        return add_weight_edge(id, u, v, weight, true);
+    }
+
+    SpuUltraGraph::edge_descriptor
+    SpuUltraGraph::add_edge(id_t id, SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, bool safe) {
+        return add_weight_edge(id, u, v, _graph_traits.default_weight, safe);
+    }
+
+    SpuUltraGraph::edge_descriptor
+    SpuUltraGraph::add_weight_edge(id_t id, SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v,
+                                   weight_t weight, bool safe) {
+        add_weight_edge(id, weight, safe);
+
+        if (!safe && (!has_vertex(u) || !has_vertex(v))) {
+            throw NotFound();
+        }
+
+        auto v_key = vertex_fields();
+        v_key[VERTEX_ID] = u;
+        v_key[WEIGHT] = weight;
+        v_key[EDGE_ID] = id;
+        _vertex_struct.insert(v_key, 0);
+
+        auto e_key = edge_fields();
+        e_key[INCIDENCE] = 1;
+        e_key[EDGE_ID] = id;
+        e_key[VERTEX_ID] = u;
+        _edge_struct.insert(e_key, 0);
+
         return id;
     }
 
@@ -296,5 +337,12 @@ namespace SPU_GRAPH
         auto cnt = num_edges();
         auto key = edge_fields();
         _edge_struct.insert(key, cnt + 1);
+    }
+
+    bool SpuUltraGraph::has_vertex(id_t id) {
+        auto key = vertex_fields();
+        key[VERTEX_ID] = key;
+        auto res = _vertex_struct.search(key);
+        return res.status == OK;
     }
 }
