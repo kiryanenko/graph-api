@@ -426,8 +426,23 @@ namespace SPU_GRAPH
     }
 
     void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v) {
-        auto u_key = vertex_fields(u);
-        auto v_key = vertex_fields(v);
+        auto u_vertex_key = vertex_fields(u);
+        auto v_vertex_key = vertex_fields(v, 1);
+        auto u_edge_key = edge_fields(0, 0, v);
+        auto v_edge_key = edge_fields(0, 1, u);
+        for (auto edge : parallel_edges(u, v)) {
+            u_vertex_key[EDGE_ID] = edge.first;
+            u_vertex_key[WEIGHT] = edge.second;
+            _vertex_struct.del(u_vertex_key);
+            v_vertex_key[EDGE_ID] = edge.first;
+            v_vertex_key[WEIGHT] = edge.second;
+            _vertex_struct.del(v_vertex_key);
+
+            u_edge_key[EDGE_ID] = edge.first;
+            _edge_struct.del(u_edge_key);
+            v_edge_key[EDGE_ID] = edge.first;
+            _edge_struct.del(v_edge_key);
+        }
     }
 
     SpuUltraGraph::ParallelEdges

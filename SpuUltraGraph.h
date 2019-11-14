@@ -101,7 +101,7 @@ namespace SPU_GRAPH
 
 
 
-        //////////////////// Итераторы /////////////////////////
+        //////////////////// Итераторы и контейнеры /////////////////////////
 
         class ParallelEdgesIterator :
                 public iterator_facade<
@@ -215,6 +215,15 @@ namespace SPU_GRAPH
     inline std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
         std::pair<SpuUltraGraph::edge_descriptor, bool> res(g.add_edge(u, v), true);
         return res;
+    }
+
+
+    inline void remove_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        g.remove_edge(u, v);
+    }
+
+    inline void remove_edge(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph &g) {
+        g.remove_edge(edge);
     }
 }
 
