@@ -29,37 +29,37 @@ namespace SPU_GRAPH
         }
 
         /* Search */
-        inline pair_t search(SPU::key_t key, flags_t flags = P_FLAG) {
+        inline pair_t search(SPU::key_t key, flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->search(key, flags));
         }
 
         /* Min */
-        inline pair_t min(flags_t flags = P_FLAG) {
+        inline pair_t min(flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->min(flags));
         }
 
         /* Max */
-        inline pair_t max(flags_t flags = P_FLAG) {
+        inline pair_t max(flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->max(flags));
         }
 
         /* Next */
-        inline pair_t next(SPU::key_t key, flags_t flags = P_FLAG) {
+        inline pair_t next(SPU::key_t key, flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->next(key, flags));
         }
 
         /* Prev */
-        inline pair_t prev(SPU::key_t key, flags_t flags = P_FLAG) {
+        inline pair_t prev(SPU::key_t key, flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->prev(key, flags));
         }
 
         /* NSM */
-        inline pair_t nsm(SPU::key_t key, flags_t flags = P_FLAG) {
+        inline pair_t nsm(SPU::key_t key, flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->nsm(key, flags));
         }
 
         /* NGR */
-        inline pair_t ngr(SPU::key_t key, flags_t flags = P_FLAG) {
+        inline pair_t ngr(SPU::key_t key, flags_t flags = P_FLAG) const {
             return check_spu_resp(_struct->ngr(key, flags));
         }
 

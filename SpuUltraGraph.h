@@ -46,7 +46,7 @@ namespace SPU_GRAPH
         Structure<> *vertex_struct = nullptr;
         Structure<> *edge_struct = nullptr;
 
-        inline size_t depth_sum() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_id_depth; }
+        inline size_t depth_sum() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_id_depth + 1; }
     };
 
 
@@ -99,7 +99,53 @@ namespace SPU_GRAPH
         /// Тип, используемый для представления числа исходящих ребер в графе
         typedef size_t degree_size_type;
 
-        //////////////////////////////////////////////////////////////
+
+
+        //////////////////// Итераторы /////////////////////////
+
+        class ParallelEdgesIterator :
+                public iterator_facade<
+                        ParallelEdgesIterator,
+                        std::pair<edge_descriptor, weight_t>,
+                        bidirectional_traversal_tag,
+                        std::pair<edge_descriptor, weight_t>>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_graph;
+            vertex_descriptor _u, _v;
+            id_t _edge;
+            weight_t _weight;
+
+        public:
+            ParallelEdgesIterator(const SpuUltraGraph *g, vertex_descriptor u, vertex_descriptor v,
+                    id_t edge=0, weight_t weight=0) : _graph(g), _u(u), _v(v), _edge(edge), _weight(weight) {}
+
+            std::pair<edge_descriptor, weight_t> dereference() const;
+            bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge; }
+            void increment();
+            void decrement();
+        };
+
+
+        class ParallelEdges
+        {
+            const SpuUltraGraph *_graph;
+            vertex_descriptor _u, _v;
+
+        public:
+            typedef SpuUltraGraph::ParallelEdgesIterator iterator;
+
+            ParallelEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor u,
+                          SpuUltraGraph::vertex_descriptor v) : _graph(g), _u(u), _v(v) {}
+
+            iterator begin() { iterator i(_graph, _u, _v); return ++i; }
+            iterator end() { return {_graph, _u, _v, (id_t) -1}; }
+        };
+
+        ////////////////////////////////////////////////////////
+
+
 
         explicit SpuUltraGraph(id_t graph_id = 0, SpuUltraGraphTraits spu_graph_traits = SpuUltraGraphTraits());
         ~SpuUltraGraph();
@@ -134,23 +180,25 @@ namespace SPU_GRAPH
         void remove_edge(edge_descriptor edge);
         void remove_edge(vertex_descriptor u, vertex_descriptor v);
 
-    protected:
-        Fields vertex_fields(id_t vertex = 0, uint8_t incidence=0, weight_t weight=0, id_t edge=0);
-        Fields edge_fields(id_t edge = 0, uint8_t incidence=0, id_t vertex=0);
+        ParallelEdges parallel_edges(vertex_descriptor u, vertex_descriptor v) const;
 
-        bool is_vertex_id_valid(id_t id);
+    protected:
+        Fields vertex_fields(id_t vertex = 0, uint8_t incidence=0, weight_t weight=0, id_t edge=0) const;
+        Fields edge_fields(id_t edge = 0, uint8_t incidence=0, id_t vertex=0) const;
+
+        bool is_vertex_id_valid(id_t id) const;
 
         id_t get_free_vertex_id();
-        id_t get_free_vertex_id(id_t min, id_t max);
+        id_t get_free_vertex_id(id_t min, id_t max) const;
 
         void inc_verteces_cnt();
         void dec_verteces_cnt();
 
 
-        bool is_edge_id_valid(id_t id);
+        bool is_edge_id_valid(id_t id) const;
 
         id_t get_free_edge_id();
-        id_t get_free_edge_id(id_t min, id_t max);
+        id_t get_free_edge_id(id_t min, id_t max) const;
 
         void inc_edges_cnt();
         void dec_edges_cnt();
