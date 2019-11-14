@@ -176,15 +176,22 @@ namespace SPU_GRAPH
     }
 
 
-    SpuUltraGraph::Fields SpuUltraGraph::vertex_fields() {
+    SpuUltraGraph::Fields SpuUltraGraph::vertex_fields(id_t vertex, uint8_t incidence, weight_t weight, id_t edge) {
         auto key = Fields(_vertex_fields_len);
         key[GRAPH_ID] = _graph_id;
+        key[INCIDENCE] = incidence;
+        key[VERTEX_ID] = vertex;
+        key[WEIGHT] = weight;
+        key[EDGE_ID] = edge;
         return key;
     }
 
-    SpuUltraGraph::Fields SpuUltraGraph::edge_fields() {
+    SpuUltraGraph::Fields SpuUltraGraph::edge_fields(id_t edge, uint8_t incidence, id_t vertex) {
         auto key = Fields(_edge_fields_len);
         key[GRAPH_ID] = _graph_id;
+        key[INCIDENCE] = incidence;
+        key[EDGE_ID] = edge;
+        key[VERTEX_ID] = vertex;
         return key;
     }
 
@@ -396,5 +403,30 @@ namespace SPU_GRAPH
             throw NotFound();
         }
         return res.value;
+    }
+
+    void SpuUltraGraph::remove_edge(SpuUltraGraph::edge_descriptor edge) {
+        try {
+            auto v_key = vertex_fields();
+            v_key[WEIGHT] = get_weight(edge);
+            v_key[EDGE_ID] = edge;
+
+            auto e_key = edge_fields(edge);
+            _edge_struct.del(e_key);
+
+            e_key = _edge_struct.ngr(e_key);
+            while ((id_t) e_key[GRAPH_ID] == _graph_id && (id_t) e_key[EDGE_ID] == edge) {
+                v_key[INCIDENCE] = e_key[INCIDENCE];
+                v_key[VERTEX_ID] = e_key[VERTEX_ID];
+                _vertex_struct.del(v_key);
+                _edge_struct.del(e_key);
+                e_key = _edge_struct.ngr(e_key);
+            }
+        } catch (NotFound &e) {}
+    }
+
+    void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v) {
+        auto u_key = vertex_fields(u);
+        auto v_key = vertex_fields(v);
     }
 }

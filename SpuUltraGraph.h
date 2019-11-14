@@ -113,6 +113,7 @@ namespace SPU_GRAPH
 
         vertices_size_type num_vertices();
 
+
         edge_descriptor add_edge();
         edge_descriptor add_edge(id_t id, bool safe=false);
         edge_descriptor add_edge(vertex_descriptor u, vertex_descriptor v, bool safe=false);
@@ -130,9 +131,12 @@ namespace SPU_GRAPH
 
         edges_size_type num_edges();
 
+        void remove_edge(edge_descriptor edge);
+        void remove_edge(vertex_descriptor u, vertex_descriptor v);
+
     protected:
-        Fields vertex_fields();
-        Fields edge_fields();
+        Fields vertex_fields(id_t vertex = 0, uint8_t incidence=0, weight_t weight=0, id_t edge=0);
+        Fields edge_fields(id_t edge = 0, uint8_t incidence=0, id_t vertex=0);
 
         bool is_vertex_id_valid(id_t id);
 
