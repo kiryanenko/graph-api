@@ -422,6 +422,8 @@ namespace SPU_GRAPH
                 _edge_struct.del(e_key);
                 e_key = _edge_struct.ngr(e_key);
             }
+
+            dec_edges_cnt();
         } catch (NotFound &e) {}
     }
 
