@@ -122,7 +122,7 @@ namespace SPU_GRAPH
                     id_t edge=0, weight_t weight=0) : _graph(g), _u(u), _v(v), _edge(edge), _weight(weight) {}
 
             std::pair<edge_descriptor, weight_t> dereference() const;
-            bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge; }
+            bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge && _weight == other._weight; }
             void increment();
             void decrement();
         };
@@ -140,7 +140,66 @@ namespace SPU_GRAPH
                           SpuUltraGraph::vertex_descriptor v) : _graph(g), _u(u), _v(v) {}
 
             iterator begin() { iterator i(_graph, _u, _v); return ++i; }
-            iterator end() { return {_graph, _u, _v, (id_t) -1}; }
+            iterator end() { return {_graph, _u, _v, 0}; }
+        };
+
+
+
+        class AdjacentEdgesIterator :
+                public iterator_facade<
+                        AdjacentEdgesIterator,
+                        std::pair<edge_descriptor, weight_t>,
+                        bidirectional_traversal_tag,
+                        std::pair<edge_descriptor, weight_t>>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_g;
+            uint8_t _incidence;
+            vertex_descriptor _v;
+            id_t _edge;
+            weight_t _weight;
+
+        public:
+            AdjacentEdgesIterator(const SpuUltraGraph *g, uint8_t incidence = 0, vertex_descriptor v = 0,
+                    id_t edge=0, weight_t weight=0) : _g(g), _incidence(incidence), _v(v), _edge(edge), _weight(weight) {}
+
+            std::pair<edge_descriptor, weight_t> dereference() const { return {_edge, _weight}; }
+            bool equal(const AdjacentEdgesIterator& other) const;
+            void increment();
+            void decrement();
+        };
+
+
+        class OutEdges
+        {
+            const SpuUltraGraph *_g;
+            vertex_descriptor _v;
+
+        public:
+            typedef SpuUltraGraph::AdjacentEdgesIterator iterator;
+
+            OutEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor u,
+                     SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
+
+            iterator begin() { iterator i(_g, 1, _v); return ++i; }
+            iterator end() { return {_g, 1, _v, (id_t) -1, (weight_t) -1}; }
+        };
+
+
+        class InEdges
+        {
+            const SpuUltraGraph *_g;
+            vertex_descriptor _v;
+
+        public:
+            typedef SpuUltraGraph::AdjacentEdgesIterator iterator;
+
+            InEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor u,
+                    SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
+
+            iterator begin() { iterator i(_g, 0, _v); return ++i; }
+            iterator end() { return {_g, 0=-, _v, (id_t) -1, (weight_t) -1}; }
         };
 
         ////////////////////////////////////////////////////////
@@ -158,6 +217,8 @@ namespace SPU_GRAPH
         bool has_vertex(id_t id);
 
         vertices_size_type num_vertices();
+
+        void clear_vertex(vertex_descriptor v);
 
 
         edge_descriptor add_edge();
@@ -212,9 +273,9 @@ namespace SPU_GRAPH
         return g.add_vertex();
     }
 
-    inline std::pair<SpuUltraGraph::edge_descriptor, bool> add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
-        std::pair<SpuUltraGraph::edge_descriptor, bool> res(g.add_edge(u, v), true);
-        return res;
+    inline std::pair<SpuUltraGraph::edge_descriptor, bool>
+    add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        return {g.add_edge(u, v), true};
     }
 
 
