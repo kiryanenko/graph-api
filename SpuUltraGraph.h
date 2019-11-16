@@ -183,7 +183,9 @@ namespace SPU_GRAPH
                      SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
 
             iterator begin() { iterator i(_g, 1, _v); return ++i; }
-            iterator end() { return {_g, 1, _v, (id_t) -1, (weight_t) -1}; }
+            iterator end() { return {_g, 1, _v,
+                                     _g->_vertex_fields_len.fieldMask(EDGE_ID),
+                                     _g->_vertex_fields_len.fieldMask(WEIGHT)}; }
         };
 
 
@@ -199,7 +201,9 @@ namespace SPU_GRAPH
                     SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
 
             iterator begin() { iterator i(_g, 0, _v); return ++i; }
-            iterator end() { return {_g, 0=-, _v, (id_t) -1, (weight_t) -1}; }
+            iterator end() { return {_g, 0, _v,
+                                     _g->_vertex_fields_len.fieldMask(EDGE_ID),
+                                     _g->_vertex_fields_len.fieldMask(WEIGHT)}; }
         };
 
         ////////////////////////////////////////////////////////
@@ -255,6 +259,11 @@ namespace SPU_GRAPH
         void inc_verteces_cnt();
         void dec_verteces_cnt();
 
+        void inc_out_degree(vertex_descriptor v, size_t val = 1);
+        void dec_out_degree(vertex_descriptor v, size_t val = 1);
+        void inc_in_degree(vertex_descriptor v, size_t val = 1);
+        void dec_in_degree(vertex_descriptor v, size_t val = 1);
+
 
         bool is_edge_id_valid(id_t id) const;
 
@@ -263,6 +272,11 @@ namespace SPU_GRAPH
 
         void inc_edges_cnt();
         void dec_edges_cnt();
+
+        void inc_target_cnt(edge_descriptor e, size_t val = 1);
+        void dec_target_cnt(edge_descriptor e, size_t val = 1);
+        void inc_source_cnt(edge_descriptor e, size_t val = 1);
+        void dec_source_cnt(edge_descriptor e, size_t val = 1);
 
         void add_target(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
         void add_source(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
