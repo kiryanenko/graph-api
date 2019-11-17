@@ -21,30 +21,53 @@ namespace SPU_GRAPH {
         friend class iterator_core_access;
 
         const StructureDecorator *_s;
-        SPU::key_t _key;
-        pair_t _resp = {0, 0, 0xFF};
+        pair_t _pair;
+        SPU::key_t _max;
 
     public:
-        StructureIterator(const StructureDecorator *structure, SPU::key_t key) : _s(structure), _key(key) {}
+        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t max=0) :
+            _s(structure), _pair({key, 0, 0xFF}), _max(max) {}
 
         SPU::key_t dereference() {
-            if (_resp.status == 0xFF) {
-                _resp = _s->search(_key);
+            if (_pair.status == 0xFF) {
+                _pair = _s->search(_pair.key);
             }
-            return _resp;
+            return _pair;
         }
 
         bool equal(const StructureIterator &other) const {
-            return _key == other._key;
+            return _pair.key == other._pair.key;
         }
 
         void increment() {
-            _resp = _s->ngr(_key);
+            _pair = _s->ngr(_pair.key);
+
+            if (_max > data_t(0) && (_pair.key >= _max || _pair.status == ERR)) {
+                _pair.key = _max;
+                _pair.status = ERR;
+                return;
+            }
         }
 
         void decrement() {
-            _resp = _s->nsm(_key);
+            _pair = _s->nsm(_pair.key);
         }
+    };
+
+
+    /// Контейнер, кот. содержит ключи внутри диапозона start..end, start и end не входят в диаопозон.
+    class StructureRange {
+        const StructureDecorator *_s;
+        SPU::key_t _start, _end;
+
+    public:
+        typedef StructureIterator iterator;
+
+        StructureRange(const StructureDecorator *structure, SPU::key_t start, SPU::key_t end) :
+            _s(structure), _start(start), _end(end) {}
+
+        iterator begin() { iterator i(_s, _start, _end); return ++i; }
+        iterator end() { return {_s, _end, _end}; }
     };
 }
 

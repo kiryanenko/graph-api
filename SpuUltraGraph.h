@@ -10,6 +10,7 @@
 #include <structure.hpp>
 #include "exceptions.h"
 #include "StructureDecorator.h"
+#include "StructureIterator.h"
 
 
 #define KEY_DEPTH 64
