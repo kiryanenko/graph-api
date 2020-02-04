@@ -50,6 +50,7 @@ namespace SPU_GRAPH {
             if (_max > data_t(0) && (_pair.key > _max || _pair.status == ERR)) {
                 _pair.key = _max;
                 _pair.status = ERR;
+                _pair.value = 0;
                 return;
             }
         }
