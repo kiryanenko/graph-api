@@ -1,0 +1,67 @@
+//
+// Created by a.kiryanenko on 2020-02-04.
+//
+
+#include "../SpuUltraGraph.h"
+
+
+
+#include <boost/test/unit_test.hpp>
+
+
+BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
+
+
+    using namespace SPU_GRAPH;
+    using namespace boost;
+
+
+    struct Fixture
+    {
+        Fixture() : structure() {}
+
+        ~Fixture() = default;
+
+        StructureDecorator structure;
+    };
+
+
+    BOOST_FIXTURE_TEST_CASE(test_structure_iterator, Fixture)
+    {
+        structure.insert(0, 10);
+        structure.insert(1, 11);
+        structure.insert(2, 22);
+        structure.insert(3, 33);
+        structure.insert(5, 55);
+        structure.insert(7, 77);
+
+        int test05_keys[] = {0, 1, 2, 3, 5};
+        int test05_values[] = {10, 11, 22, 33, 55};
+        int i = 0;
+        for (pair_t p: StructureRange(&structure, 0, 5)) {
+            int v = p.value;
+            BOOST_CHECK_EQUAL((int) p.key, test05_keys[i]);
+            BOOST_CHECK_EQUAL(v, test05_values[i]);
+            ++i;
+            BOOST_CHECK(i < 5);
+        }
+
+        int test49_keys[] = {5, 7};
+        int test49_values[] = {55, 77};
+        i = 0;
+        for (pair_t p: StructureRange(&structure, 4, 9)) {
+            int v = p.value;
+            BOOST_CHECK_EQUAL((int) p.key, test49_keys[i]);
+            BOOST_CHECK_EQUAL(v, test49_values[i]);
+            ++i;
+            BOOST_CHECK(i < 2);
+        }
+
+        i = 0;
+        for (pair_t p: StructureRange(&structure, 8, 9)) {
+            ++i;
+        }
+        BOOST_CHECK_EQUAL(i, 0);
+    }
+
+BOOST_AUTO_TEST_SUITE_END()

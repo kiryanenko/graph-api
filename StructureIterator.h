@@ -11,6 +11,8 @@
 namespace SPU_GRAPH {
     using namespace boost;
 
+#define INIT_STATUS 0xCC
+
     class StructureIterator :
             public iterator_facade<
                     StructureIterator,
@@ -21,28 +23,31 @@ namespace SPU_GRAPH {
         friend class iterator_core_access;
 
         const StructureDecorator *_s;
-        pair_t _pair;
+        SPU::pair_t _pair;
         SPU::key_t _max;
 
     public:
-        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t max=0) :
-            _s(structure), _pair({key, 0, 0xFF}), _max(max) {}
-
-        SPU::key_t dereference() {
-            if (_pair.status == 0xFF) {
+        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t max=0, SPU::status_t status=INIT_STATUS) :
+            _s(structure), _pair({key, 0, status}), _max(max) {
+            if (_pair.status == INIT_STATUS) {
                 _pair = _s->search(_pair.key);
             }
+        }
+
+        SPU::pair_t dereference() const {
             return _pair;
         }
 
         bool equal(const StructureIterator &other) const {
-            return _pair.key == other._pair.key;
+            if (_pair.status == INIT_STATUS) **this;
+            if (other._pair.status == INIT_STATUS) *other;
+            return (_pair.status == ERR && other._pair.status == ERR) || _pair.key == other._pair.key;
         }
 
         void increment() {
             _pair = _s->ngr(_pair.key);
 
-            if (_max > data_t(0) && (_pair.key >= _max || _pair.status == ERR)) {
+            if (_max > data_t(0) && (_pair.key > _max || _pair.status == ERR)) {
                 _pair.key = _max;
                 _pair.status = ERR;
                 return;
@@ -55,7 +60,7 @@ namespace SPU_GRAPH {
     };
 
 
-    /// Контейнер, кот. содержит ключи внутри диапозона start..end, start и end не входят в диаопозон.
+    /// Контейнер, кот. содержит ключи в диапозоне [start..end], start и end входят в диаопозон.
     class StructureRange {
         const StructureDecorator *_s;
         SPU::key_t _start, _end;
@@ -66,8 +71,8 @@ namespace SPU_GRAPH {
         StructureRange(const StructureDecorator *structure, SPU::key_t start, SPU::key_t end) :
             _s(structure), _start(start), _end(end) {}
 
-        iterator begin() { iterator i(_s, _start, _end); return ++i; }
-        iterator end() { return {_s, _end, _end}; }
+        iterator begin() { return {_s, _start, _end}; }
+        iterator end() { return {_s, _end, _end, ERR}; }
     };
 }
 

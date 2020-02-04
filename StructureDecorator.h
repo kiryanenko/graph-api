@@ -17,6 +17,9 @@ namespace SPU_GRAPH
         Structure<> *_struct = nullptr;
 
     public:
+        StructureDecorator() : _struct(new Structure<>) {}
+        explicit StructureDecorator(Structure<> *structure) : _struct(structure) {}
+
         void set(Structure<> *structure) { _struct = structure; }
 
         inline status_t insert(SPU::key_t key, value_t value, flags_t flags = NO_FLAGS) {

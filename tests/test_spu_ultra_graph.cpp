@@ -4,9 +4,8 @@
 
 #include "../SpuUltraGraph.h"
 
-
 #define BOOST_TEST_MODULE testSpuUltraGraph
-#define BOOST_TEST_MAIN
+
 #include <boost/test/unit_test.hpp>
 #include <boost/graph/graph_concepts.hpp>
 //#include <boost/graph/graph_test.hpp>

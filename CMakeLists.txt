@@ -28,7 +28,8 @@ find_package (Boost REQUIRED COMPONENTS unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(TEST test_graph_api)
-add_executable(${TEST} tests/test_spu_ultra_graph.cpp)
+file(GLOB_RECURSE graph_api_tests_sources tests/*.cpp)
+add_executable(${TEST} ${graph_api_tests_sources})
 target_link_libraries(${TEST} graph_api ${Boost_LIBRARIES})
 
 enable_testing()
