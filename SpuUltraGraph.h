@@ -104,7 +104,7 @@ namespace SPU_GRAPH
 
         //////////////////// Итераторы и контейнеры /////////////////////////
 
-        /// Итератор по параллельным ребрам между вершинами u и v
+        /// Итератор по параллельным ребрам от вершины from к to
         class ParallelEdgesIterator :
                 public iterator_facade<
                         ParallelEdgesIterator,
@@ -115,35 +115,35 @@ namespace SPU_GRAPH
             friend class iterator_core_access;
 
             const SpuUltraGraph *_graph;
-            vertex_descriptor _u, _v;
+            vertex_descriptor _from, _to;
             id_t _edge;
             weight_t _weight;
 
         public:
-            ParallelEdgesIterator(const SpuUltraGraph *g, vertex_descriptor u, vertex_descriptor v,
-                    id_t edge=0, weight_t weight=0) : _graph(g), _u(u), _v(v), _edge(edge), _weight(weight) {}
+            ParallelEdgesIterator(const SpuUltraGraph *g, vertex_descriptor from, vertex_descriptor to,
+                    id_t edge=0, weight_t weight=0) : _graph(g), _from(from), _to(to), _edge(edge), _weight(weight) {}
 
             std::pair<edge_descriptor, weight_t> dereference() const;
-            bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge && _weight == other._weight; }
+            bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge; }
             void increment();
             void decrement();
         };
 
 
-        /// Контейнер параллельных ребер между вершинами u и v
+        /// Контейнер параллельных ребер от вершины from к to
         class ParallelEdges
         {
             const SpuUltraGraph *_graph;
-            vertex_descriptor _u, _v;
+            vertex_descriptor _from, _to;
 
         public:
             typedef SpuUltraGraph::ParallelEdgesIterator iterator;
 
-            ParallelEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor u,
-                          SpuUltraGraph::vertex_descriptor v) : _graph(g), _u(u), _v(v) {}
+            ParallelEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor from,
+                          SpuUltraGraph::vertex_descriptor v) : _graph(g), _from(from), _to(v) {}
 
-            iterator begin() { iterator i(_graph, _u, _v); return ++i; }
-            iterator end() { return {_graph, _u, _v, 0}; }
+            iterator begin() { iterator i(_graph, _from, _to); return ++i; }
+            iterator end() { return {_graph, _from, _to, 0}; }
         };
 
 
@@ -246,9 +246,11 @@ namespace SPU_GRAPH
         edges_size_type num_edges();
 
         void remove_edge(edge_descriptor edge);
-        void remove_edge(vertex_descriptor u, vertex_descriptor v);
+        /// Удаляются все соединения от вершины from к to.
+        /// Если ребро не содержит вершин, то оно полностью удаляется
+        void remove_edge(vertex_descriptor from, vertex_descriptor to);
 
-        ParallelEdges parallel_edges(vertex_descriptor u, vertex_descriptor v) const;
+        ParallelEdges parallel_edges(vertex_descriptor from, vertex_descriptor to) const;
 
     protected:
         Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, weight_t weight = 0, id_t edge = 0) const;
