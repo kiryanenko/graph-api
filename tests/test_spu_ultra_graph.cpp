@@ -80,4 +80,26 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
     }
 
 
+    BOOST_FIXTURE_TEST_CASE(test_remove_edge, Fixture)
+    {
+        auto e = graph.add_edge();
+        BOOST_CHECK_EQUAL(graph.num_edges(), 1);
+        graph.remove_edge(e);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 0);
+
+        graph.remove_edge(e);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 0);
+
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        auto e1 = graph.add_edge(v1, v2);
+        auto e2 = graph.add_edge(v1, v3);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 2);
+        graph.remove_edge(e1);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 1);
+        // TODO: проверить отсутствие соединения между v1 и v2
+    }
+
+
 BOOST_AUTO_TEST_SUITE_END()

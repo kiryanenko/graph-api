@@ -230,12 +230,12 @@ namespace SPU_GRAPH
 
         edge_descriptor add_edge();
         edge_descriptor add_edge(id_t id, bool safe=false);
-        edge_descriptor add_edge(vertex_descriptor u, vertex_descriptor v, bool safe=false);
-        edge_descriptor add_edge(id_t id, vertex_descriptor u, vertex_descriptor v, bool safe=false);
+        edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to, bool safe=false);
+        edge_descriptor add_edge(id_t id, vertex_descriptor from, vertex_descriptor to, bool safe=false);
         edge_descriptor add_weight_edge(weight_t weight);
         edge_descriptor add_weight_edge(id_t id, weight_t weight, bool safe=false);
-        edge_descriptor add_weight_edge(vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
-        edge_descriptor add_weight_edge(id_t id, vertex_descriptor u, vertex_descriptor v, weight_t weight, bool safe=false);
+        edge_descriptor add_weight_edge(vertex_descriptor from, vertex_descriptor to, weight_t weight, bool safe=false);
+        edge_descriptor add_weight_edge(id_t id, vertex_descriptor from, vertex_descriptor to, weight_t weight, bool safe=false);
 
         void add_target(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
         void add_source(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
@@ -283,8 +283,6 @@ namespace SPU_GRAPH
         void inc_edges_cnt();
         void dec_edges_cnt();
 
-
-
         void inc_target_cnt(edge_descriptor e, size_t val = 1);
         void dec_target_cnt(edge_descriptor e, size_t val = 1);
         void inc_source_cnt(edge_descriptor e, size_t val = 1);
@@ -300,8 +298,8 @@ namespace SPU_GRAPH
     }
 
     inline std::pair<SpuUltraGraph::edge_descriptor, bool>
-    add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
-        return {g.add_edge(u, v), true};
+    add_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, SpuUltraGraph &g) {
+        return {g.add_edge(from, to), true};
     }
 
 

@@ -232,48 +232,44 @@ namespace SPU_GRAPH
         }
 
         _edge_struct.insert(key, weight);
-
-        key[VERTEX_ID] = _vertex_fields_len.fieldMask(EDGE_ID);
-        _vertex_struct.insert(key, 0);
-
-        key[INCIDENCE] = 1;
-        _vertex_struct.insert(key, 0);
+        _edge_struct.insert(source_cnt_key(id), 0);
+        _edge_struct.insert(target_cnt_key(id), 0);
 
         inc_edges_cnt();
         return id;
     }
 
     SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, bool safe) {
-        return add_weight_edge(u, v, _graph_traits.default_weight, safe);
+    SpuUltraGraph::add_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, bool safe) {
+        return add_weight_edge(from, to, _graph_traits.default_weight, safe);
 
     }
 
     SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_weight_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v,
+    SpuUltraGraph::add_weight_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to,
                                    weight_t weight, bool safe) {
         auto id = get_free_edge_id();
-        if (!safe && (!has_vertex(u) || !has_vertex(v))) {
+        if (!safe && (!has_vertex(from) || !has_vertex(to))) {
             throw NotFound();
         }
-        return add_weight_edge(id, u, v, weight, true);
+        return add_weight_edge(id, from, to, weight, true);
     }
 
     SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_edge(id_t id, SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, bool safe) {
-        return add_weight_edge(id, u, v, _graph_traits.default_weight, safe);
+    SpuUltraGraph::add_edge(id_t id, SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, bool safe) {
+        return add_weight_edge(id, from, to, _graph_traits.default_weight, safe);
     }
 
     SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_weight_edge(id_t id, SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v,
+    SpuUltraGraph::add_weight_edge(id_t id, SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to,
                                    weight_t weight, bool safe) {
         add_weight_edge(id, weight, safe);
 
-        if (!safe && (!has_vertex(u) || !has_vertex(v))) {
+        if (!safe && (!has_vertex(from) || !has_vertex(to))) {
             throw NotFound();
         }
-        add_source(id, u, weight);
-        add_target(id, v, weight);
+        add_source(id, from, weight);
+        add_target(id, to, weight);
         return id;
     }
 
@@ -345,7 +341,7 @@ namespace SPU_GRAPH
     void SpuUltraGraph::dec_edges_cnt() {
         auto cnt = num_edges();
         auto key = edge_key();
-        _edge_struct.insert(key, cnt + 1);
+        _edge_struct.insert(key, cnt - 1);
     }
 
     bool SpuUltraGraph::has_vertex(id_t id) {
@@ -461,7 +457,7 @@ namespace SPU_GRAPH
             dec_edges_cnt();
             _edge_struct.del(target_cnt_key(edge));
             _edge_struct.del(source_cnt_key(edge));
-        } catch (NotFound &e) {}
+        } catch (exception &) {}
     }
 
     void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v) {
@@ -585,11 +581,11 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::max_vertex_id() const {
-        return _vertex_fields_len.fieldMask(VERTEX_ID);
+        return _vertex_fields_len.fieldMask(VERTEX_ID) - 1;
     }
 
     id_t SpuUltraGraph::max_edge_id() const {
-        return _edge_fields_len.fieldMask(EDGE_ID);
+        return _edge_fields_len.fieldMask(EDGE_ID) - 1;
     }
 
 
