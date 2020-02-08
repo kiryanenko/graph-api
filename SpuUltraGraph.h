@@ -104,6 +104,7 @@ namespace SPU_GRAPH
 
         //////////////////// Итераторы и контейнеры /////////////////////////
 
+        /// Итератор по параллельным ребрам между вершинами u и v
         class ParallelEdgesIterator :
                 public iterator_facade<
                         ParallelEdgesIterator,
@@ -129,6 +130,7 @@ namespace SPU_GRAPH
         };
 
 
+        /// Контейнер параллельных ребер между вершинами u и v
         class ParallelEdges
         {
             const SpuUltraGraph *_graph;
@@ -249,8 +251,15 @@ namespace SPU_GRAPH
         ParallelEdges parallel_edges(vertex_descriptor u, vertex_descriptor v) const;
 
     protected:
-        Fields vertex_fields(id_t vertex = 0, uint8_t incidence=0, weight_t weight=0, id_t edge=0) const;
-        Fields edge_fields(id_t edge = 0, uint8_t incidence=0, id_t vertex=0) const;
+        Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, weight_t weight = 0, id_t edge = 0) const;
+        Fields edge_key(id_t edge = 0, uint8_t incidence = 0, id_t vertex = 0) const;
+        Fields out_degree_key(vertex_descriptor v) const;
+        Fields in_degree_key(vertex_descriptor v) const;
+        Fields target_cnt_key(edge_descriptor e) const;
+        Fields source_cnt_key(edge_descriptor e) const;
+        id_t max_vertex_id() const;
+        id_t max_edge_id() const;
+
 
         bool is_vertex_id_valid(id_t id) const;
 
@@ -273,6 +282,8 @@ namespace SPU_GRAPH
 
         void inc_edges_cnt();
         void dec_edges_cnt();
+
+
 
         void inc_target_cnt(edge_descriptor e, size_t val = 1);
         void dec_target_cnt(edge_descriptor e, size_t val = 1);
