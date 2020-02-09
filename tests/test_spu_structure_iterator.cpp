@@ -43,8 +43,8 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
             BOOST_CHECK_EQUAL((int) p.key, test05_keys[i]);
             BOOST_CHECK_EQUAL(v, test05_values[i]);
             ++i;
-            BOOST_CHECK(i < 5);
         }
+        BOOST_CHECK_EQUAL(i, 5);
 
         int test49_keys[] = {5, 7};
         int test49_values[] = {55, 77};
@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
             BOOST_CHECK_EQUAL((int) p.key, test49_keys[i]);
             BOOST_CHECK_EQUAL(v, test49_values[i]);
             ++i;
-            BOOST_CHECK(i < 2);
         }
+        BOOST_CHECK_EQUAL(i, 2);
 
         i = 0;
         for (pair_t p: StructureRange(&structure, 8, 9)) {

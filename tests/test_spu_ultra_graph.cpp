@@ -122,8 +122,8 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
             BOOST_CHECK_EQUAL(edge.first, test_ids[i]);
             BOOST_CHECK_EQUAL(edge.second, test_weights[i]);
             ++i;
-            BOOST_CHECK(i < 2);
         }
+        BOOST_CHECK_EQUAL(i, 2);
     }
 
 
