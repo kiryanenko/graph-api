@@ -3,9 +3,6 @@
 //
 
 #include "../SpuUltraGraph.h"
-
-
-
 #include <boost/test/unit_test.hpp>
 
 

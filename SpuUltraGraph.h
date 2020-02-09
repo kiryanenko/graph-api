@@ -127,6 +127,9 @@ namespace SPU_GRAPH
             bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge; }
             void increment();
             void decrement();
+
+        private:
+            bool check_end(pair_t resp, SpuUltraGraph::vertex_descriptor vertex, uint8_t incidence);
         };
 
 
@@ -143,7 +146,7 @@ namespace SPU_GRAPH
                           SpuUltraGraph::vertex_descriptor v) : _graph(g), _from(from), _to(v) {}
 
             iterator begin() { iterator i(_graph, _from, _to); return ++i; }
-            iterator end() { return {_graph, _from, _to, 0}; }
+            iterator end() { return {_graph, _from, _to, _graph->max_edge_id(), _graph->max_weight()}; }
         };
 
 
@@ -264,6 +267,7 @@ namespace SPU_GRAPH
         Fields source_cnt_key(edge_descriptor e) const;
         id_t max_vertex_id() const;
         id_t max_edge_id() const;
+        id_t max_weight() const;
 
 
         bool is_vertex_id_valid(id_t id) const;

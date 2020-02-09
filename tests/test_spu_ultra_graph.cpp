@@ -126,5 +126,26 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         BOOST_CHECK_EQUAL(i, 2);
     }
 
+    BOOST_FIXTURE_TEST_CASE(test_decrement_parallel_edges_iterator, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        auto e12_1 = graph.add_weight_edge(101, v1, v2, (weight_t) 1);
+        auto e12_2 = graph.add_weight_edge(102, v1, v2, (weight_t) 2);
+        auto e21 = graph.add_edge(v2, v1);
+        auto e23 = graph.add_edge(v2, v3);
+        auto e32 = graph.add_edge(v3, v2);
+        auto e13 = graph.add_edge(v1, v3);
+        auto e31 = graph.add_edge(v3, v1);
+
+        auto iter = graph.parallel_edges(v1, v2).end();
+        iter--;
+        BOOST_CHECK_EQUAL((*iter).first, 102);
+        BOOST_CHECK_EQUAL((*iter).second, 2);
+        iter--;
+        BOOST_CHECK_EQUAL((*iter).first, 101);
+        BOOST_CHECK_EQUAL((*iter).second, 1);
+    }
 
 BOOST_AUTO_TEST_SUITE_END()
