@@ -252,6 +252,9 @@ namespace SPU_GRAPH
 
         ParallelEdges parallel_edges(vertex_descriptor from, vertex_descriptor to) const;
 
+        void print_vertex_struct() const;
+        void print_edge_struct() const;
+
     protected:
         Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, weight_t weight = 0, id_t edge = 0) const;
         Fields edge_key(id_t edge = 0, uint8_t incidence = 0, id_t vertex = 0) const;
