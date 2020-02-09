@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
         structure.insert(2, 22);
         structure.insert(3, 33);
         structure.insert(5, 55);
-        structure.insert(7, 77);
+        structure.insert(8, 88);
 
         int test05_keys[] = {0, 1, 2, 3, 5};
         int test05_values[] = {10, 11, 22, 33, 55};
@@ -46,8 +46,8 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
         }
         BOOST_CHECK_EQUAL(i, 5);
 
-        int test49_keys[] = {5, 7};
-        int test49_values[] = {55, 77};
+        int test49_keys[] = {5, 8};
+        int test49_values[] = {55, 88};
         i = 0;
         for (pair_t p: StructureRange(&structure, 4, 9)) {
             int v = p.value;
@@ -58,7 +58,13 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
         BOOST_CHECK_EQUAL(i, 2);
 
         i = 0;
-        for (pair_t p: StructureRange(&structure, 8, 9)) {
+        for (pair_t p: StructureRange(&structure, 6, 7)) {
+            ++i;
+        }
+        BOOST_CHECK_EQUAL(i, 0);
+
+        i = 0;
+        for (pair_t p: StructureRange(&structure, 9, 11)) {
             ++i;
         }
         BOOST_CHECK_EQUAL(i, 0);

@@ -33,6 +33,12 @@ namespace SPU_GRAPH {
                 _pair = _s->search(key);
                 if (_pair.status == ERR) {
                     _pair = _s->ngr(key);
+                    if (_pair.status == ERR || (max > data_t(0) && _pair.key > max)) {
+                        _pair.key = _max;
+                        _pair.status = ERR;
+                        _pair.value = 0;
+                        return;
+                    }
                 }
             }
         }
@@ -51,7 +57,7 @@ namespace SPU_GRAPH {
         void increment() {
             _pair = _s->ngr(_pair.key);
 
-            if (_max > data_t(0) && (_pair.key > _max || _pair.status == ERR)) {
+            if (_pair.status == ERR || (_max > data_t(0) && _pair.key > _max)) {
                 _pair.key = _max;
                 _pair.status = ERR;
                 _pair.value = 0;

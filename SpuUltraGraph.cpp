@@ -412,36 +412,47 @@ namespace SPU_GRAPH
     }
 
     void SpuUltraGraph::remove_edge(SpuUltraGraph::edge_descriptor edge) {
+        weight_t weight;
         try {
-            auto v_key = vertex_key(0, 0, get_weight(edge), edge);
-            auto e_key = edge_key();
-            auto start = edge_key(edge, 0, 1);
-            auto end = edge_key(edge, 0, max_vertex_id());
-            for (auto pair : StructureRange(&_edge_struct, start, end)) {
-                e_key = pair.key;
-                vertex_descriptor v = e_key[VERTEX_ID];
-                v_key[VERTEX_ID] =  v;
-                _vertex_struct.del(v_key);
-                _edge_struct.del(e_key);
-                dec_out_degree(v);
-            }
-            v_key[INCIDENCE] = 1;
-            start[INCIDENCE] = 1;
-            end[INCIDENCE] = 1;
-            for (auto pair : StructureRange(&_edge_struct, start, end)) {
-                e_key = pair.key;
-                vertex_descriptor v = e_key[VERTEX_ID];
-                v_key[VERTEX_ID] =  v;
-                _vertex_struct.del(v_key);
-                _edge_struct.del(e_key);
-                dec_in_degree(v);
-            }
+            weight = get_weight(edge);
+        } catch (exception &) {
+            return;
+        }
+        auto v_key = vertex_key(0, 0, weight, edge);
 
-            _edge_struct.del(edge_key(edge));
-            dec_edges_cnt();
-            _edge_struct.del(target_cnt_key(edge));
-            _edge_struct.del(source_cnt_key(edge));
-        } catch (exception &) {}
+        auto e_key = edge_key();
+        auto start = edge_key(edge, 0, 1);
+        auto end = edge_key(edge, 0, max_vertex_id());
+        print_edge_struct();
+        for (auto pair : StructureRange(&_edge_struct, start, end)) {
+            e_key = pair.key;
+            vertex_descriptor v = e_key[VERTEX_ID];
+            v_key[VERTEX_ID] =  v;
+            _vertex_struct.del(v_key);
+            _edge_struct.del(e_key);
+            try {
+                dec_out_degree(v);
+            } catch (exception &) {}
+        }
+
+        v_key[INCIDENCE] = 1;
+        start[INCIDENCE] = 1;
+        end[INCIDENCE] = 1;
+        for (auto pair : StructureRange(&_edge_struct, start, end)) {
+            e_key = pair.key;
+            vertex_descriptor v = e_key[VERTEX_ID];
+            v_key[VERTEX_ID] =  v;
+            _vertex_struct.del(v_key);
+            _edge_struct.del(e_key);
+            try {
+                dec_in_degree(v);
+            } catch (exception &) {}
+        }
+
+        _edge_struct.del(edge_key(edge));
+        dec_edges_cnt();
+        _edge_struct.del(target_cnt_key(edge));
+        _edge_struct.del(source_cnt_key(edge));
     }
 
     /// Удаляются все соединения от вершины from к to.
