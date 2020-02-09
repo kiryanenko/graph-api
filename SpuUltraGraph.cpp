@@ -661,17 +661,17 @@ namespace SPU_GRAPH
         to_key = resp.key;
 
         while (from_key[EDGE_ID] != to_key[EDGE_ID]) {
-            if (from_key[WEIGHT] > to_key[WEIGHT]
+            if (from_key[WEIGHT] < to_key[WEIGHT]
                 || (from_key[WEIGHT] == to_key[WEIGHT] && from_key[EDGE_ID] > to_key[EDGE_ID])) {
                 to_key[WEIGHT] = from_key[WEIGHT];
                 to_key[EDGE_ID] = from_key[EDGE_ID];
-                resp = _graph->_vertex_struct.nsm(to_key - 1);
+                resp = _graph->_vertex_struct.nsm(to_key + 1);
                 if (check_end(resp, _to, 1)) return;
                 to_key = resp.key;
             } else {
                 from_key[WEIGHT] = to_key[WEIGHT];
                 from_key[EDGE_ID] = to_key[EDGE_ID];
-                resp = _graph->_vertex_struct.nsm(from_key - 1);
+                resp = _graph->_vertex_struct.nsm(from_key + 1);
                 if (check_end(resp, _from, 0)) return;
                 from_key = resp.key;
             }
