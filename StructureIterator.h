@@ -30,15 +30,19 @@ namespace SPU_GRAPH {
         StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t max=0, SPU::status_t status=INIT_STATUS) :
             _s(structure), _pair({key, 0, status}), _max(max) {
             if (_pair.status == INIT_STATUS) {
-                _pair = _s->search(key);
-                if (_pair.status == ERR) {
-                    _pair = _s->ngr(key);
-                    if (_pair.status == ERR || (max > data_t(0) && _pair.key > max)) {
-                        _pair.key = _max;
-                        _pair.status = ERR;
-                        _pair.value = 0;
-                        return;
+                if (key == data_t(0)) {
+                    _pair = _s->search(key);
+                    if (_pair.status == ERR) {
+                        _pair = _s->ngr(key);
                     }
+                } else {
+                    _pair = _s->ngr(key - 1);
+                }
+                if (_pair.status == ERR || (max > data_t(0) && _pair.key > max)) {
+                    _pair.key = _max;
+                    _pair.status = ERR;
+                    _pair.value = 0;
+                    return;
                 }
             }
         }
