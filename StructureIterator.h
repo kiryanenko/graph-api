@@ -24,11 +24,11 @@ namespace SPU_GRAPH {
 
         const StructureDecorator *_s;
         SPU::pair_t _pair;
-        SPU::key_t _max;
+        SPU::key_t _end;
 
     public:
-        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t max=0, SPU::status_t status=INIT_STATUS) :
-            _s(structure), _pair({key, 0, status}), _max(max) {
+        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t end=0, SPU::status_t status=INIT_STATUS) :
+                _s(structure), _pair({key, 0, status}), _end(end) {
             if (_pair.status == INIT_STATUS) {
                 if (key == data_t(0)) {
                     _pair = _s->search(key);
@@ -38,8 +38,8 @@ namespace SPU_GRAPH {
                 } else {
                     _pair = _s->ngr(key - 1);
                 }
-                if (_pair.status == ERR || (max > data_t(0) && _pair.key > max)) {
-                    _pair.key = _max;
+                if (_pair.status == ERR || (end > data_t(0) && _pair.key > end)) {
+                    _pair.key = _end;
                     _pair.status = ERR;
                     _pair.value = 0;
                     return;
@@ -61,8 +61,8 @@ namespace SPU_GRAPH {
         void increment() {
             _pair = _s->ngr(_pair.key);
 
-            if (_pair.status == ERR || (_max > data_t(0) && _pair.key > _max)) {
-                _pair.key = _max;
+            if (_pair.status == ERR || (_end > data_t(0) && _pair.key > _end)) {
+                _pair.key = _end;
                 _pair.status = ERR;
                 _pair.value = 0;
                 return;

@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
     };
 
 
-    BOOST_FIXTURE_TEST_CASE(test_structure_iterator, Fixture)
+    BOOST_FIXTURE_TEST_CASE(test_structure_container, Fixture)
     {
         structure.insert(0, 10);
         structure.insert(1, 11);
@@ -68,6 +68,14 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
             ++i;
         }
         BOOST_CHECK_EQUAL(i, 0);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_init_structure_iterator, Fixture) {
+        structure.insert(1, 11);
+        StructureIterator iter(&structure, 0);
+        auto pair = *iter;
+        BOOST_CHECK_EQUAL((int) pair.key, 1);
+        BOOST_CHECK_EQUAL((int) pair.value, 11);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
