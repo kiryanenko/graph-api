@@ -456,7 +456,7 @@ namespace SPU_GRAPH
     }
 
     /// Удаляются все соединения от вершины from к to.
-    /// Если ребро не содержит вершин, то оно полностью удаляется
+    /// Само ребро НЕ удаляется
     void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to) {
         auto from_vertex_key = vertex_key(from);
         auto to_vertex_key = vertex_key(to, 1);
@@ -464,22 +464,35 @@ namespace SPU_GRAPH
         auto to_edge_key = edge_key(0, 1, to);
         size_t removed_edges_cnt = 0;
         for (auto edge : parallel_edges(from, to)) {
-            from_vertex_key[EDGE_ID] = edge.first;
-            from_vertex_key[WEIGHT] = edge.second;
+            auto edge_id = edge.first;
+            auto weight = edge.second;
+
+            from_vertex_key[EDGE_ID] = edge_id;
+            from_vertex_key[WEIGHT] = weight;
             _vertex_struct.del(from_vertex_key);
-            to_vertex_key[EDGE_ID] = edge.first;
-            to_vertex_key[WEIGHT] = edge.second;
+            to_vertex_key[EDGE_ID] = edge_id;
+            to_vertex_key[WEIGHT] = weight;
             _vertex_struct.del(to_vertex_key);
             removed_edges_cnt++;
 
-            from_edge_key[EDGE_ID] = edge.first;
+            from_edge_key[EDGE_ID] = edge_id;
             _edge_struct.del(from_edge_key);
-            to_edge_key[EDGE_ID] = edge.first;
-            _edge_struct.del(to_edge_key);
+            try {
+                dec_source_cnt(edge_id);
+            } catch (NotFound &) {}
 
+            to_edge_key[EDGE_ID] = edge_id;
+            _edge_struct.del(to_edge_key);
+            try {
+                dec_target_cnt(edge_id);
+            } catch (NotFound &) {}
         }
-        dec_out_degree(from, removed_edges_cnt);
-        dec_in_degree(to, removed_edges_cnt);
+        try {
+            dec_out_degree(from, removed_edges_cnt);
+        } catch (NotFound &) {}
+        try {
+            dec_in_degree(to, removed_edges_cnt);
+        } catch (NotFound &) {}
     }
 
     SpuUltraGraph::ParallelEdges

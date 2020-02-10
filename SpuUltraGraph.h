@@ -254,7 +254,7 @@ namespace SPU_GRAPH
 
         void remove_edge(edge_descriptor edge);
         /// Удаляются все соединения от вершины from к to.
-        /// Если ребро не содержит вершин, то оно полностью удаляется
+        /// Само ребро НЕ удаляется
         void remove_edge(vertex_descriptor from, vertex_descriptor to);
 
         ParallelEdges parallel_edges(vertex_descriptor from, vertex_descriptor to) const;
