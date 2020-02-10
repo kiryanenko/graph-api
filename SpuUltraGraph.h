@@ -36,10 +36,10 @@ namespace SPU_GRAPH
 
 
     struct SpuUltraGraphTraits {
-        size_t graph_id_depth = 3;
+        size_t graph_id_depth = 5;
         size_t vertex_id_depth = 28;
-        size_t edge_id_depth = 28;
-        size_t weight_id_depth = 4;
+        size_t edge_id_depth = 25;
+        size_t weight_depth = 5;
 
         data_t default_vertex_value = 0;
         data_t default_weight = 0;
@@ -47,7 +47,7 @@ namespace SPU_GRAPH
         Structure<> *vertex_struct = nullptr;
         Structure<> *edge_struct = nullptr;
 
-        inline size_t depth_sum() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_id_depth + 1; }
+        inline size_t depth_sum() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_depth + 1; }
     };
 
 
@@ -58,6 +58,7 @@ namespace SPU_GRAPH
 
         typedef SPU::Fields<SPU_STRUCTURE_ATTRS> Fields;
 
+        FieldsLength<SPU_STRUCTURE_ATTRS> _edge_id_fields_len;
         FieldsLength<SPU_STRUCTURE_ATTRS> _vertex_fields_len;
         FieldsLength<SPU_STRUCTURE_ATTRS> _edge_fields_len;
 
@@ -108,22 +109,21 @@ namespace SPU_GRAPH
         class ParallelEdgesIterator :
                 public iterator_facade<
                         ParallelEdgesIterator,
-                        std::pair<edge_descriptor, weight_t>,
+                        edge_descriptor,
                         bidirectional_traversal_tag,
-                        std::pair<edge_descriptor, weight_t>>
+                        edge_descriptor>
         {
             friend class iterator_core_access;
 
             const SpuUltraGraph *_graph;
             vertex_descriptor _from, _to;
             id_t _edge;
-            weight_t _weight;
 
         public:
             ParallelEdgesIterator(const SpuUltraGraph *g, vertex_descriptor from, vertex_descriptor to,
-                    id_t edge=0, weight_t weight=0) : _graph(g), _from(from), _to(to), _edge(edge), _weight(weight) {}
+                    id_t edge=0) : _graph(g), _from(from), _to(to), _edge(edge) {}
 
-            std::pair<edge_descriptor, weight_t> dereference() const;
+            edge_descriptor dereference() const;
             bool equal(const ParallelEdgesIterator& other) const { return _edge == other._edge; }
             void increment();
             void decrement();
@@ -146,7 +146,7 @@ namespace SPU_GRAPH
                           SpuUltraGraph::vertex_descriptor v) : _graph(g), _from(from), _to(v) {}
 
             iterator begin() { iterator i(_graph, _from, _to); return ++i; }
-            iterator end() { return {_graph, _from, _to, _graph->max_edge_id(), _graph->max_weight()}; }
+            iterator end() { return {_graph, _from, _to, _graph->max_edge_id()}; }
         };
 
 
@@ -237,15 +237,14 @@ namespace SPU_GRAPH
         edge_descriptor add_edge(id_t id, bool safe=false);
         edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to, bool safe=false);
         edge_descriptor add_edge(id_t id, vertex_descriptor from, vertex_descriptor to, bool safe=false);
-        edge_descriptor add_weight_edge(weight_t weight);
-        edge_descriptor add_weight_edge(id_t id, weight_t weight, bool safe=false);
-        edge_descriptor add_weight_edge(vertex_descriptor from, vertex_descriptor to, weight_t weight, bool safe=false);
-        edge_descriptor add_weight_edge(id_t id, vertex_descriptor from, vertex_descriptor to, weight_t weight, bool safe=false);
 
         void add_target(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
         void add_source(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
 
-        bool has_edge(id_t id);
+        bool has_edge(edge_descriptor id);
+
+        edge_descriptor get_edge_descriptor(id_t edge_id);
+        edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);
         weight_t get_weight(edge_descriptor edge);
 
         edges_size_type num_edges();
@@ -263,7 +262,7 @@ namespace SPU_GRAPH
         void print_edge_struct() const;
 
     protected:
-        Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, weight_t weight = 0, id_t edge = 0) const;
+        Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, id_t edge = 0) const;
         Fields edge_key(id_t edge = 0, uint8_t incidence = 0, id_t vertex = 0) const;
         Fields out_degree_key(vertex_descriptor v) const;
         Fields in_degree_key(vertex_descriptor v) const;
@@ -300,9 +299,6 @@ namespace SPU_GRAPH
         edges_size_type dec_target_cnt(edge_descriptor e, edges_size_type val = 1);
         edges_size_type inc_source_cnt(edge_descriptor e, edges_size_type val = 1);
         edges_size_type dec_source_cnt(edge_descriptor e, edges_size_type val = 1);
-
-        void add_target(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
-        void add_source(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
     };
 
 

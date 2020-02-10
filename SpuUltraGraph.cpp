@@ -4,7 +4,7 @@
 
 #include "SpuUltraGraph.h"
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 
 
 using namespace std;
@@ -16,9 +16,12 @@ namespace SPU_GRAPH
     SpuUltraGraph::SpuUltraGraph(SPU_GRAPH::id_t graph_id, SPU_GRAPH::SpuUltraGraphTraits spu_graph_traits) :
             _graph_id(graph_id),
             _graph_traits(spu_graph_traits),
-            _vertex_fields_len({
+            _edge_id_fields_len({
                                        {EDGE_ID, 0},
                                        {WEIGHT, 0},
+                               }),
+            _vertex_fields_len({
+                                       {EDGE_ID, 0},
                                        {VERTEX_ID, 0},
                                        {INCIDENCE, 1},
                                        {GRAPH_ID, 0},
@@ -38,14 +41,17 @@ namespace SPU_GRAPH
             throw BadRequest("Key depth exceed SPU depth");
         }
 
+        auto edge_id_depth = _graph_traits.edge_id_depth + _graph_traits.weight_depth;
+        _edge_id_fields_len[EDGE_ID] = _graph_traits.edge_id_depth;
+        _edge_id_fields_len[WEIGHT] = _graph_traits.weight_depth;
+
         _vertex_fields_len[GRAPH_ID] = _graph_traits.graph_id_depth;
         _vertex_fields_len[VERTEX_ID] = _graph_traits.vertex_id_depth;
-        _vertex_fields_len[WEIGHT] = _graph_traits.weight_id_depth;
-        _vertex_fields_len[EDGE_ID] = _graph_traits.edge_id_depth;
+        _vertex_fields_len[EDGE_ID] = edge_id_depth;
 
         _edge_fields_len[GRAPH_ID] = _graph_traits.graph_id_depth;
         _edge_fields_len[VERTEX_ID] = _graph_traits.vertex_id_depth;
-        _edge_fields_len[EDGE_ID] = _graph_traits.edge_id_depth;
+        _edge_fields_len[EDGE_ID] = edge_id_depth;
 
         if (graph_id > (id_t) _vertex_fields_len.fieldMask(GRAPH_ID)) {
             throw BadRequest("graph_id exceed graph_id_depth");
@@ -103,7 +109,6 @@ namespace SPU_GRAPH
 
         _vertex_struct.insert(key, value);
 
-        key[WEIGHT] = _vertex_fields_len.fieldMask(WEIGHT);
         key[EDGE_ID] = _vertex_fields_len.fieldMask(EDGE_ID);
         _vertex_struct.insert(key, 0);
 
@@ -144,12 +149,10 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::get_free_vertex_id(id_t min, id_t max) const {
-        auto key = vertex_key(max, 0, 0, 1);
+        auto key = vertex_key(max, 0, 1);
         auto vertex = _vertex_struct.nsm(key);
         key = vertex.key;
         id_t id = key[VERTEX_ID];
-
-        data_t d = 0xFF;
 
         if (vertex.status == ERR || (id_t) key[GRAPH_ID] != _graph_id || id < min) {
             return min;
@@ -185,12 +188,11 @@ namespace SPU_GRAPH
     }
 
 
-    SpuUltraGraph::Fields SpuUltraGraph::vertex_key(id_t vertex, uint8_t incidence, weight_t weight, id_t edge) const {
+    SpuUltraGraph::Fields SpuUltraGraph::vertex_key(id_t vertex, uint8_t incidence, id_t edge) const {
         auto key = Fields(_vertex_fields_len);
         key[GRAPH_ID] = _graph_id;
         key[INCIDENCE] = incidence;
         key[VERTEX_ID] = vertex;
-        key[WEIGHT] = weight;
         key[EDGE_ID] = edge;
         return key;
     }
@@ -206,34 +208,18 @@ namespace SPU_GRAPH
 
 
     SpuUltraGraph::edge_descriptor SpuUltraGraph::add_edge() {
-        return add_weight_edge(_graph_traits.default_weight);
-    }
-
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_weight_edge(weight_t weight) {
         auto id = get_free_edge_id();
-        return add_weight_edge(id, weight, true);
+        return add_edge(id, true);
     }
 
     SpuUltraGraph::edge_descriptor SpuUltraGraph::add_edge(id_t id, bool safe) {
-        return add_weight_edge(id, _graph_traits.default_weight, safe);
-    }
-
-
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::add_weight_edge(id_t id, weight_t weight, bool safe) {
         if (!is_edge_id_valid(id)) {
             throw BadRequest("Invalid ID");
         }
-
-        auto key = edge_key(id);
-
-        if (!safe) {
-            auto conflict = _edge_struct.search(key);
-            if (conflict.status == OK) {
-                throw Conflict();
-            }
+        if (!safe && has_edge(id)) {
+            throw Conflict();
         }
 
-        _edge_struct.insert(key, weight);
         _edge_struct.insert(source_cnt_key(id), 0);
         _edge_struct.insert(target_cnt_key(id), 0);
 
@@ -243,35 +229,18 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::edge_descriptor
     SpuUltraGraph::add_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, bool safe) {
-        return add_weight_edge(from, to, _graph_traits.default_weight, safe);
-
-    }
-
-    SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_weight_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to,
-                                   weight_t weight, bool safe) {
         auto id = get_free_edge_id();
         if (!safe && (!has_vertex(from) || !has_vertex(to))) {
             throw NotFound();
         }
-        return add_weight_edge(id, from, to, weight, true);
+        return add_edge(id, from, to, true);
     }
 
     SpuUltraGraph::edge_descriptor
     SpuUltraGraph::add_edge(id_t id, SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, bool safe) {
-        return add_weight_edge(id, from, to, _graph_traits.default_weight, safe);
-    }
-
-    SpuUltraGraph::edge_descriptor
-    SpuUltraGraph::add_weight_edge(id_t id, SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to,
-                                   weight_t weight, bool safe) {
-        add_weight_edge(id, weight, safe);
-
-        if (!safe && (!has_vertex(from) || !has_vertex(to))) {
-            throw NotFound();
-        }
-        add_source(id, from, weight);
-        add_target(id, to, weight);
+        add_edge(id, safe);
+        add_source(id, from, safe);
+        add_target(id, to, safe);
         return id;
     }
 
@@ -293,15 +262,14 @@ namespace SPU_GRAPH
 
     id_t SpuUltraGraph::get_free_edge_id() {
         if (is_edge_id_valid(_free_edge_id)) {
-            auto key = edge_key();
-            key[EDGE_ID] = _free_edge_id;
+            auto key = source_cnt_key(_free_edge_id);
             auto is_free = _edge_struct.search(key);
             if (is_free.status == ERR) {
                 return _free_edge_id++;
             }
         }
 
-        auto id = get_free_edge_id(1, _edge_fields_len.fieldMask(EDGE_ID) - 1);
+        auto id = get_free_edge_id(1, max_edge_id());
         if (id == 0) {
             throw InsufficientStorage();
         }
@@ -310,8 +278,7 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::get_free_edge_id(id_t min, id_t max) const {
-        auto key_f = edge_key();
-        key_f[EDGE_ID] = max;
+        auto key_f = source_cnt_key(max);
         auto key = (data_t) key_f + 1;
 
         auto edge = _edge_struct.nsm(key);
@@ -353,9 +320,8 @@ namespace SPU_GRAPH
         return res.status == OK;
     }
 
-    bool SpuUltraGraph::has_edge(id_t id) {
-        auto key = edge_key();
-        key[EDGE_ID] = id;
+    bool SpuUltraGraph::has_edge(edge_descriptor id) {
+        auto key = source_cnt_key(id);
         auto res = _edge_struct.search(key);
         return res.status == OK;
     }
@@ -365,7 +331,14 @@ namespace SPU_GRAPH
         if (!safe && !has_vertex(vertex)) {
             throw NotFound();
         }
-        add_target(edge, vertex, get_weight(edge));
+
+        auto v_key = vertex_key(vertex, 1, edge);
+        _vertex_struct.insert(v_key);
+        auto e_key = edge_key(edge, 1, vertex);
+        _edge_struct.insert(e_key);
+
+        inc_in_degree(vertex);
+        inc_target_cnt(edge);
     }
 
     void
@@ -373,54 +346,23 @@ namespace SPU_GRAPH
         if (!safe && !has_vertex(vertex)) {
             throw NotFound();
         }
-        add_source(edge, vertex, get_weight(edge));
-    }
 
-    void SpuUltraGraph::add_target(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex,
-                                   weight_t weight) {
-        auto v_key = vertex_key(vertex, 1, weight, edge);
-        _vertex_struct.insert(v_key, 0);
-        auto e_key = edge_key(edge, 1, vertex);
-        _edge_struct.insert(e_key, 0);
-
-        inc_in_degree(vertex);
-        inc_target_cnt(edge);
-    }
-
-    void SpuUltraGraph::add_source(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex,
-                                   weight_t weight) {
-        auto v_key = vertex_key(vertex, 0, weight, edge);
-        _vertex_struct.insert(v_key, 0);
+        auto v_key = vertex_key(vertex, 0, edge);
+        _vertex_struct.insert(v_key);
         auto e_key = edge_key(edge, 0, vertex);
-        _edge_struct.insert(e_key, 0);
+        _edge_struct.insert(e_key);
 
         inc_out_degree(vertex);
         inc_source_cnt(edge);
     }
 
     weight_t SpuUltraGraph::get_weight(SpuUltraGraph::edge_descriptor edge) {
-        if (_vertex_fields_len[WEIGHT] == 0) {
-            return 0;
-        }
-
-        auto key = edge_key();
-        key[EDGE_ID] = edge;
-        auto res = _edge_struct.search(key);
-        if (res.status == ERR) {
-            throw NotFound();
-        }
-        return res.value;
+        auto fields = Fields(_edge_id_fields_len);
+        return fields[WEIGHT];
     }
 
     void SpuUltraGraph::remove_edge(SpuUltraGraph::edge_descriptor edge) {
-        weight_t weight;
-        try {
-            weight = get_weight(edge);
-        } catch (NotFound &) {
-            return;
-        }
-        auto v_key = vertex_key(0, 0, weight, edge);
-
+        auto v_key = vertex_key(0, 0, edge);
         auto e_key = edge_key();
         auto start = edge_key(edge, 0, 1);
         auto end = edge_key(edge, 0, max_vertex_id());
@@ -463,15 +405,10 @@ namespace SPU_GRAPH
         auto from_edge_key = edge_key(0, 0, from);
         auto to_edge_key = edge_key(0, 1, to);
         size_t removed_edges_cnt = 0;
-        for (auto edge : parallel_edges(from, to)) {
-            auto edge_id = edge.first;
-            auto weight = edge.second;
-
+        for (auto edge_id : parallel_edges(from, to)) {
             from_vertex_key[EDGE_ID] = edge_id;
-            from_vertex_key[WEIGHT] = weight;
             _vertex_struct.del(from_vertex_key);
             to_vertex_key[EDGE_ID] = edge_id;
-            to_vertex_key[WEIGHT] = weight;
             _vertex_struct.del(to_vertex_key);
             removed_edges_cnt++;
 
@@ -556,11 +493,11 @@ namespace SPU_GRAPH
 
 
     SpuUltraGraph::Fields SpuUltraGraph::out_degree_key(SpuUltraGraph::vertex_descriptor v) const {
-        return vertex_key(v, 0, _vertex_fields_len.fieldMask(WEIGHT), _vertex_fields_len.fieldMask(EDGE_ID));
+        return vertex_key(v, 0, _vertex_fields_len.fieldMask(EDGE_ID));
     }
 
     SpuUltraGraph::Fields SpuUltraGraph::in_degree_key(SpuUltraGraph::vertex_descriptor v) const {
-        return vertex_key(v, 1, _vertex_fields_len.fieldMask(WEIGHT), _vertex_fields_len.fieldMask(EDGE_ID));
+        return vertex_key(v, 1, _vertex_fields_len.fieldMask(EDGE_ID));
     }
 
     SpuUltraGraph::Fields SpuUltraGraph::target_cnt_key(SpuUltraGraph::edge_descriptor e) const {
@@ -576,36 +513,36 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::max_edge_id() const {
+        auto d = _edge_fields_len.fieldMask(EDGE_ID);
         return _edge_fields_len.fieldMask(EDGE_ID) - 1;
     }
 
     id_t SpuUltraGraph::max_weight() const {
-        return _vertex_fields_len.fieldMask(WEIGHT);
+        return _edge_id_fields_len.fieldMask(WEIGHT);
     }
 
 
     void SpuUltraGraph::print_vertex_struct() const {
         cout << "Vertex Structure" << endl;
-        cout << " VERTEX_ID INCIDENCE WEIGHT    EDGE_ID |      VALUE" << endl;
-        auto last_key = vertex_key(_vertex_fields_len.fieldMask(VERTEX_ID), 1,
-                                   _vertex_fields_len.fieldMask(WEIGHT), _vertex_fields_len.fieldMask(EDGE_ID));
+        cout << "INCIDENCE  VERTEX_ID    EDGE_ID |      VALUE" << endl;
+        auto last_key = vertex_key(_vertex_fields_len.fieldMask(VERTEX_ID), 1, _vertex_fields_len.fieldMask(EDGE_ID));
         auto key = vertex_key();
         for (auto pair : StructureRange(&_vertex_struct, 0, last_key)) {
             key = pair.key;
-            printf("%10d %9d %6d %10d | %10d\n", (int) key[VERTEX_ID], (int) key[INCIDENCE], (int) key[WEIGHT], (int) key[EDGE_ID], (int) pair.value);
+            printf("%9d %10d %10d | %10d\n", (int) key[INCIDENCE], (int) key[VERTEX_ID], (int) key[EDGE_ID], (int) pair.value);
         }
         cout << endl;
     }
 
     void SpuUltraGraph::print_edge_struct() const {
         cout << "Edge Structure:" << endl;
-        cout << "   EDGE_ID INCIDENCE  VERTEX_ID |      VALUE" << endl;
+        cout << "INCIDENCE    EDGE_ID  VERTEX_ID |      VALUE" << endl;
         auto last_key = edge_key(_edge_fields_len.fieldMask(EDGE_ID), 1,
                 _edge_fields_len.fieldMask(VERTEX_ID));
         auto key = edge_key();
         for (auto pair : StructureRange(&_edge_struct, 0, last_key)) {
             key = pair.key;
-            printf("%10d %9d %10d | %10d\n", (int) key[EDGE_ID], (int) key[INCIDENCE], (int) key[VERTEX_ID], (int) pair.value);
+            printf("%9d %10d %10d | %10d\n", (int) key[INCIDENCE], (int) key[EDGE_ID], (int) key[VERTEX_ID], (int) pair.value);
         }
         cout << endl;
     }
@@ -646,11 +583,24 @@ namespace SPU_GRAPH
         return res.value;
     }
 
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id) {
+        auto fields = Fields(_edge_id_fields_len);
+        fields[EDGE_ID] = edge_id;
+        fields[WEIGHT] = _graph_traits.default_weight;
+        return data_t(fields);
+    }
+
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id, weight_t weight) {
+        auto fields = Fields(_edge_id_fields_len);
+        fields[EDGE_ID] = edge_id;
+        fields[WEIGHT] = weight;
+        return data_t(fields);
+    }
 
 
     void SpuUltraGraph::ParallelEdgesIterator::increment() {
-        auto from_key = _graph->vertex_key(_from, 0, _weight, _edge);
-        auto to_key = _graph->vertex_key(_to, 1, _weight, _edge);
+        auto from_key = _graph->vertex_key(_from, 0, _edge);
+        auto to_key = _graph->vertex_key(_to, 1, _edge);
 
         auto resp = _graph->_vertex_struct.ngr(from_key);
         if (check_end(resp, _from, 0)) return;
@@ -661,15 +611,12 @@ namespace SPU_GRAPH
         to_key = resp.key;
 
         while (from_key[EDGE_ID] != to_key[EDGE_ID]) {
-            if (from_key[WEIGHT] > to_key[WEIGHT]
-                || (from_key[WEIGHT] == to_key[WEIGHT] && from_key[EDGE_ID] > to_key[EDGE_ID])) {
-                to_key[WEIGHT] = from_key[WEIGHT];
+            if (from_key[EDGE_ID] > to_key[EDGE_ID]) {
                 to_key[EDGE_ID] = from_key[EDGE_ID];
                 resp = _graph->_vertex_struct.ngr(to_key - 1);
                 if (check_end(resp, _to, 1)) return;
                 to_key = resp.key;
             } else {
-                from_key[WEIGHT] = to_key[WEIGHT];
                 from_key[EDGE_ID] = to_key[EDGE_ID];
                 resp = _graph->_vertex_struct.ngr(from_key - 1);
                 if (check_end(resp, _from, 0)) return;
@@ -678,12 +625,11 @@ namespace SPU_GRAPH
         }
 
         _edge = from_key[EDGE_ID];
-        _weight = from_key[WEIGHT];
     }
 
     void SpuUltraGraph::ParallelEdgesIterator::decrement() {
-        auto from_key = _graph->vertex_key(_from, 0, _weight, _edge);
-        auto to_key = _graph->vertex_key(_to, 1, _weight, _edge);
+        auto from_key = _graph->vertex_key(_from, 0, _edge);
+        auto to_key = _graph->vertex_key(_to, 1, _edge);
 
         auto resp = _graph->_vertex_struct.nsm(from_key);
         if (check_end(resp, _from, 0)) return;
@@ -694,15 +640,12 @@ namespace SPU_GRAPH
         to_key = resp.key;
 
         while (from_key[EDGE_ID] != to_key[EDGE_ID]) {
-            if (from_key[WEIGHT] < to_key[WEIGHT]
-                || (from_key[WEIGHT] == to_key[WEIGHT] && from_key[EDGE_ID] > to_key[EDGE_ID])) {
-                to_key[WEIGHT] = from_key[WEIGHT];
+            if (from_key[EDGE_ID] > to_key[EDGE_ID]) {
                 to_key[EDGE_ID] = from_key[EDGE_ID];
                 resp = _graph->_vertex_struct.nsm(to_key + 1);
                 if (check_end(resp, _to, 1)) return;
                 to_key = resp.key;
             } else {
-                from_key[WEIGHT] = to_key[WEIGHT];
                 from_key[EDGE_ID] = to_key[EDGE_ID];
                 resp = _graph->_vertex_struct.nsm(from_key + 1);
                 if (check_end(resp, _from, 0)) return;
@@ -711,11 +654,10 @@ namespace SPU_GRAPH
         }
 
         _edge = from_key[EDGE_ID];
-        _weight = from_key[WEIGHT];
     }
 
-    pair<SpuUltraGraph::edge_descriptor, weight_t> SpuUltraGraph::ParallelEdgesIterator::dereference() const {
-        return {_edge, _weight};
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::ParallelEdgesIterator::dereference() const {
+        return _edge;
     }
 
     bool SpuUltraGraph::ParallelEdgesIterator::check_end(pair_t resp, SpuUltraGraph::vertex_descriptor vertex, uint8_t incidence)
@@ -728,7 +670,6 @@ namespace SPU_GRAPH
             || (uint8_t) key[INCIDENCE] != incidence
             || !_graph->is_edge_id_valid(key[EDGE_ID])) {
             _edge = _graph->max_edge_id();
-            _weight = _graph->max_weight();
             return true;
         }
         return false;
@@ -737,7 +678,7 @@ namespace SPU_GRAPH
 
 
     void SpuUltraGraph::AdjacentEdgesIterator::increment() {
-        auto key = _g->vertex_key(_v, _incidence, _weight, _edge);
+        auto key = _g->vertex_key(_v, _incidence, _edge);
         auto resp = _g->_vertex_struct.ngr(key);
         if (resp.status == ERR) {
             _v = 0;
@@ -755,7 +696,7 @@ namespace SPU_GRAPH
     }
 
     void SpuUltraGraph::AdjacentEdgesIterator::decrement() {
-        auto key = _g->vertex_key(_v, _incidence, _weight, _edge);
+        auto key = _g->vertex_key(_v, _incidence, _edge);
         auto resp = _g->_vertex_struct.nsm(key);
         if (resp.status == ERR) {
             _v = 0;

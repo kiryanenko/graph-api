@@ -22,7 +22,7 @@ namespace SPU_GRAPH
 
         void set(Structure<> *structure) { _struct = structure; }
 
-        inline status_t insert(SPU::key_t key, value_t value, flags_t flags = NO_FLAGS) {
+        inline status_t insert(SPU::key_t key, value_t value = {0}, flags_t flags = NO_FLAGS) {
             return check_spu_resp_status(_struct->insert( key,  value, flags));
         }
 

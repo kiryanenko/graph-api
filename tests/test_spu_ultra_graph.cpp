@@ -123,8 +123,8 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         auto v1 = graph.add_vertex();
         auto v2 = graph.add_vertex();
         auto v3 = graph.add_vertex();
-        auto e12_1 = graph.add_weight_edge(101, v1, v2, (weight_t) 1);
-        auto e12_2 = graph.add_weight_edge(102, v1, v2, (weight_t) 2);
+        auto e12_1 = graph.add_edge(101, v1, v2, (weight_t) 1);
+        auto e12_2 = graph.add_edge(102, v1, v2, (weight_t) 2);
         auto e21 = graph.add_edge(v2, v1);
         auto e23 = graph.add_edge(v2, v3);
         auto e32 = graph.add_edge(v3, v2);
@@ -132,11 +132,9 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         auto e31 = graph.add_edge(v3, v1);
 
         int test_ids[] = {101, 102};
-        int test_weights[] = {1, 2};
         int i = 0;
         for (auto edge : graph.parallel_edges(v1, v2)) {
-            BOOST_CHECK_EQUAL(edge.first, test_ids[i]);
-            BOOST_CHECK_EQUAL(edge.second, test_weights[i]);
+            BOOST_CHECK_EQUAL(edge, test_ids[i]);
             ++i;
         }
         BOOST_CHECK_EQUAL(i, 2);
@@ -147,26 +145,24 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         auto v1 = graph.add_vertex();
         auto v2 = graph.add_vertex();
         auto v3 = graph.add_vertex();
-        auto e12_1 = graph.add_weight_edge(101, v1, v2, (weight_t) 1);
-        auto e12_2 = graph.add_weight_edge(102, v1, v2, (weight_t) 2);
+        auto e12_1 = graph.add_edge(101, v1, v2);
+        auto e12_2 = graph.add_edge(102, v1, v2);
         auto e21 = graph.add_edge(v2, v1);
-        auto e21_w = graph.add_weight_edge(v2, v1, (weight_t) 5);
+        auto e21_w = graph.add_edge(111, v2, v1);
         auto e23 = graph.add_edge(v2, v3);
-        auto e23_w = graph.add_weight_edge(v2, v3, (weight_t) 5);
+        auto e23_w = graph.add_edge(112, v2, v3);
         auto e32 = graph.add_edge(v3, v2);
-        auto e32_w = graph.add_weight_edge(v3, v2, (weight_t) 4);
+        auto e32_w = graph.add_edge(113, v3, v2);
         auto e13 = graph.add_edge(v1, v3);
-        auto e13_w = graph.add_weight_edge(v1, v3, (weight_t) 5);
+        auto e13_w = graph.add_edge(114, v1, v3);
         auto e31 = graph.add_edge(v3, v1);
-        auto e31_w = graph.add_weight_edge(v3, v1, (weight_t) 4);
+        auto e31_w = graph.add_edge(115, v3, v1);
 
         auto iter = graph.parallel_edges(v1, v2).end();
         iter--;
-        BOOST_CHECK_EQUAL((*iter).first, 102);
-        BOOST_CHECK_EQUAL((*iter).second, 2);
+        BOOST_CHECK_EQUAL(*iter, 102);
         iter--;
-        BOOST_CHECK_EQUAL((*iter).first, 101);
-        BOOST_CHECK_EQUAL((*iter).second, 1);
+        BOOST_CHECK_EQUAL(*iter, 101);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
