@@ -670,7 +670,7 @@ namespace SPU_GRAPH
             || (id_t) key[VERTEX_ID] != vertex
             || (uint8_t) key[INCIDENCE] != incidence
             || !_graph->is_edge_id_valid(key[EDGE_ID])) {
-            _edge = _graph->max_edge_id();
+            _edge = _graph->max_edge_id() + 1;
             return true;
         }
         return false;
@@ -684,7 +684,6 @@ namespace SPU_GRAPH
         if (resp.status == ERR) {
             _v = 0;
             _incidence = 0;
-            _weight = 0;
             _edge = 0;
             return;
         }
@@ -692,7 +691,6 @@ namespace SPU_GRAPH
         key = resp.key;
         _v = key[VERTEX_ID];
         _incidence = key[INCIDENCE];
-        _weight = key[WEIGHT];
         _edge = key[EDGE_ID];
     }
 
@@ -702,7 +700,6 @@ namespace SPU_GRAPH
         if (resp.status == ERR) {
             _v = 0;
             _incidence = 0;
-            _weight = 0;
             _edge = 0;
             return;
         }
@@ -710,11 +707,10 @@ namespace SPU_GRAPH
         key = resp.key;
         _v = key[VERTEX_ID];
         _incidence = key[INCIDENCE];
-        _weight = key[WEIGHT];
         _edge = key[EDGE_ID];
     }
 
     bool SpuUltraGraph::AdjacentEdgesIterator::equal(const SpuUltraGraph::AdjacentEdgesIterator &other) const {
-        return _edge == other._edge && _v == other._v && _weight == other._weight;
+        return _edge == other._edge && _v == other._v;
     }
 }

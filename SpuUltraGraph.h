@@ -146,7 +146,7 @@ namespace SPU_GRAPH
                           SpuUltraGraph::vertex_descriptor v) : _graph(g), _from(from), _to(v) {}
 
             iterator begin() { iterator i(_graph, _from, _to); return ++i; }
-            iterator end() { return {_graph, _from, _to, _graph->max_edge_id()}; }
+            iterator end() { return {_graph, _from, _to, _graph->max_edge_id() + 1}; }
         };
 
 
@@ -154,9 +154,9 @@ namespace SPU_GRAPH
         class AdjacentEdgesIterator :
                 public iterator_facade<
                         AdjacentEdgesIterator,
-                        std::pair<edge_descriptor, weight_t>,
+                        edge_descriptor,
                         bidirectional_traversal_tag,
-                        std::pair<edge_descriptor, weight_t>>
+                        edge_descriptor>
         {
             friend class iterator_core_access;
 
@@ -164,13 +164,12 @@ namespace SPU_GRAPH
             uint8_t _incidence;
             vertex_descriptor _v;
             id_t _edge;
-            weight_t _weight;
 
         public:
             AdjacentEdgesIterator(const SpuUltraGraph *g, uint8_t incidence = 0, vertex_descriptor v = 0,
-                    id_t edge=0, weight_t weight=0) : _g(g), _incidence(incidence), _v(v), _edge(edge), _weight(weight) {}
+                    id_t edge=0, weight_t weight=0) : _g(g), _incidence(incidence), _v(v), _edge(edge) {}
 
-            std::pair<edge_descriptor, weight_t> dereference() const { return {_edge, _weight}; }
+            edge_descriptor dereference() const { return _edge; }
             bool equal(const AdjacentEdgesIterator& other) const;
             void increment();
             void decrement();
