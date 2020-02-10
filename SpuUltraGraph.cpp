@@ -362,6 +362,7 @@ namespace SPU_GRAPH
     }
 
     void SpuUltraGraph::remove_edge(SpuUltraGraph::edge_descriptor edge) {
+        if (!has_edge(edge)) return;
         auto v_key = vertex_key(0, 0, edge);
         auto e_key = edge_key();
         auto start = edge_key(edge, 0, 1);
@@ -640,7 +641,7 @@ namespace SPU_GRAPH
         to_key = resp.key;
 
         while (from_key[EDGE_ID] != to_key[EDGE_ID]) {
-            if (from_key[EDGE_ID] > to_key[EDGE_ID]) {
+            if (from_key[EDGE_ID] < to_key[EDGE_ID]) {
                 to_key[EDGE_ID] = from_key[EDGE_ID];
                 resp = _graph->_vertex_struct.nsm(to_key + 1);
                 if (check_end(resp, _to, 1)) return;

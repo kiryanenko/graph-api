@@ -36,10 +36,10 @@ namespace SPU_GRAPH
 
 
     struct SpuUltraGraphTraits {
-        size_t graph_id_depth = 5;
+        size_t graph_id_depth = 3;
         size_t vertex_id_depth = 28;
-        size_t edge_id_depth = 25;
-        size_t weight_depth = 5;
+        size_t edge_id_depth = 28;
+        size_t weight_depth = 4;
 
         data_t default_vertex_value = 0;
         data_t default_weight = 0;
