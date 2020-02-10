@@ -416,7 +416,7 @@ namespace SPU_GRAPH
         weight_t weight;
         try {
             weight = get_weight(edge);
-        } catch (exception &) {
+        } catch (NotFound &) {
             return;
         }
         auto v_key = vertex_key(0, 0, weight, edge);
@@ -432,7 +432,7 @@ namespace SPU_GRAPH
             _edge_struct.del(e_key);
             try {
                 dec_out_degree(v);
-            } catch (exception &) {}
+            } catch (NotFound &) {}
         }
 
         v_key[INCIDENCE] = 1;
@@ -446,7 +446,7 @@ namespace SPU_GRAPH
             _edge_struct.del(e_key);
             try {
                 dec_in_degree(v);
-            } catch (exception &) {}
+            } catch (NotFound &) {}
         }
 
         _edge_struct.del(edge_key(edge));
