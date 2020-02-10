@@ -227,6 +227,8 @@ namespace SPU_GRAPH
         bool has_vertex(id_t id);
 
         vertices_size_type num_vertices();
+        vertices_size_type out_degree(vertex_descriptor v);
+        vertices_size_type in_degree(vertex_descriptor v);
 
         void clear_vertex(vertex_descriptor v);
 
@@ -247,6 +249,8 @@ namespace SPU_GRAPH
         weight_t get_weight(edge_descriptor edge);
 
         edges_size_type num_edges();
+        edges_size_type source_cnt(edge_descriptor e);
+        edges_size_type target_cnt(edge_descriptor e);
 
         void remove_edge(edge_descriptor edge);
         /// Удаляются все соединения от вершины from к to.
@@ -275,13 +279,13 @@ namespace SPU_GRAPH
         id_t get_free_vertex_id();
         id_t get_free_vertex_id(id_t min, id_t max) const;
 
-        void inc_verteces_cnt();
-        void dec_verteces_cnt();
+        vertices_size_type inc_vertexes_cnt();
+        vertices_size_type dec_vertexes_cnt();
 
-        void inc_out_degree(vertex_descriptor v, size_t val = 1);
-        void dec_out_degree(vertex_descriptor v, size_t val = 1);
-        void inc_in_degree(vertex_descriptor v, size_t val = 1);
-        void dec_in_degree(vertex_descriptor v, size_t val = 1);
+        vertices_size_type inc_out_degree(vertex_descriptor v, vertices_size_type val = 1);
+        vertices_size_type dec_out_degree(vertex_descriptor v, vertices_size_type val = 1);
+        vertices_size_type inc_in_degree(vertex_descriptor v, vertices_size_type val = 1);
+        vertices_size_type dec_in_degree(vertex_descriptor v, vertices_size_type val = 1);
 
 
         bool is_edge_id_valid(id_t id) const;
@@ -292,10 +296,10 @@ namespace SPU_GRAPH
         void inc_edges_cnt();
         void dec_edges_cnt();
 
-        void inc_target_cnt(edge_descriptor e, size_t val = 1);
-        void dec_target_cnt(edge_descriptor e, size_t val = 1);
-        void inc_source_cnt(edge_descriptor e, size_t val = 1);
-        void dec_source_cnt(edge_descriptor e, size_t val = 1);
+        edges_size_type inc_target_cnt(edge_descriptor e, edges_size_type val = 1);
+        edges_size_type dec_target_cnt(edge_descriptor e, edges_size_type val = 1);
+        edges_size_type inc_source_cnt(edge_descriptor e, edges_size_type val = 1);
+        edges_size_type dec_source_cnt(edge_descriptor e, edges_size_type val = 1);
 
         void add_target(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);
         void add_source(edge_descriptor edge, vertex_descriptor vertex, weight_t weight);

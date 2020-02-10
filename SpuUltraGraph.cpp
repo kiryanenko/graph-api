@@ -110,7 +110,7 @@ namespace SPU_GRAPH
         key[INCIDENCE] = 1;
         _vertex_struct.insert(key, 0);
 
-        inc_verteces_cnt();
+        inc_vertexes_cnt();
         return id;
     }
 
@@ -170,16 +170,18 @@ namespace SPU_GRAPH
         return id > 0 && id <= max_vertex_id();
     }
 
-    void SpuUltraGraph::inc_verteces_cnt() {
-        auto cnt = num_vertices();
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::inc_vertexes_cnt() {
+        auto cnt = num_vertices() + 1;
         auto key = vertex_key();
-        _vertex_struct.insert(key, cnt + 1);
+        _vertex_struct.insert(key, cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::dec_verteces_cnt() {
-        auto cnt = num_vertices();
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::dec_vertexes_cnt() {
+        auto cnt = num_vertices() - 1;
         auto key = vertex_key();
-        _vertex_struct.insert(key, cnt - 1);
+        _vertex_struct.insert(key, cnt);
+        return cnt;
     }
 
 
@@ -456,23 +458,28 @@ namespace SPU_GRAPH
     /// Удаляются все соединения от вершины from к to.
     /// Если ребро не содержит вершин, то оно полностью удаляется
     void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to) {
-        auto u_vertex_key = vertex_key(from);
-        auto v_vertex_key = vertex_key(to, 1);
-        auto u_edge_key = edge_key(0, 0, to);
-        auto v_edge_key = edge_key(0, 1, from);
+        auto from_vertex_key = vertex_key(from);
+        auto to_vertex_key = vertex_key(to, 1);
+        auto from_edge_key = edge_key(0, 0, from);
+        auto to_edge_key = edge_key(0, 1, to);
+        size_t removed_edges_cnt = 0;
         for (auto edge : parallel_edges(from, to)) {
-            u_vertex_key[EDGE_ID] = edge.first;
-            u_vertex_key[WEIGHT] = edge.second;
-            _vertex_struct.del(u_vertex_key);
-            v_vertex_key[EDGE_ID] = edge.first;
-            v_vertex_key[WEIGHT] = edge.second;
-            _vertex_struct.del(v_vertex_key);
+            from_vertex_key[EDGE_ID] = edge.first;
+            from_vertex_key[WEIGHT] = edge.second;
+            _vertex_struct.del(from_vertex_key);
+            to_vertex_key[EDGE_ID] = edge.first;
+            to_vertex_key[WEIGHT] = edge.second;
+            _vertex_struct.del(to_vertex_key);
+            removed_edges_cnt++;
 
-            u_edge_key[EDGE_ID] = edge.first;
-            _edge_struct.del(u_edge_key);
-            v_edge_key[EDGE_ID] = edge.first;
-            _edge_struct.del(v_edge_key);
+            from_edge_key[EDGE_ID] = edge.first;
+            _edge_struct.del(from_edge_key);
+            to_edge_key[EDGE_ID] = edge.first;
+            _edge_struct.del(to_edge_key);
+
         }
+        dec_out_degree(from, removed_edges_cnt);
+        dec_in_degree(to, removed_edges_cnt);
     }
 
     SpuUltraGraph::ParallelEdges
@@ -485,77 +492,53 @@ namespace SPU_GRAPH
     }
 
 
-    void SpuUltraGraph::inc_out_degree(SpuUltraGraph::vertex_descriptor v, size_t val) {
-        auto key = out_degree_key(v);
-        auto cnt = _vertex_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value + val);
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::inc_out_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::vertices_size_type val) {
+        auto cnt = out_degree(v) + val;
+        _vertex_struct.insert(out_degree_key(v), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::dec_out_degree(SpuUltraGraph::vertex_descriptor v, size_t val) {
-        auto key = out_degree_key(v);
-        auto cnt = _vertex_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value - val);
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::dec_out_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::vertices_size_type val) {
+        auto cnt = out_degree(v) - val;
+        _vertex_struct.insert(out_degree_key(v), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::inc_in_degree(SpuUltraGraph::vertex_descriptor v, size_t val) {
-        auto key = in_degree_key(v);
-        auto cnt = _vertex_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value + val);
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::inc_in_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::vertices_size_type val) {
+        auto cnt = in_degree(v) + val;
+        _vertex_struct.insert(in_degree_key(v), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::dec_in_degree(SpuUltraGraph::vertex_descriptor v, size_t val) {
-        auto key = in_degree_key(v);
-        auto cnt = _vertex_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value - val);
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::dec_in_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::vertices_size_type val) {
+        auto cnt = in_degree(v) - val;
+        _vertex_struct.insert(in_degree_key(v), cnt);
+        return cnt;
     }
 
 
-    void SpuUltraGraph::inc_target_cnt(SpuUltraGraph::edge_descriptor e, size_t val) {
-        auto key = target_cnt_key(e);
-        auto cnt = _edge_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value + val);
+    SpuUltraGraph::edges_size_type SpuUltraGraph::inc_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
+        auto cnt = target_cnt(e) + val;
+        _vertex_struct.insert(target_cnt_key(e), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::dec_target_cnt(SpuUltraGraph::edge_descriptor e, size_t val) {
-        auto key = target_cnt_key(e);
-        auto cnt = _edge_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value - val);
+    SpuUltraGraph::edges_size_type SpuUltraGraph::dec_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
+        auto cnt = target_cnt(e) - val;
+        _vertex_struct.insert(target_cnt_key(e), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::inc_source_cnt(SpuUltraGraph::edge_descriptor e, size_t val) {
-        auto key = source_cnt_key(e);
-        auto cnt = _edge_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value + val);
+    SpuUltraGraph::edges_size_type SpuUltraGraph::inc_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
+        auto cnt = source_cnt(e) + val;
+        _vertex_struct.insert(source_cnt_key(e), cnt);
+        return cnt;
     }
 
-    void SpuUltraGraph::dec_source_cnt(SpuUltraGraph::edge_descriptor e, size_t val) {
-        auto key = source_cnt_key(e);
-        auto cnt = _edge_struct.search(key);
-        if (cnt.status == ERR) {
-            throw NotFound();
-        }
-        _vertex_struct.insert(key, cnt.value - val);
+    SpuUltraGraph::edges_size_type SpuUltraGraph::dec_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
+        auto cnt = source_cnt(e) - val;
+        _vertex_struct.insert(source_cnt_key(e), cnt);
+        return cnt;
     }
 
 
@@ -613,6 +596,43 @@ namespace SPU_GRAPH
         }
         cout << endl;
     }
+
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::out_degree(SpuUltraGraph::vertex_descriptor v) {
+        auto key = out_degree_key(v);
+        auto res = _vertex_struct.search(key);
+        if (res.status == ERR) {
+            throw NotFound();
+        }
+        return res.value;
+    }
+
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::in_degree(SpuUltraGraph::vertex_descriptor v) {
+        auto key = in_degree_key(v);
+        auto res = _vertex_struct.search(key);
+        if (res.status == ERR) {
+            throw NotFound();
+        }
+        return res.value;
+    }
+
+    SpuUltraGraph::edges_size_type SpuUltraGraph::source_cnt(SpuUltraGraph::edge_descriptor e) {
+        auto key = source_cnt_key(e);
+        auto res = _edge_struct.search(key);
+        if (res.status == ERR) {
+            throw NotFound();
+        }
+        return res.value;
+    }
+
+    SpuUltraGraph::edges_size_type SpuUltraGraph::target_cnt(SpuUltraGraph::edge_descriptor e) {
+        auto key = target_cnt_key(e);
+        auto res = _edge_struct.search(key);
+        if (res.status == ERR) {
+            throw NotFound();
+        }
+        return res.value;
+    }
+
 
 
     void SpuUltraGraph::ParallelEdgesIterator::increment() {
