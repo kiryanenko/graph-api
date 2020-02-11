@@ -438,8 +438,14 @@ namespace SPU_GRAPH
         return {this, from, to};
     }
 
+    /// Отсоединяет вершину v от всех ребер
     void SpuUltraGraph::clear_vertex(SpuUltraGraph::vertex_descriptor v) {
-
+        for (auto e : out_edges(v)) {
+            disconnect_source(v, e);
+        }
+        for (auto e : in_edges(v)) {
+            disconnect_target(v, e);
+        }
     }
 
 
@@ -596,6 +602,32 @@ namespace SPU_GRAPH
         fields[EDGE_ID] = edge_id;
         fields[WEIGHT] = weight;
         return data_t(fields);
+    }
+
+    void SpuUltraGraph::disconnect_source(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::edge_descriptor e) {
+        auto v_key = vertex_key(v, 0, e);
+        if (_vertex_struct.search(v_key).status == OK) {
+            _vertex_struct.del(v_key);
+            dec_out_degree(v);
+        }
+        auto e_key = edge_key(e, 0, v);
+        if (_edge_struct.search(e_key).status == OK) {
+            _edge_struct.del(e_key);
+            dec_source_cnt(e);
+        }
+    }
+
+    void SpuUltraGraph::disconnect_target(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::edge_descriptor e) {
+        auto v_key = vertex_key(v, 1, e);
+        if (_vertex_struct.search(v_key).status == OK) {
+            _vertex_struct.del(v_key);
+            dec_in_degree(v);
+        }
+        auto e_key = edge_key(e, 1, v);
+        if (_edge_struct.search(e_key).status == OK) {
+            _edge_struct.del(e_key);
+            dec_target_cnt(e);
+        }
     }
 
 

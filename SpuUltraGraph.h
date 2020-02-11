@@ -243,8 +243,13 @@ namespace SPU_GRAPH
         vertices_size_type out_degree(vertex_descriptor v);
         vertices_size_type in_degree(vertex_descriptor v);
 
+        /// Отсоединяет вершину v от всех ребер
         void clear_vertex(vertex_descriptor v);
 
+        // Отсоединят источник v от ребра e
+        void disconnect_source(vertex_descriptor v, edge_descriptor e);
+        // Отсоединят сток v от ребра e
+        void disconnect_target(vertex_descriptor v, edge_descriptor e);
 
         edge_descriptor add_edge();
         edge_descriptor add_edge(id_t id, bool safe=false);
