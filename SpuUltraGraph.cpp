@@ -675,42 +675,4 @@ namespace SPU_GRAPH
         }
         return false;
     }
-
-
-
-    void SpuUltraGraph::AdjacentEdgesIterator::increment() {
-        auto key = _g->vertex_key(_v, _incidence, _edge);
-        auto resp = _g->_vertex_struct.ngr(key);
-        if (resp.status == ERR) {
-            _v = 0;
-            _incidence = 0;
-            _edge = 0;
-            return;
-        }
-
-        key = resp.key;
-        _v = key[VERTEX_ID];
-        _incidence = key[INCIDENCE];
-        _edge = key[EDGE_ID];
-    }
-
-    void SpuUltraGraph::AdjacentEdgesIterator::decrement() {
-        auto key = _g->vertex_key(_v, _incidence, _edge);
-        auto resp = _g->_vertex_struct.nsm(key);
-        if (resp.status == ERR) {
-            _v = 0;
-            _incidence = 0;
-            _edge = 0;
-            return;
-        }
-
-        key = resp.key;
-        _v = key[VERTEX_ID];
-        _incidence = key[INCIDENCE];
-        _edge = key[EDGE_ID];
-    }
-
-    bool SpuUltraGraph::AdjacentEdgesIterator::equal(const SpuUltraGraph::AdjacentEdgesIterator &other) const {
-        return _edge == other._edge && _v == other._v;
-    }
 }
