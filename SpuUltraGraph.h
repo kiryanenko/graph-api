@@ -343,6 +343,10 @@ namespace SPU_GRAPH
         g.remove_edge(edge);
     }
 
+    inline void clear_vertex(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        g.clear_vertex(v);
+    }
+
     inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator> out_edges(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
         auto edges = g.out_edges(v);
         return {edges.begin(), edges.end()};
