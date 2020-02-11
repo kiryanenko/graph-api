@@ -244,8 +244,10 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         graph.disconnect_target(v2, e12_1);
         BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 1);
         BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 0);
-        BOOST_CHECK_EQUAL(graph.out_degree(v1), 2);
+        BOOST_CHECK_EQUAL(graph.out_degree(v1), 3);
         BOOST_CHECK_EQUAL(graph.in_degree(v1), 2);
+        BOOST_CHECK_EQUAL(graph.out_degree(v2), 2);
+        BOOST_CHECK_EQUAL(graph.in_degree(v2), 2);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
