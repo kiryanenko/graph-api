@@ -208,4 +208,44 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         BOOST_CHECK_EQUAL(*iter, 101);
     }
 
+    BOOST_FIXTURE_TEST_CASE(test_disconnect_source, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        auto e12_1 = graph.add_edge(101, v1, v2);
+        auto e12_2 = graph.add_edge(102, v1, v2);
+        auto e13 = graph.add_edge(103, v1, v3);
+        auto e21 = graph.add_edge(v2, v1);
+        auto e23 = graph.add_edge(v2, v3);
+        auto e32 = graph.add_edge(v3, v2);
+        auto e31 = graph.add_edge(v3, v1);
+
+        graph.disconnect_source(v1, e12_1);
+        BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 0);
+        BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 1);
+        BOOST_CHECK_EQUAL(graph.out_degree(v1), 2);
+        BOOST_CHECK_EQUAL(graph.in_degree(v1), 2);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_disconnect_target, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        auto e12_1 = graph.add_edge(101, v1, v2);
+        auto e12_2 = graph.add_edge(102, v1, v2);
+        auto e13 = graph.add_edge(103, v1, v3);
+        auto e21 = graph.add_edge(v2, v1);
+        auto e23 = graph.add_edge(v2, v3);
+        auto e32 = graph.add_edge(v3, v2);
+        auto e31 = graph.add_edge(v3, v1);
+
+        graph.disconnect_target(v2, e12_1);
+        BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 1);
+        BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 0);
+        BOOST_CHECK_EQUAL(graph.out_degree(v1), 2);
+        BOOST_CHECK_EQUAL(graph.in_degree(v1), 2);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -476,25 +476,25 @@ namespace SPU_GRAPH
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::inc_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
         auto cnt = target_cnt(e) + val;
-        _vertex_struct.insert(target_cnt_key(e), cnt);
+        _edge_struct.insert(target_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::dec_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
         auto cnt = target_cnt(e) - val;
-        _vertex_struct.insert(target_cnt_key(e), cnt);
+        _edge_struct.insert(target_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::inc_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
         auto cnt = source_cnt(e) + val;
-        _vertex_struct.insert(source_cnt_key(e), cnt);
+        _edge_struct.insert(source_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::dec_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
         auto cnt = source_cnt(e) - val;
-        _vertex_struct.insert(source_cnt_key(e), cnt);
+        _edge_struct.insert(source_cnt_key(e), cnt);
         return cnt;
     }
 
