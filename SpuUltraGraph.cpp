@@ -630,6 +630,15 @@ namespace SPU_GRAPH
         }
     }
 
+    void SpuUltraGraph::remove_vertex(SpuUltraGraph::vertex_descriptor v) {
+        if (!has_vertex(v)) return;
+        clear_vertex(v);
+        _vertex_struct.del(vertex_key(v));
+        _vertex_struct.del(out_degree_key(v));
+        _vertex_struct.del(in_degree_key(v));
+        dec_vertexes_cnt();
+    }
+
 
     void SpuUltraGraph::ParallelEdgesIterator::increment() {
         auto from_key = _graph->vertex_key(_from, 0, _edge);

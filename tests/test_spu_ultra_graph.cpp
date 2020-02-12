@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_check_concept, Fixture)
     {
-//        BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
 //        graph_test<SpuUltraGraph> graph_tests;
 //        graph_tests.test_add_vertex(graph);
     }
@@ -268,6 +268,25 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
         BOOST_CHECK_EQUAL(graph.in_degree(v1), 0);
         BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 0);
         BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 1);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_remove_vertex, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        auto e12_1 = graph.add_edge(101, v1, v2);
+        auto e12_2 = graph.add_edge(102, v1, v2);
+        auto e13 = graph.add_edge(103, v1, v3);
+        auto e21 = graph.add_edge(v2, v1);
+        auto e23 = graph.add_edge(v2, v3);
+        auto e32 = graph.add_edge(v3, v2);
+        auto e31 = graph.add_edge(v3, v1);
+
+        graph.remove_vertex(v1);
+        BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 0);
+        BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 1);
+        BOOST_CHECK_EQUAL(graph.num_vertices(), 2);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

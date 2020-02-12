@@ -237,6 +237,8 @@ namespace SPU_GRAPH
         vertex_descriptor add_vertex(id_t id, bool safe=false);
         vertex_descriptor add_vertex(id_t id, value_t value, bool safe=false);
 
+        void remove_vertex(vertex_descriptor v);
+
         bool has_vertex(id_t id);
 
         vertices_size_type num_vertices();
@@ -345,6 +347,10 @@ namespace SPU_GRAPH
 
     inline void clear_vertex(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
         g.clear_vertex(v);
+    }
+
+    inline void remove_vertex(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+        g.remove_vertex(v);
     }
 
     inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator> out_edges(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
