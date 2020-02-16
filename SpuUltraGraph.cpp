@@ -120,7 +120,7 @@ namespace SPU_GRAPH
     }
 
 
-    SpuUltraGraph::vertices_size_type SpuUltraGraph::num_vertices() {
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::num_vertices() const {
         auto key = vertex_key();
         auto res = _vertex_struct.search(key);
         if (res.status == OK) {
@@ -554,7 +554,7 @@ namespace SPU_GRAPH
         cout << endl;
     }
 
-    SpuUltraGraph::vertices_size_type SpuUltraGraph::out_degree(SpuUltraGraph::vertex_descriptor v) {
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::out_degree(SpuUltraGraph::vertex_descriptor v) const {
         auto key = out_degree_key(v);
         auto res = _vertex_struct.search(key);
         if (res.status == ERR) {
@@ -563,7 +563,7 @@ namespace SPU_GRAPH
         return res.value;
     }
 
-    SpuUltraGraph::vertices_size_type SpuUltraGraph::in_degree(SpuUltraGraph::vertex_descriptor v) {
+    SpuUltraGraph::vertices_size_type SpuUltraGraph::in_degree(SpuUltraGraph::vertex_descriptor v) const {
         auto key = in_degree_key(v);
         auto res = _vertex_struct.search(key);
         if (res.status == ERR) {

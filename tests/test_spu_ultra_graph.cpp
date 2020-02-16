@@ -8,11 +8,9 @@
 
 #include <boost/test/unit_test.hpp>
 #include <boost/graph/graph_concepts.hpp>
-//#include <boost/graph/graph_test.hpp>
 
 
-BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
-
+BOOST_AUTO_TEST_SUITE(testSpuUltraGraph)
 
     using namespace SPU_GRAPH;
     using namespace boost;
@@ -21,19 +19,10 @@ BOOST_AUTO_TEST_SUITE(testSuiteSpuUltraGraph)
     struct Fixture
     {
         Fixture() : graph() {}
-
         ~Fixture() = default;
 
         SpuUltraGraph graph;
     };
-
-
-    BOOST_FIXTURE_TEST_CASE(test_check_concept, Fixture)
-    {
-        BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
-//        graph_test<SpuUltraGraph> graph_tests;
-//        graph_tests.test_add_vertex(graph);
-    }
 
 
     BOOST_FIXTURE_TEST_CASE(test_add_vertex, Fixture)
