@@ -42,6 +42,7 @@ namespace SPU_GRAPH
         size_t weight_depth = 4;
 
         data_t default_vertex_value = 0;
+        data_t default_edge_value = 0;
         data_t default_weight = 0;
 
         Structure<> *vertex_struct = nullptr;
@@ -82,10 +83,9 @@ namespace SPU_GRAPH
         /// Категория обхода отражает поддерживаемые графовым классом виды итераторов
         struct spu_ultra_graph_traversal_category :
                 public virtual bidirectional_graph_tag,
-                public virtual adjacency_graph_tag
-//                public virtual vertex_list_graph_tag,
-//                public virtual edge_list_graph_tag
-                {};
+                public virtual adjacency_graph_tag,
+                public virtual vertex_list_graph_tag,
+                public virtual edge_list_graph_tag {};
 
         /// Предоставляет информацию о том, что граф ориентированный
         typedef directed_tag directed_category;
@@ -235,12 +235,12 @@ namespace SPU_GRAPH
 
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);
-        vertex_descriptor add_vertex(id_t id, bool safe=false);
-        vertex_descriptor add_vertex(id_t id, value_t value, bool safe=false);
+        vertex_descriptor add_vertex(id_t id);
+        vertex_descriptor add_vertex(id_t id, value_t value);
 
         void remove_vertex(vertex_descriptor v);
 
-        bool has_vertex(id_t id);
+        bool has_vertex(vertex_descriptor id);
 
         vertices_size_type num_vertices() const;
         vertices_size_type out_degree(vertex_descriptor v) const;
@@ -255,12 +255,17 @@ namespace SPU_GRAPH
         void disconnect_target(vertex_descriptor v, edge_descriptor e);
 
         edge_descriptor add_edge();
-        edge_descriptor add_edge(id_t id, bool safe=false);
-        edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to, bool safe=false);
-        edge_descriptor add_edge(id_t id, vertex_descriptor from, vertex_descriptor to, bool safe=false);
+        edge_descriptor add_edge(value_t value);
+        edge_descriptor add_edge(edge_descriptor id);
+        edge_descriptor add_edge(edge_descriptor id, value_t value);
+        edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to);
+        edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to);
+        edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to, value_t value);
 
-        void add_target(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
-        void add_source(edge_descriptor edge, vertex_descriptor vertex, bool safe=false);
+        // Присоединяет как сток вершину vertex к ребру edge
+        void add_target(edge_descriptor edge, vertex_descriptor vertex);
+        // Присоединяет как источник вершину vertex к ребру edge
+        void add_source(edge_descriptor edge, vertex_descriptor vertex);
 
         bool has_edge(edge_descriptor id);
 
@@ -312,6 +317,10 @@ namespace SPU_GRAPH
         vertices_size_type inc_in_degree(vertex_descriptor v, vertices_size_type val = 1);
         vertices_size_type dec_in_degree(vertex_descriptor v, vertices_size_type val = 1);
 
+        vertex_descriptor _add_vertex(vertex_descriptor id, value_t value);
+        edge_descriptor _add_edge(edge_descriptor id, value_t value);
+        void _add_target(edge_descriptor edge, vertex_descriptor vertex);
+        void _add_source(edge_descriptor edge, vertex_descriptor vertex);
 
         bool is_edge_id_valid(id_t id) const;
 
