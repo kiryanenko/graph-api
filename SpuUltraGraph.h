@@ -317,7 +317,7 @@ namespace SPU_GRAPH
 
         void remove_vertex(vertex_descriptor v);
 
-        bool has_vertex(vertex_descriptor id);
+        bool has_vertex(vertex_descriptor id) const;
 
         vertices_size_type num_vertices() const;
         vertices_size_type out_degree(vertex_descriptor v) const;
@@ -344,7 +344,7 @@ namespace SPU_GRAPH
         // Присоединяет как источник вершину vertex к ребру edge
         void add_source(edge_descriptor edge, vertex_descriptor vertex);
 
-        bool has_edge(edge_descriptor id);
+        bool has_edge(edge_descriptor id) const;
 
         edge_descriptor get_edge_descriptor(id_t edge_id);
         edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);
@@ -353,6 +353,13 @@ namespace SPU_GRAPH
         edges_size_type num_edges();
         edges_size_type source_cnt(edge_descriptor e);
         edges_size_type target_cnt(edge_descriptor e);
+
+        /// Возвращает первую вершину источник для ребра e
+        /// Если источников, нет то вернет 0
+        vertex_descriptor source(edge_descriptor e) const;
+        /// Возвращает первую вершину сток для ребра e
+        /// Если стоков нет, то вернет 0
+        vertex_descriptor target(edge_descriptor e) const;
 
         void remove_edge(edge_descriptor edge);
         /// Удаляются все соединения от вершины from к to.
@@ -417,6 +424,8 @@ namespace SPU_GRAPH
         edges_size_type dec_target_cnt(edge_descriptor e, edges_size_type val = 1);
         edges_size_type inc_source_cnt(edge_descriptor e, edges_size_type val = 1);
         edges_size_type dec_source_cnt(edge_descriptor e, edges_size_type val = 1);
+
+        bool is_valid_edge_resp(pair_t resp, edge_descriptor edge, uint8_t incidence = 0) const;
     };
 }
 

@@ -331,13 +331,13 @@ namespace SPU_GRAPH
         _edge_struct.insert(key, cnt - 1);
     }
 
-    bool SpuUltraGraph::has_vertex(vertex_descriptor id) {
+    bool SpuUltraGraph::has_vertex(vertex_descriptor id) const {
         auto key = vertex_key(id);
         auto res = _vertex_struct.search(key);
         return res.status == OK;
     }
 
-    bool SpuUltraGraph::has_edge(edge_descriptor id) {
+    bool SpuUltraGraph::has_edge(edge_descriptor id) const {
         auto key = edge_key(id);
         auto res = _edge_struct.search(key);
         return res.status == OK;
@@ -662,6 +662,37 @@ namespace SPU_GRAPH
         _vertex_struct.del(out_degree_key(v));
         _vertex_struct.del(in_degree_key(v));
         dec_vertexes_cnt();
+    }
+
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::source(SpuUltraGraph::edge_descriptor e) const {
+        auto key = edge_key(e);
+        auto resp = _edge_struct.ngr(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (!is_valid_edge_resp(resp, e) || !is_vertex_id_valid(vertex_id)) {
+            return 0;
+        }
+        return vertex_id;
+    }
+
+    SpuUltraGraph::vertex_descriptor SpuUltraGraph::target(SpuUltraGraph::edge_descriptor e) const {
+        auto key = edge_key(e, 1);
+        auto resp = _edge_struct.ngr(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (!is_valid_edge_resp(resp, e, 1) || !is_vertex_id_valid(vertex_id)) {
+            return 0;
+        }
+        return vertex_id;
+    }
+
+    bool SpuUltraGraph::is_valid_edge_resp(pair_t resp, edge_descriptor e, uint8_t incidence) const {
+        auto key = edge_key();
+        key = resp.key;
+        return resp.status == OK
+               && (edge_descriptor) key[EDGE_ID] == e
+               && (int) key[INCIDENCE] == incidence
+               && (id_t) key[GRAPH_ID] == _graph_id;
     }
 
 

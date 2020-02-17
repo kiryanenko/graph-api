@@ -26,8 +26,11 @@ namespace boost {
     inline void remove_vertex(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { g.remove_vertex(v); }
 
     inline SpuUltraGraph::vertices_size_type num_vertices(const SpuUltraGraph &g) { return g.num_vertices(); }
-    inline SpuUltraGraph::degree_size_type out_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { return g.out_degree(v); }
-    inline SpuUltraGraph::degree_size_type in_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { return g.in_degree(v); }
+    inline SpuUltraGraph::degree_size_type out_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.out_degree(v); }
+    inline SpuUltraGraph::degree_size_type in_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.in_degree(v); }
+
+    inline SpuUltraGraph::vertex_descriptor source(SpuUltraGraph::edge_descriptor e, const SpuUltraGraph &g) { return g.source(e); }
+    inline SpuUltraGraph::vertex_descriptor target(SpuUltraGraph::edge_descriptor e, const SpuUltraGraph &g) { return g.target(e); }
 
 
     inline std::pair<SpuUltraGraph::vertex_iterator, SpuUltraGraph::vertex_iterator> vertices(const SpuUltraGraph &g) {
