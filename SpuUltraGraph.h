@@ -106,6 +106,43 @@ namespace SPU_GRAPH
 
         //////////////////// Итераторы и контейнеры /////////////////////////
 
+        class VertexIterator :
+                public iterator_facade<
+                        VertexIterator,
+                        vertex_descriptor,
+                        bidirectional_traversal_tag,
+                        vertex_descriptor>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_g;
+            vertex_descriptor _v;
+
+        public:
+            VertexIterator(const SpuUltraGraph *g, vertex_descriptor v=0) : _g(g), _v(v) {}
+            vertex_descriptor dereference() const { return _v; }
+            bool equal(const VertexIterator& other) const { return _v == other._v; }
+            void increment();
+            void decrement();
+        };
+
+        /// Итератор по всем ребрам
+        typedef VertexIterator vertex_iterator;
+
+        /// Контейнер содержащий все ребра графа
+        class Vertices
+        {
+            const SpuUltraGraph *_g;
+
+        public:
+            typedef vertex_iterator iterator;
+
+            Vertices(const SpuUltraGraph *g) : _g(g) {}
+            iterator begin() { iterator i(_g); return ++i; }
+            iterator end() { return {_g, _g->max_vertex_id() + 1}; }
+        };
+
+
         class EdgeIterator :
                 public iterator_facade<
                         EdgeIterator,
@@ -116,10 +153,10 @@ namespace SPU_GRAPH
             friend class iterator_core_access;
 
             const SpuUltraGraph *_g;
-            id_t _edge;
+            edge_descriptor _edge;
 
         public:
-            EdgeIterator(const SpuUltraGraph *g, id_t edge=0) : _g(g), _edge(edge) {}
+            EdgeIterator(const SpuUltraGraph *g, edge_descriptor edge=0) : _g(g), _edge(edge) {}
             edge_descriptor dereference() const { return _edge; }
             bool equal(const EdgeIterator& other) const { return _edge == other._edge; }
             void increment();

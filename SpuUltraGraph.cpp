@@ -771,4 +771,34 @@ namespace SPU_GRAPH
         }
         _edge = key[EDGE_ID];
     }
+
+    void SpuUltraGraph::VertexIterator::increment() {
+        auto key = _g->vertex_key(_v);
+        auto resp = _g->_vertex_struct.ngr(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (resp.status == ERR
+            || (int) key[INCIDENCE] != 0
+            || !_g->is_vertex_id_valid(vertex_id)
+            || (id_t) key[GRAPH_ID] != _g->_graph_id) {
+            _v = _g->max_vertex_id() + 1;
+            return;
+        }
+        _v = vertex_id;
+    }
+
+    void SpuUltraGraph::VertexIterator::decrement() {
+        auto key = _g->vertex_key(_v);
+        auto resp = _g->_vertex_struct.ngr(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (resp.status == ERR
+            || (int) key[INCIDENCE] != 0
+            || !_g->is_vertex_id_valid(vertex_id)
+            || (id_t) key[GRAPH_ID] != _g->_graph_id) {
+            _v = 0;
+            return;
+        }
+        _v = vertex_id;
+    }
 }
