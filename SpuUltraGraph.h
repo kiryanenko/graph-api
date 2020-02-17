@@ -106,6 +106,44 @@ namespace SPU_GRAPH
 
         //////////////////// Итераторы и контейнеры /////////////////////////
 
+        class EdgeIterator :
+                public iterator_facade<
+                        EdgeIterator,
+                        edge_descriptor,
+                        bidirectional_traversal_tag,
+                        edge_descriptor>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_g;
+            id_t _edge;
+
+        public:
+            EdgeIterator(const SpuUltraGraph *g, id_t edge=0) : _g(g), _edge(edge) {}
+            edge_descriptor dereference() const { return _edge; }
+            bool equal(const EdgeIterator& other) const { return _edge == other._edge; }
+            void increment();
+            void decrement();
+        };
+
+        /// Итератор по всем ребрам
+        typedef EdgeIterator edge_iterator;
+
+        /// Контейнер содержащий все ребра графа
+        class Edges
+        {
+            const SpuUltraGraph *_g;
+
+        public:
+            typedef edge_iterator iterator;
+
+            Edges(const SpuUltraGraph *g) : _g(g) {}
+            iterator begin() { iterator i(_g); return ++i; }
+            iterator end() { return {_g, _g->max_edge_id() + 1}; }
+        };
+
+
+
         /// Итератор по параллельным ребрам от вершины from к to
         class ParallelEdgesIterator :
                 public iterator_facade<
@@ -289,7 +327,9 @@ namespace SPU_GRAPH
         /// Возвращает контейнер исходящих ребер от вершины v
         InEdges in_edges(vertex_descriptor v) const { return {this, v}; }
 
+        /// Метод для отладки. Распечатывает структуру vertex
         void print_vertex_struct() const;
+        /// Метод для отладки. Распечатывает структуру edge
         void print_edge_struct() const;
 
     protected:
