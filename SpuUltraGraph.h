@@ -119,6 +119,7 @@ namespace SPU_GRAPH
             vertex_descriptor _v;
 
         public:
+            VertexIterator() : _g(nullptr) {}
             VertexIterator(const SpuUltraGraph *g, vertex_descriptor v=0) : _g(g), _v(v) {}
             vertex_descriptor dereference() const { return _v; }
             bool equal(const VertexIterator& other) const { return _v == other._v; }
@@ -126,7 +127,7 @@ namespace SPU_GRAPH
             void decrement();
         };
 
-        /// Итератор по всем ребрам
+        /// Итератор по всем вершинам
         typedef VertexIterator vertex_iterator;
 
         /// Контейнер содержащий все ребра графа
@@ -156,6 +157,7 @@ namespace SPU_GRAPH
             edge_descriptor _edge;
 
         public:
+            EdgeIterator() : _g(nullptr) {}
             EdgeIterator(const SpuUltraGraph *g, edge_descriptor edge=0) : _g(g), _edge(edge) {}
             edge_descriptor dereference() const { return _edge; }
             bool equal(const EdgeIterator& other) const { return _edge == other._edge; }
@@ -357,6 +359,10 @@ namespace SPU_GRAPH
         /// Само ребро НЕ удаляется
         void remove_edge(vertex_descriptor from, vertex_descriptor to);
 
+        /// Возвращает контейнер содержащий все вершины графа
+        Vertices vertices() const { return {this}; }
+        /// Возвращает контейнер содержащий все ребра графа
+        Edges edges() const { return {this}; }
         /// Возвращает контейнер параллельных ребер от вершины from к to
         ParallelEdges parallel_edges(vertex_descriptor from, vertex_descriptor to) const;
         /// Возвращает контейнер исходящих ребер от вершины v

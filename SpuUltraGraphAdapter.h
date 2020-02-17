@@ -29,12 +29,23 @@ namespace boost {
     inline SpuUltraGraph::degree_size_type out_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { return g.out_degree(v); }
     inline SpuUltraGraph::degree_size_type in_degree(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { return g.in_degree(v); }
 
-    inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator> out_edges(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+
+    inline std::pair<SpuUltraGraph::vertex_iterator, SpuUltraGraph::vertex_iterator> vertices(const SpuUltraGraph &g) {
+        auto vertices = g.vertices();
+        return {vertices.begin(), vertices.end()};
+    }
+
+    inline std::pair<SpuUltraGraph::edge_iterator, SpuUltraGraph::edge_iterator> edges(const SpuUltraGraph &g) {
+        auto edges = g.edges();
+        return {edges.begin(), edges.end()};
+    }
+
+    inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator> out_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
         auto edges = g.out_edges(v);
         return {edges.begin(), edges.end()};
     }
 
-    inline std::pair<SpuUltraGraph::in_edge_iterator, SpuUltraGraph::in_edge_iterator> in_edges(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) {
+    inline std::pair<SpuUltraGraph::in_edge_iterator, SpuUltraGraph::in_edge_iterator> in_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
         auto edges = g.in_edges(v);
         return {edges.begin(), edges.end()};
     }
