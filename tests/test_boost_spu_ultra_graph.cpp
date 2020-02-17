@@ -3,13 +3,12 @@
 //
 
 
-#include "../SpuUltraGraph.h"
 #include "../SpuUltraGraphAdapter.h"
 
 
 #include <boost/test/unit_test.hpp>
 #include <boost/graph/graph_concepts.hpp>
-//#include <boost/graph/graph_test.hpp>
+#include "graph_test.h"
 
 
 BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
@@ -21,10 +20,11 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     struct Fixture
     {
-        Fixture() : graph() {}
-        ~Fixture() = default;
-
         SpuUltraGraph graph;
+        graph_test<SpuUltraGraph> graph_tests;
+
+        Fixture() : graph()  {}
+        ~Fixture() = default;
     };
 
 
@@ -35,8 +35,7 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_add_vertex, Fixture)
     {
-//        graph_test<SpuUltraGraph> graph_tests;
-//        graph_tests.test_add_vertex(graph);
+        graph_tests.test_add_vertex(graph);
     }
 
 

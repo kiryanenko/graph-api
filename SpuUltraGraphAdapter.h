@@ -62,13 +62,13 @@ namespace boost {
     public:
         typedef boost::readable_property_map_tag category;
         typedef SPU_GRAPH::id_t value_type;
-        typedef SPU_GRAPH::id_t* reference;
+        typedef SPU_GRAPH::id_t reference;
         typedef SpuUltraGraph::vertex_descriptor key_type;
-        long operator[](SpuUltraGraph::vertex_descriptor v) const { return v; }
+        SPU_GRAPH::id_t operator[](SpuUltraGraph::vertex_descriptor v) const { return v; }
     };
 
     inline spu_ug_vertex_id_map get(vertex_index_t, const SpuUltraGraph &g) { return {}; }
-    inline spu_ug_vertex_id_map get(vertex_all_t, const SpuUltraGraph &g) { return {}; }
+
 
     template <>
     struct property_map<SpuUltraGraph, vertex_index_t> {
@@ -76,10 +76,22 @@ namespace boost {
         typedef spu_ug_vertex_id_map const_type;
     };
 
+    class spu_ug_vertex_data_map : public boost::put_get_helper<SPU_GRAPH::id_t, spu_ug_vertex_data_map>
+    {
+    public:
+        typedef boost::lvalue_property_map_tag category;
+        typedef SpuUltraGraph::vertex_descriptor value_type;
+        typedef SpuUltraGraph::vertex_descriptor& reference;
+        typedef SpuUltraGraph::vertex_descriptor key_type;
+        SpuUltraGraph::vertex_descriptor& operator[](SpuUltraGraph::vertex_descriptor& v) const { return v; }
+        const SpuUltraGraph::vertex_descriptor& operator[](const SpuUltraGraph::vertex_descriptor& v) const { return v; }
+    };
+    inline spu_ug_vertex_data_map get(vertex_all_t, const SpuUltraGraph &g) { return {}; }
+
     template <>
     struct property_map<SpuUltraGraph, vertex_all_t> {
-        typedef spu_ug_vertex_id_map type;
-        typedef spu_ug_vertex_id_map const_type;
+        typedef spu_ug_vertex_data_map type;
+        typedef spu_ug_vertex_data_map const_type;
     };
 
 
@@ -88,22 +100,33 @@ namespace boost {
     public:
         typedef boost::readable_property_map_tag category;
         typedef SPU_GRAPH::id_t value_type;
-        typedef SPU_GRAPH::id_t* reference;
+        typedef SPU_GRAPH::id_t reference;
         typedef SpuUltraGraph::edge_descriptor key_type;
-        long operator[](SpuUltraGraph::edge_descriptor v) const { return v; }
+        SPU_GRAPH::id_t operator[](SpuUltraGraph::edge_descriptor v) const { return v; }
     };
     inline spu_ug_edge_id_map get(edge_index_t, const SpuUltraGraph &g) { return {}; }
-    inline spu_ug_edge_id_map get(edge_all_t, const SpuUltraGraph &g) { return {}; }
 
     template <>
     struct property_map<SpuUltraGraph, edge_index_t> {
         typedef spu_ug_edge_id_map type;
         typedef spu_ug_edge_id_map const_type;
     };
+
+    class spu_ug_edge_data_map : public boost::put_get_helper<SPU_GRAPH::id_t, spu_ug_edge_data_map>
+    {
+    public:
+        typedef boost::lvalue_property_map_tag category;
+        typedef SpuUltraGraph::edge_descriptor value_type;
+        typedef SpuUltraGraph::edge_descriptor& reference;
+        typedef SpuUltraGraph::edge_descriptor key_type;
+        SpuUltraGraph::edge_descriptor& operator[](SpuUltraGraph::edge_descriptor& e) const { return e; }
+        const SpuUltraGraph::edge_descriptor& operator[](const SpuUltraGraph::edge_descriptor& e) const { return e; }
+    };
+    inline spu_ug_edge_data_map get(edge_all_t, const SpuUltraGraph &g) { return {}; }
     template <>
     struct property_map<SpuUltraGraph, edge_all_t> {
-        typedef spu_ug_edge_id_map type;
-        typedef spu_ug_edge_id_map const_type;
+        typedef spu_ug_edge_data_map type;
+        typedef spu_ug_edge_data_map const_type;
     };
 }
 
