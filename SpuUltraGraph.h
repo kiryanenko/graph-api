@@ -242,10 +242,10 @@ namespace SPU_GRAPH
 
             const SpuUltraGraph *_g;
             vertex_descriptor _v;
-            id_t _edge;
+            edge_descriptor _edge;
 
         public:
-            AdjacentEdgesIterator(const SpuUltraGraph *g, vertex_descriptor v, id_t edge=0) : _g(g), _v(v), _edge(edge) {}
+            AdjacentEdgesIterator(const SpuUltraGraph *g, vertex_descriptor v, edge_descriptor edge=0) : _g(g), _v(v), _edge(edge) {}
             edge_descriptor dereference() const { return _edge; }
             bool equal(const AdjacentEdgesIterator& other) const { return _edge == other._edge; }
             void increment() {
@@ -268,6 +268,11 @@ namespace SPU_GRAPH
                 }
                 _edge = key[EDGE_ID];
             }
+
+            static AdjacentEdgesIterator begin(const SpuUltraGraph *g, vertex_descriptor v) { auto i = AdjacentEdgesIterator::rend(g, v); return ++i; }
+            static AdjacentEdgesIterator end(const SpuUltraGraph *g, vertex_descriptor v) { return {g, v, g->max_edge_id() + 1}; }
+            static AdjacentEdgesIterator rbegin(const SpuUltraGraph *g, vertex_descriptor v) { auto i = AdjacentEdgesIterator::end(g, v); return --i; }
+            static AdjacentEdgesIterator rend(const SpuUltraGraph *g, vertex_descriptor v) { return {g, v}; }
         };
 
         /// Итератор по исходящим ребрам
@@ -285,8 +290,8 @@ namespace SPU_GRAPH
             typedef out_edge_iterator iterator;
 
             OutEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
-            iterator begin() { iterator i(_g, _v); return ++i; }
-            iterator end() { return {_g, _v, _g->max_edge_id() + 1}; }
+            iterator begin() { return iterator::begin(_g, _v); }
+            iterator end() { return iterator::end(_g, _v); }
         };
 
 
@@ -299,8 +304,92 @@ namespace SPU_GRAPH
             typedef in_edge_iterator iterator;
 
             InEdges(const SpuUltraGraph *g, SpuUltraGraph::vertex_descriptor v) : _g(g), _v(v) {}
-            iterator begin() { iterator i(_g, _v); return ++i; }
-            iterator end() { return {_g, _v,_g->max_edge_id() + 1}; }
+            iterator begin() { return iterator::begin(_g, _v); }
+            iterator end() { return iterator::end(_g, _v); }
+        };
+
+
+
+        /// Итератор по стокам для ребра e
+        class TargetIterator :
+                public iterator_facade<
+                        TargetIterator,
+                        vertex_descriptor,
+                        bidirectional_traversal_tag,
+                        vertex_descriptor>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_g;
+            edge_descriptor _e;
+            vertex_descriptor _v;
+
+        public:
+            TargetIterator(const SpuUltraGraph *g=nullptr, edge_descriptor e=0, vertex_descriptor v=0) : _g(g), _e(e), _v(v) {}
+            vertex_descriptor dereference() const { return _v; }
+            bool equal(const TargetIterator& other) const { return _v == other._v && _e == other._e; }
+            void increment();
+            void decrement();
+
+            static TargetIterator begin(const SpuUltraGraph *g, edge_descriptor e) { auto i = TargetIterator::rend(g, e); return ++i; }
+            static TargetIterator end(const SpuUltraGraph *g, edge_descriptor e) { return {g, e, g->max_vertex_id() + 1}; }
+            static TargetIterator rbegin(const SpuUltraGraph *g, edge_descriptor e) { auto i = TargetIterator::end(g, e); return --i; }
+            static TargetIterator rend(const SpuUltraGraph *g, edge_descriptor e) { return {g, e}; }
+        };
+
+
+
+        /// Итератор по вершинам смежным вершине v
+        /// Итератор проходит по всем ребрам исходящих от v,
+        /// т.о. при прохождении по параллельным ребрам будут повторяться вершины
+        class AdjacentVerticesIterator :
+                public iterator_facade<
+                        AdjacentVerticesIterator,
+                        vertex_descriptor,
+                        bidirectional_traversal_tag,
+                        vertex_descriptor>
+        {
+            friend class iterator_core_access;
+
+            const SpuUltraGraph *_g;
+            vertex_descriptor _v;
+            out_edge_iterator _edge_iter;
+            TargetIterator _target_iter;
+
+        public:
+            /// Конструктор итератора по вершинам смежным вершине v
+            /// \param g Граф
+            /// \param v Вершина относительно которой будет проходить итератор по смежным вершинам
+            /// \param e Текущее ребро
+            /// \param u Текущая вершина
+            AdjacentVerticesIterator(const SpuUltraGraph *g=nullptr, vertex_descriptor v=0, edge_descriptor e=0, vertex_descriptor u=0) :
+                _g(g), _v(v), _edge_iter(g, e), _target_iter(g, u) {}
+            vertex_descriptor dereference() const { return *_target_iter; }
+            bool equal(const AdjacentVerticesIterator& other) const { return _target_iter == other._target_iter; }
+            void increment();
+            void decrement();
+
+            static AdjacentVerticesIterator begin(const SpuUltraGraph *g, vertex_descriptor v) { auto i = AdjacentVerticesIterator::rend(g, v); return ++i; }
+            static AdjacentVerticesIterator end(const SpuUltraGraph *g, vertex_descriptor v) { return {g, v, g->max_edge_id() + 1, g->max_vertex_id() + 1}; }
+            static AdjacentVerticesIterator rbegin(const SpuUltraGraph *g, vertex_descriptor v) { auto i = AdjacentVerticesIterator::end(g, v); return --i; }
+            static AdjacentVerticesIterator rend(const SpuUltraGraph *g, vertex_descriptor v) { return {g, v}; }
+        };
+
+        /// Итератор по смежным вершинам
+        typedef AdjacentVerticesIterator adjacency_iterator;
+
+        /// Контейнер содержащий все ребра графа
+        class AdjacentVertices
+        {
+            const SpuUltraGraph *_g;
+            vertex_descriptor _v;
+
+        public:
+            typedef adjacency_iterator iterator;
+
+            AdjacentVertices(const SpuUltraGraph *g, vertex_descriptor v) : _g(g), _v(v) {}
+            iterator begin() { return iterator::begin(_g, _v); }
+            iterator end() { return iterator::end(_g, _v); }
         };
 
         ////////////////////////////////////////////////////////
@@ -350,7 +439,7 @@ namespace SPU_GRAPH
         edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);
         weight_t get_weight(edge_descriptor edge);
 
-        edges_size_type num_edges();
+        edges_size_type num_edges() const;
         edges_size_type source_cnt(edge_descriptor e);
         edges_size_type target_cnt(edge_descriptor e);
 
@@ -368,6 +457,8 @@ namespace SPU_GRAPH
 
         /// Возвращает контейнер содержащий все вершины графа
         Vertices vertices() const { return {this}; }
+        /// Возвращает контейнер содержащий вершины смежные вершине v
+        AdjacentVertices adjacent_vertices(vertex_descriptor v) const { return {this, v}; }
         /// Возвращает контейнер содержащий все ребра графа
         Edges edges() const { return {this}; }
         /// Возвращает контейнер параллельных ребер от вершины from к to

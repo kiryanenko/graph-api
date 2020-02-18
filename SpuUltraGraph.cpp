@@ -263,7 +263,7 @@ namespace SPU_GRAPH
     }
 
 
-    SpuUltraGraph::edges_size_type SpuUltraGraph::num_edges() {
+    SpuUltraGraph::edges_size_type SpuUltraGraph::num_edges() const {
         auto key = edge_key();
         auto res = _edge_struct.search(key);
         if (res.status == OK) {
@@ -820,7 +820,7 @@ namespace SPU_GRAPH
 
     void SpuUltraGraph::VertexIterator::decrement() {
         auto key = _g->vertex_key(_v);
-        auto resp = _g->_vertex_struct.ngr(key);
+        auto resp = _g->_vertex_struct.nsm(key);
         key = resp.key;
         auto vertex_id = key[VERTEX_ID];
         if (resp.status == ERR
@@ -831,5 +831,66 @@ namespace SPU_GRAPH
             return;
         }
         _v = vertex_id;
+    }
+
+
+
+    void SpuUltraGraph::TargetIterator::increment() {
+        auto key = _g->edge_key(_e, 1, _v);
+        auto resp = _g->_edge_struct.ngr(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (!_g->is_valid_edge_resp(resp, _e, 1) || !_g->is_vertex_id_valid(vertex_id)) {
+            _v = _g->max_vertex_id() + 1;
+            return;
+        }
+        _v = vertex_id;
+    }
+
+    void SpuUltraGraph::TargetIterator::decrement() {
+        auto key = _g->edge_key(_e, 1, _v);
+        auto resp = _g->_edge_struct.nsm(key);
+        key = resp.key;
+        auto vertex_id = key[VERTEX_ID];
+        if (!_g->is_valid_edge_resp(resp, _e, 1) || !_g->is_vertex_id_valid(vertex_id)) {
+            _v = 0;
+            return;
+        }
+        _v = vertex_id;
+    }
+
+
+    void SpuUltraGraph::AdjacentVerticesIterator::increment() {
+        if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
+            ++_edge_iter;
+            _target_iter = TargetIterator::rend(_g, *_edge_iter);
+            return;
+        }
+        ++_target_iter;
+        while (_target_iter == TargetIterator::end(_g, *_edge_iter)) {
+            ++_edge_iter;
+            if (_edge_iter == out_edge_iterator::end(_g, _v)) {
+                _target_iter = TargetIterator::end(_g, *_edge_iter);
+                return;
+            }
+            _target_iter = TargetIterator::begin(_g, *_edge_iter);
+        }
+    }
+
+    void SpuUltraGraph::AdjacentVerticesIterator::decrement() {
+        if (_edge_iter == out_edge_iterator::end(_g, _v)) {
+            --_edge_iter;
+            _target_iter = TargetIterator::end(_g, *_edge_iter);
+            return;
+        }
+        --_target_iter;
+        while (_target_iter == TargetIterator::rend(_g, *_edge_iter)) {
+            --_edge_iter;
+            if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
+                _target_iter = TargetIterator::rend(_g, *_edge_iter);
+                return;
+            }
+            _target_iter = TargetIterator::rbegin(_g, *_edge_iter);
+        }
     }
 }

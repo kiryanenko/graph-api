@@ -26,6 +26,7 @@ namespace boost {
     inline void remove_vertex(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { g.remove_vertex(v); }
 
     inline SpuUltraGraph::vertices_size_type num_vertices(const SpuUltraGraph &g) { return g.num_vertices(); }
+    inline SpuUltraGraph::edges_size_type num_edges(const SpuUltraGraph &g) { return g.num_edges(); }
     inline SpuUltraGraph::degree_size_type out_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.out_degree(v); }
     inline SpuUltraGraph::degree_size_type in_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.in_degree(v); }
 
@@ -38,17 +39,25 @@ namespace boost {
         return {vertices.begin(), vertices.end()};
     }
 
+    inline std::pair<SpuUltraGraph::adjacency_iterator, SpuUltraGraph::adjacency_iterator>
+    adjacent_vertices(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
+        auto vertices = g.adjacent_vertices(v);
+        return {vertices.begin(), vertices.end()};
+    }
+
     inline std::pair<SpuUltraGraph::edge_iterator, SpuUltraGraph::edge_iterator> edges(const SpuUltraGraph &g) {
         auto edges = g.edges();
         return {edges.begin(), edges.end()};
     }
 
-    inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator> out_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
+    inline std::pair<SpuUltraGraph::out_edge_iterator, SpuUltraGraph::out_edge_iterator>
+    out_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
         auto edges = g.out_edges(v);
         return {edges.begin(), edges.end()};
     }
 
-    inline std::pair<SpuUltraGraph::in_edge_iterator, SpuUltraGraph::in_edge_iterator> in_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
+    inline std::pair<SpuUltraGraph::in_edge_iterator, SpuUltraGraph::in_edge_iterator>
+    in_edges(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
         auto edges = g.in_edges(v);
         return {edges.begin(), edges.end()};
     }
@@ -56,6 +65,7 @@ namespace boost {
 
     //////////////////////// Свойства графа /////////////////////////////
 
+    // FIXME: Код нуждается в рефакторинге
 
     class spu_ug_vertex_id_map : public boost::put_get_helper<SPU_GRAPH::id_t, spu_ug_vertex_id_map>
     {
