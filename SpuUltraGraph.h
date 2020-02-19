@@ -363,7 +363,7 @@ namespace SPU_GRAPH
             /// \param e Текущее ребро
             /// \param u Текущая вершина
             AdjacentVerticesIterator(const SpuUltraGraph *g=nullptr, vertex_descriptor v=0, edge_descriptor e=0, vertex_descriptor u=0) :
-                _g(g), _v(v), _edge_iter(g, e), _target_iter(g, u) {}
+                _g(g), _v(v), _edge_iter(g, v, e), _target_iter(g, e, u) {}
             vertex_descriptor dereference() const { return *_target_iter; }
             bool equal(const AdjacentVerticesIterator& other) const { return _target_iter == other._target_iter; }
             void increment();

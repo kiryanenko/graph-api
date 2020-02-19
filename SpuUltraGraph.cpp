@@ -776,8 +776,8 @@ namespace SPU_GRAPH
 
 
     void SpuUltraGraph::EdgeIterator::increment() {
-        auto key = _g->edge_key(_edge);
-        auto resp = _g->_edge_struct.ngr(key);
+        auto key = _g->edge_key(_edge  + 1);
+        auto resp = _g->_edge_struct.ngr(key - 1);
         key = resp.key;
         if (resp.status == ERR
             || (int) key[INCIDENCE] != 0
@@ -804,8 +804,8 @@ namespace SPU_GRAPH
     }
 
     void SpuUltraGraph::VertexIterator::increment() {
-        auto key = _g->vertex_key(_v);
-        auto resp = _g->_vertex_struct.ngr(key);
+        auto key = _g->vertex_key(_v + 1);
+        auto resp = _g->_vertex_struct.ngr(key - 1);
         key = resp.key;
         auto vertex_id = key[VERTEX_ID];
         if (resp.status == ERR
@@ -870,7 +870,7 @@ namespace SPU_GRAPH
         while (_target_iter == TargetIterator::end(_g, *_edge_iter)) {
             ++_edge_iter;
             if (_edge_iter == out_edge_iterator::end(_g, _v)) {
-                _target_iter = TargetIterator::end(_g, *_edge_iter);
+                _target_iter = TargetIterator::end(_g, _g->max_edge_id() + 1);
                 return;
             }
             _target_iter = TargetIterator::begin(_g, *_edge_iter);
@@ -887,7 +887,7 @@ namespace SPU_GRAPH
         while (_target_iter == TargetIterator::rend(_g, *_edge_iter)) {
             --_edge_iter;
             if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
-                _target_iter = TargetIterator::rend(_g, *_edge_iter);
+                _target_iter = TargetIterator::rend(_g, 0);
                 return;
             }
             _target_iter = TargetIterator::rbegin(_g, *_edge_iter);

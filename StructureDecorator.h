@@ -17,7 +17,7 @@ namespace SPU_GRAPH
         Structure<> *_struct = nullptr;
 
     public:
-        StructureDecorator() : _struct(new Structure<>) {}
+        StructureDecorator() : _struct(nullptr) {}
         explicit StructureDecorator(Structure<> *structure) : _struct(structure) {}
 
         void set(Structure<> *structure) { _struct = structure; }
