@@ -30,7 +30,13 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_AUTO_TEST_CASE(test_check_concept)
     {
+        BOOST_CONCEPT_ASSERT(( GraphConcept<SpuUltraGraph> ));
         BOOST_CONCEPT_ASSERT(( MutableGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( VertexListGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( EdgeListGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( IncidenceGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( AdjacencyGraphConcept<SpuUltraGraph> ));
     }
 
     BOOST_FIXTURE_TEST_CASE(test_add_vertex, Fixture)
@@ -43,6 +49,14 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         auto v1 = graph.add_vertex();
         auto v2 = graph.add_vertex();
         graph_tests.test_add_edge(v1, v2, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_remove_edge, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        graph.add_edge(v1, v2);
+//        graph_tests.test_remove_edge(v1, v2, graph);
     }
 
 
