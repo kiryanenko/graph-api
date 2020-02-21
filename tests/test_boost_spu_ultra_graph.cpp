@@ -67,5 +67,18 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         graph_tests.test_remove_edge(e, graph);
     }
 
+    BOOST_FIXTURE_TEST_CASE(test_clear_vertex, Fixture)
+    {
+        auto v1 = graph.add_vertex();
+        auto v2 = graph.add_vertex();
+        auto v3 = graph.add_vertex();
+        graph.add_edge(v1, v2);
+        graph.add_edge(v1, v2);
+        graph.add_edge(v2, v1);
+        graph.add_edge(v1, v3);
+        graph.add_edge(v2, v3);
+        graph_tests.test_clear_vertex(v1, graph);
+    }
+
 
 BOOST_AUTO_TEST_SUITE_END()

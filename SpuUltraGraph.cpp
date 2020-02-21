@@ -464,12 +464,19 @@ namespace SPU_GRAPH
     }
 
     /// Отсоединяет вершину v от всех ребер
-    void SpuUltraGraph::clear_vertex(SpuUltraGraph::vertex_descriptor v) {
+    /// Если после ребро не соединено ни с одной вершиной, то оно удаляется
+    void SpuUltraGraph::clear_vertex(SpuUltraGraph::vertex_descriptor v, bool remove_edges) {
         for (auto e : out_edges(v)) {
             disconnect_source(v, e);
+            if (remove_edges && source_cnt(e) == 0) {
+                remove_edge(e);
+            }
         }
         for (auto e : in_edges(v)) {
             disconnect_target(v, e);
+            if (remove_edges && target_cnt(e) == 0) {
+                remove_edge(e);
+            }
         }
     }
 

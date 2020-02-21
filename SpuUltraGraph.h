@@ -413,7 +413,9 @@ namespace SPU_GRAPH
         vertices_size_type in_degree(vertex_descriptor v) const;
 
         /// Отсоединяет вершину v от всех ребер
-        void clear_vertex(vertex_descriptor v);
+        /// \param v Вершина
+        /// \param remove_edges При true если у ребра не останется вершин "источников" или "стоков", то ребро будет удалено
+        void clear_vertex(vertex_descriptor v, bool remove_edges=true);
 
         // Отсоединят источник v от ребра e
         void disconnect_source(vertex_descriptor v, edge_descriptor e);

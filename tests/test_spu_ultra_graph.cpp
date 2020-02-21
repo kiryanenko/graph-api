@@ -255,8 +255,6 @@ BOOST_AUTO_TEST_SUITE(testSpuUltraGraph)
         graph.clear_vertex(v1);
         BOOST_CHECK_EQUAL(graph.out_degree(v1), 0);
         BOOST_CHECK_EQUAL(graph.in_degree(v1), 0);
-        BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 0);
-        BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 1);
     }
 
     BOOST_FIXTURE_TEST_CASE(test_remove_vertex, Fixture)
@@ -273,8 +271,6 @@ BOOST_AUTO_TEST_SUITE(testSpuUltraGraph)
         auto e31 = graph.add_edge(v3, v1);
 
         graph.remove_vertex(v1);
-        BOOST_CHECK_EQUAL(graph.source_cnt(e12_1), 0);
-        BOOST_CHECK_EQUAL(graph.target_cnt(e12_1), 1);
         BOOST_CHECK_EQUAL(graph.num_vertices(), 2);
     }
 
