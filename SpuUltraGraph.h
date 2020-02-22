@@ -438,7 +438,11 @@ namespace SPU_GRAPH
         bool has_edge(edge_descriptor id) const;
 
         edge_descriptor get_edge_descriptor(id_t edge_id);
+        /// Формирование edge_descriptor из веса ребра и индекса
+        /// Это необходимо, например, для добавления взвешенных ребер.
+        /// Индекс ребра это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса.
         edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);
+        /// Получение веса ребра из edge_descriptor
         weight_t get_weight(edge_descriptor edge);
 
         edges_size_type num_edges() const;
@@ -456,6 +460,13 @@ namespace SPU_GRAPH
         /// Удаляются все соединения от вершины from к to.
         /// Само ребро НЕ удаляется
         void remove_edge(vertex_descriptor from, vertex_descriptor to);
+
+        /// Получить данные вершины
+        /// \throw NotFound если нет вершины v
+        value_t get_vertex_value(vertex_descriptor v);
+        /// Получить данные ребра
+        /// \throw NotFound если нет вершины e
+        value_t get_edge_value(edge_descriptor e);
 
         /// Возвращает контейнер содержащий все вершины графа
         Vertices vertices() const { return {this}; }

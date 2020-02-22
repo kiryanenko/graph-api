@@ -626,14 +626,16 @@ namespace SPU_GRAPH
         auto fields = Fields(_edge_id_fields_len);
         fields[EDGE_ID] = edge_id;
         fields[WEIGHT] = _graph_traits.default_weight;
-        return data_t(fields);
+        data_t data = fields;
+        return data;
     }
 
     SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id, weight_t weight) {
         auto fields = Fields(_edge_id_fields_len);
         fields[EDGE_ID] = edge_id;
         fields[WEIGHT] = weight;
-        return data_t(fields);
+        data_t data = fields;
+        return data;
     }
 
     void SpuUltraGraph::disconnect_source(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::edge_descriptor e) {
@@ -700,6 +702,22 @@ namespace SPU_GRAPH
                && (edge_descriptor) key[EDGE_ID] == e
                && (int) key[INCIDENCE] == incidence
                && (id_t) key[GRAPH_ID] == _graph_id;
+    }
+
+    value_t SpuUltraGraph::get_vertex_value(vertex_descriptor v) {
+        auto resp = _vertex_struct.search(vertex_key(v));
+        if (resp.status == ERR) {
+            throw NotFound();
+        }
+        return resp.value;
+    }
+
+    value_t SpuUltraGraph::get_edge_value(SpuUltraGraph::edge_descriptor e) {
+        auto resp = _edge_struct.search(edge_key(e));
+        if (resp.status == ERR) {
+            throw NotFound();
+        }
+        return resp.value;
     }
 
 

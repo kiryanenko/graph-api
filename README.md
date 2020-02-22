@@ -70,3 +70,14 @@
 чтобы в старших битах идентификатора ребра находился вес этого ребра
 (для формирования такого идентификатора имеется вспомогательный метод 
 `edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);`).
+
+
+## Пример работы с SpuUltraGraph
+
+```c++
+#include "SpuUltraGraph.h"
+
+int main() {
+    return 0;
+}
+```

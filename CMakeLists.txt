@@ -7,7 +7,7 @@ set(SPU_SIMULATOR ON)
 set(CMAKE_CXX_STANDARD 14)
 
 if(${SPU_SIMULATOR})
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSPU_SIMULATOR --coverage")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSPU_SIMULATOR")
 endif(${SPU_SIMULATOR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -Wall -ggdb -DSPU${SPU_ARCH}")
@@ -34,3 +34,8 @@ target_link_libraries(${TEST} graph_api ${Boost_LIBRARIES})
 
 enable_testing()
 add_test (${TEST} ${TEST})
+
+
+# Примеры
+add_executable(graph_api_example examples/main.cpp)
+target_link_libraries(graph_api_example graph_api ${Boost_LIBRARIES})
