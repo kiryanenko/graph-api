@@ -70,5 +70,62 @@ int main()
     // Получение данных вершины. Если вершина не найдена будет исключение
     cout << "Данные ребра e3 = " << (const char *) graph.get_edge_value(e3) << endl;
 
+    // Проверка наличия вершины
+    cout << "Наличие вершины v1 = " << graph.has_vertex(v1) << endl;
+    // Проверка наличия ребра
+    cout << "Наличие ребра е1 = " << graph.has_edge(e1) << endl;
+
+    cout << "Кол-во вершин = " << graph.num_vertices() << endl;
+    cout << "Кол-во ребер = " << graph.num_edges() << endl;
+    cout << "Кол-во исходящих ребер у вершины v1 = " << graph.out_degree(v1) << endl;
+    cout << "Кол-во входящих ребер у вершины v1 = " << graph.in_degree(v1) << endl;
+    cout << "Кол-во вершин 'источников' у ребра e12 = " << graph.source_cnt(e12) << endl;
+    cout << "Кол-во вершин 'стоков' у ребра e12 = " << graph.target_cnt(e12) << endl;
+
+
+    // Удаление вершины
+    graph.remove_vertex(v1);
+    // Удаление всех ребер соединенных с вершиной v2
+    graph.clear_vertex(v2);
+
+    // Удаление ребра
+    graph.remove_edge(e1);
+    // Удаление всех ребер от v2 к v3
+    graph.remove_edge(v2, v3);
+
+
+    v1 = graph.add_vertex(1);
+    graph.add_edge(10, v1, v2);
+    graph.add_edge(11, v1, v2);
+    graph.add_edge(12, v1, v3);
+    graph.add_edge(13, v2, v1);
+    graph.add_edge(14, v2, v1);
+    graph.add_edge(15, v3, v1);
+
+    cout << "Итерация по всем вершинам: ";
+    for (auto v : graph.vertices())
+        cout << v <<  ' ';
+    cout << endl;
+
+    cout << "Итерация по всем ребрам: ";
+    for (auto e : graph.edges())
+        cout << e <<  ' ';
+    cout << endl;
+
+    cout << "Итерация по исходящим ребрам у вершины v1: ";
+    for (auto e : graph.out_edges(v1))
+        cout << e <<  ' ';
+    cout << endl;
+
+    cout << "Итерация по входящим ребрам у вершины v1: ";
+    for (auto e : graph.in_edges(v1))
+        cout << e <<  ' ';
+    cout << endl;
+
+    cout << "Итерация по параллельным ребрам от вершины v1 к v2: ";
+    for (auto e : graph.parallel_edges(v1, v2))
+        cout << e <<  ' ';
+    cout << endl;
+
     return 0;
 }
