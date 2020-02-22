@@ -200,6 +200,11 @@ int main()
         cout << e <<  ' ';
     cout << endl;
 
+    cout << "Итерация по смежным вершинам для v1: ";
+    for (auto v : graph.adjacent_vertices(v1))
+        cout << v <<  ' ';
+    cout << endl;
+
     return 0;
 }
 ```
