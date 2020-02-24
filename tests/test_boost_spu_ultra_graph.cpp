@@ -83,6 +83,7 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         graph_tests.test_clear_vertex(v1, graph);
     }
 
+
     BOOST_FIXTURE_TEST_CASE(test_incidence_graph, Fixture)
     {
         const std::vector<SpuUltraGraph::vertex_descriptor> vertex_set = {v1, v2, v3, v4};
@@ -97,6 +98,22 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
                 {v3, v2},
         };
         graph_tests.test_incidence_graph(vertex_set, edge_set, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_bidirectional_graph, Fixture)
+    {
+        const std::vector<SpuUltraGraph::vertex_descriptor> vertex_set = {v1, v2, v3, v4};
+        const std::vector< std::pair<SpuUltraGraph::vertex_descriptor, SpuUltraGraph::vertex_descriptor> > edge_set = {
+                {v1, v1},
+                {v1, v2},
+                {v1, v2},
+                {v1, v3},
+                {v2, v1},
+                {v2, v3},
+                {v3, v1},
+                {v3, v2},
+        };
+        graph_tests.test_bidirectional_graph(vertex_set, edge_set, graph);
     }
 
 
