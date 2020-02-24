@@ -71,6 +71,9 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         BOOST_CONCEPT_ASSERT(( AdjacencyGraphConcept<SpuUltraGraph> ));
     }
 
+    //=========================================================================
+    // Операции изменения
+
     BOOST_FIXTURE_TEST_CASE(test_add_vertex, Fixture)
     {
         graph_tests.test_add_vertex(graph);
@@ -98,6 +101,8 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         graph_tests.test_clear_vertex(v1, graph);
     }
 
+    //=========================================================================
+    // Операции обхода
 
     BOOST_FIXTURE_TEST_CASE(test_incidence_graph, Fixture)
     {
@@ -112,6 +117,11 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
     BOOST_FIXTURE_TEST_CASE(test_adjacency_graph, Fixture)
     {
         graph_tests.test_adjacency_graph(vertex_set, edge_set, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_vertex_list_graph, Fixture)
+    {
+        graph_tests.test_vertex_list_graph(vertex_set, graph);
     }
 
 
