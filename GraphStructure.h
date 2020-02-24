@@ -2,8 +2,8 @@
 // Created by kiryanenko on 12.11.19.
 //
 
-#ifndef GRAPH_API_STRUCTUREDECORATOR_H
-#define GRAPH_API_STRUCTUREDECORATOR_H
+#ifndef GRAPH_API_GRAPHSTRUCTURE_H
+#define GRAPH_API_GRAPHSTRUCTURE_H
 
 #include <spu.h>
 #include <structure.hpp>
@@ -13,14 +13,15 @@ namespace SPU_GRAPH
 {
     using namespace SPU;
 
-    class StructureDecorator {
-        Structure<> *_struct = nullptr;
+    class GraphStructure {
+        std::shared_ptr<AbstractStructure> _struct;
 
     public:
-        StructureDecorator() : _struct(nullptr) {}
-        explicit StructureDecorator(Structure<> *structure) : _struct(structure) {}
+        GraphStructure() : _struct(new Structure<>) {}
+        explicit GraphStructure(std::shared_ptr<AbstractStructure> structure) : _struct(structure ? structure : std::shared_ptr<AbstractStructure>(new Structure<>)) {}
 
-        void set(Structure<> *structure) { _struct = structure; }
+        void set(std::shared_ptr<Structure<>> structure) { _struct = structure; }
+        GraphStructure& operator=(std::shared_ptr<AbstractStructure> structure) { _struct = structure; }
 
         inline status_t insert(SPU::key_t key, value_t value = {0}, flags_t flags = NO_FLAGS) {
             return check_spu_resp_status(_struct->insert( key,  value, flags));
@@ -83,4 +84,4 @@ namespace SPU_GRAPH
     };
 }
 
-#endif //GRAPH_API_STRUCTUREDECORATOR_H
+#endif //GRAPH_API_GRAPHSTRUCTURE_H

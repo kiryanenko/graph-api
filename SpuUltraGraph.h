@@ -8,8 +8,9 @@
 #include <boost/graph/graph_traits.hpp>
 #include <libspu.hpp>
 #include <structure.hpp>
+#include <memory>
 #include "exceptions.h"
-#include "StructureDecorator.h"
+#include "GraphStructure.h"
 #include "StructureIterator.h"
 
 
@@ -36,6 +37,9 @@ namespace SPU_GRAPH
 
 
     struct SpuUltraGraphTraits {
+        GraphStructure vertex_struct;
+        GraphStructure edge_struct;
+
         size_t graph_id_depth = 3;
         size_t vertex_id_depth = 28;
         size_t edge_id_depth = 28;
@@ -45,8 +49,9 @@ namespace SPU_GRAPH
         data_t default_edge_value = 0;
         data_t default_weight = 0;
 
-        Structure<> *vertex_struct = nullptr;
-        Structure<> *edge_struct = nullptr;
+        SpuUltraGraphTraits() {}
+        SpuUltraGraphTraits(GraphStructure vertex_structure, GraphStructure edge_structure) :
+                vertex_struct(vertex_structure), edge_struct(edge_structure) {}
 
         inline size_t depth_sum() { return graph_id_depth + vertex_id_depth + edge_id_depth + weight_depth + 1; }
     };
@@ -63,11 +68,8 @@ namespace SPU_GRAPH
         FieldsLength<SPU_STRUCTURE_ATTRS> _vertex_fields_len;
         FieldsLength<SPU_STRUCTURE_ATTRS> _edge_fields_len;
 
-        bool _should_free_vertex_struct = false;
-        bool _should_free_edge_struct = false;
-
-        StructureDecorator _vertex_struct;
-        StructureDecorator _edge_struct;
+        GraphStructure _vertex_struct;
+        GraphStructure _edge_struct;
 
         id_t _free_vertex_id = 1;
         id_t _free_edge_id = 1;
@@ -396,8 +398,7 @@ namespace SPU_GRAPH
 
 
 
-        explicit SpuUltraGraph(id_t graph_id = 0, SpuUltraGraphTraits spu_graph_traits = SpuUltraGraphTraits());
-        ~SpuUltraGraph();
+        explicit SpuUltraGraph(id_t graph_id = 0, const SpuUltraGraphTraits& spu_graph_traits = SpuUltraGraphTraits());
 
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);

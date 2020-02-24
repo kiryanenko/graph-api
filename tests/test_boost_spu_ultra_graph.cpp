@@ -56,7 +56,6 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
                     {v3, v2},
             };
         }
-        ~Fixture() = default;
     };
 
 
@@ -122,6 +121,11 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
     BOOST_FIXTURE_TEST_CASE(test_vertex_list_graph, Fixture)
     {
         graph_tests.test_vertex_list_graph(vertex_set, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_edge_list_graph, Fixture)
+    {
+        graph_tests.test_edge_list_graph(vertex_set, edge_set, graph);
     }
 
 

@@ -13,7 +13,7 @@ using namespace std;
 namespace SPU_GRAPH
 {
 
-    SpuUltraGraph::SpuUltraGraph(SPU_GRAPH::id_t graph_id, SPU_GRAPH::SpuUltraGraphTraits spu_graph_traits) :
+    SpuUltraGraph::SpuUltraGraph(SPU_GRAPH::id_t graph_id, const SPU_GRAPH::SpuUltraGraphTraits& spu_graph_traits) :
             _graph_id(graph_id),
             _graph_traits(spu_graph_traits),
             _edge_id_fields_len({
@@ -31,7 +31,9 @@ namespace SPU_GRAPH
                                      {EDGE_ID, 0},
                                      {INCIDENCE, 1},
                                      {GRAPH_ID, 0}
-                             })
+                             }),
+            _vertex_struct(spu_graph_traits.vertex_struct),
+            _edge_struct(spu_graph_traits.edge_struct)
     {
         if (!_graph_traits.vertex_id_depth || !_graph_traits.edge_id_depth) {
             throw BadRequest("vertex_id_depth and edge_id_depth should be > 0");
@@ -56,29 +58,7 @@ namespace SPU_GRAPH
         if (graph_id > (id_t) _vertex_fields_len.fieldMask(GRAPH_ID)) {
             throw BadRequest("graph_id exceed graph_id_depth");
         }
-
-        if (!_graph_traits.vertex_struct) {
-            _graph_traits.vertex_struct = new Structure<>;
-            _should_free_vertex_struct = true;
-        }
-        if (!_graph_traits.edge_struct) {
-            _graph_traits.edge_struct = new Structure<>;
-            _should_free_edge_struct = true;
-        }
-        
-        _vertex_struct.set(_graph_traits.vertex_struct);
-        _edge_struct.set(_graph_traits.edge_struct);
     }
-
-    SpuUltraGraph::~SpuUltraGraph() {
-        if (_should_free_vertex_struct) {
-            delete _graph_traits.vertex_struct;
-        }
-        if (_should_free_edge_struct) {
-            delete _graph_traits.edge_struct;
-        }
-    }
-
 
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::add_vertex() {
         return add_vertex(_graph_traits.default_vertex_value);

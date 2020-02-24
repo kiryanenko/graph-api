@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -Wall -ggd
 
 
 add_library(graph_api
-        SpuUltraGraph.cpp SpuUltraGraph.h StructureDecorator.h StructureIterator.h SpuUltraGraphAdapter.h)
+        SpuUltraGraph.cpp SpuUltraGraph.h GraphStructure.h StructureIterator.h SpuUltraGraphAdapter.h)
 
 include_directories(spu-api/libspu)
 add_subdirectory(spu-api)
@@ -23,7 +23,7 @@ target_link_libraries(graph_api spu-api)
 
 # Тесты
 set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_MULTITHREADED OFF)
 find_package (Boost REQUIRED COMPONENTS unit_test_framework REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 

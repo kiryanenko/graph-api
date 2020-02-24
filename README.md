@@ -96,16 +96,12 @@ int main()
     traits.edge_id_depth = 28;      // Кол-во бит под индекс ребра (Индекс ребра НЕ id ребра. id ребра состоит из веса и индекса)
     traits.weight_depth = 4;        // Кол-во бит под вес ребра
     // Указывваю структуры, кот будет использовать наш граф
-    traits.vertex_struct = new Structure<>();
-    traits.edge_struct = new Structure<>();
+    GraphStructure vertex_struct, edge_struct;
+    traits.vertex_struct = vertex_struct;
+    traits.edge_struct = edge_struct;
 
     // Инициализация графа с id = 5 и указанием черт
-    auto custom_graph = new SpuUltraGraph(5, traits);
-
-    // После того как завершили работу с графом следует освободить память
-    delete custom_graph;
-    delete traits.vertex_struct;
-    delete traits.edge_struct;
+    SpuUltraGraph custom_graph = SpuUltraGraph(5, traits);
 
 
     // SpuUltraGraph::vertex_descriptor - тип идентификатора вершины графа (unsigned long)

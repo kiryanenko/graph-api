@@ -15,12 +15,10 @@ BOOST_AUTO_TEST_SUITE(testSpuStructureIterator)
 
     struct Fixture
     {
-        Fixture() : base_struct(),  structure(&base_struct) {}
+        GraphStructure structure;
 
+        Fixture() : structure() {}
         ~Fixture() = default;
-
-        Structure<> base_struct;
-        StructureDecorator structure;
     };
 
 

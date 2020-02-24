@@ -6,7 +6,7 @@
 #define GRAPH_API_STRUCTUREITERATOR_H
 
 #include <boost/iterator/iterator_facade.hpp>
-#include "StructureDecorator.h"
+#include "GraphStructure.h"
 
 namespace SPU_GRAPH {
     using namespace boost;
@@ -22,12 +22,12 @@ namespace SPU_GRAPH {
                     SPU::key_t> {
         friend class iterator_core_access;
 
-        const StructureDecorator *_s;
+        const GraphStructure *_s;
         SPU::pair_t _pair;
         SPU::key_t _end;
 
     public:
-        StructureIterator(const StructureDecorator *structure, SPU::key_t key, SPU::key_t end=0, SPU::status_t status=INIT_STATUS) :
+        StructureIterator(const GraphStructure *structure, SPU::key_t key, SPU::key_t end=0, SPU::status_t status=INIT_STATUS) :
                 _s(structure), _pair({key, 0, status}), _end(end) {
             if (_pair.status == INIT_STATUS) {
                 if (key == data_t(0)) {
@@ -77,13 +77,13 @@ namespace SPU_GRAPH {
 
     /// Контейнер, кот. содержит ключи в диапозоне [start..end], start и end входят в диаопозон.
     class StructureRange {
-        const StructureDecorator *_s;
+        const GraphStructure *_s;
         SPU::key_t _start, _end;
 
     public:
         typedef StructureIterator iterator;
 
-        StructureRange(const StructureDecorator *structure, SPU::key_t start, SPU::key_t end) :
+        StructureRange(const GraphStructure *structure, SPU::key_t start, SPU::key_t end) :
             _s(structure), _start(start), _end(end) {}
 
         iterator begin() { return {_s, _start, _end}; }
