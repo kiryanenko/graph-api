@@ -27,6 +27,7 @@ namespace boost {
 
     inline SpuUltraGraph::vertices_size_type num_vertices(const SpuUltraGraph &g) { return g.num_vertices(); }
     inline SpuUltraGraph::edges_size_type num_edges(const SpuUltraGraph &g) { return g.num_edges(); }
+    inline SpuUltraGraph::degree_size_type degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.degree(v); }
     inline SpuUltraGraph::degree_size_type out_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.out_degree(v); }
     inline SpuUltraGraph::degree_size_type in_degree(SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) { return g.in_degree(v); }
 

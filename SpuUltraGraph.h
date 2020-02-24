@@ -410,6 +410,7 @@ namespace SPU_GRAPH
         bool has_vertex(vertex_descriptor id) const;
 
         vertices_size_type num_vertices() const;
+        vertices_size_type degree(vertex_descriptor v) const { return out_degree(v) + in_degree(v); }
         vertices_size_type out_degree(vertex_descriptor v) const;
         vertices_size_type in_degree(vertex_descriptor v) const;
 
