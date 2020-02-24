@@ -23,7 +23,24 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         SpuUltraGraph graph;
         graph_test<SpuUltraGraph> graph_tests;
 
-        Fixture() : graph()  {}
+        SpuUltraGraph::vertex_descriptor v1, v2, v3, v4;
+        SpuUltraGraph::edge_descriptor e11, e12_1, e12_2, e13, e21,  e23, e32, e31;
+
+        Fixture() : graph()  {
+            v1 = graph.add_vertex();
+            v2 = graph.add_vertex();
+            v3 = graph.add_vertex();
+            v4 = graph.add_vertex();
+
+            e11 = graph.add_edge(v1, v1);
+            e12_1 = graph.add_edge(v1, v2);
+            e12_2 = graph.add_edge(v1, v2);
+            e13 = graph.add_edge(v1, v3);
+            e21 = graph.add_edge(v2, v1);
+            e23 = graph.add_edge(v2, v3);
+            e31 = graph.add_edge(v3, v1);
+            e32 = graph.add_edge(v3, v2);
+        }
         ~Fixture() = default;
     };
 
@@ -46,37 +63,23 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_add_edge, Fixture)
     {
-        auto v1 = graph.add_vertex();
-        auto v2 = graph.add_vertex();
         graph_tests.test_add_edge(v1, v2, graph);
+        graph_tests.test_add_edge(v2, v2, graph);
     }
 
     BOOST_FIXTURE_TEST_CASE(test_remove_uv_edge, Fixture)
     {
-        auto v1 = graph.add_vertex();
-        auto v2 = graph.add_vertex();
-        graph.add_edge(v1, v2);
 //        graph_tests.test_remove_edge(v1, v2, graph);
     }
 
     BOOST_FIXTURE_TEST_CASE(test_remove_edge, Fixture)
     {
-        auto v1 = graph.add_vertex();
-        auto v2 = graph.add_vertex();
-        auto e = graph.add_edge(v1, v2);
-        graph_tests.test_remove_edge(e, graph);
+        graph_tests.test_remove_edge(e11, graph);
+        graph_tests.test_remove_edge(e12_1, graph);
     }
 
     BOOST_FIXTURE_TEST_CASE(test_clear_vertex, Fixture)
     {
-        auto v1 = graph.add_vertex();
-        auto v2 = graph.add_vertex();
-        auto v3 = graph.add_vertex();
-        graph.add_edge(v1, v2);
-        graph.add_edge(v1, v2);
-        graph.add_edge(v2, v1);
-        graph.add_edge(v1, v3);
-        graph.add_edge(v2, v3);
         graph_tests.test_clear_vertex(v1, graph);
     }
 
