@@ -888,7 +888,7 @@ namespace SPU_GRAPH
     void SpuUltraGraph::AdjacentVerticesIterator::increment() {
         if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
             ++_edge_iter;
-            _target_iter = TargetIterator::rend(_g, *_edge_iter);
+            _target_iter = TargetIterator::begin(_g, *_edge_iter);
             return;
         }
         ++_target_iter;
@@ -905,7 +905,7 @@ namespace SPU_GRAPH
     void SpuUltraGraph::AdjacentVerticesIterator::decrement() {
         if (_edge_iter == out_edge_iterator::end(_g, _v)) {
             --_edge_iter;
-            _target_iter = TargetIterator::end(_g, *_edge_iter);
+            _target_iter = TargetIterator::rbegin(_g, *_edge_iter);
             return;
         }
         --_target_iter;

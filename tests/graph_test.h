@@ -142,7 +142,7 @@ namespace boost {
                         adj.push_back(e->second);
 
                 std::pair<adj_iter, adj_iter> p = adjacent_vertices(u, g);
-                BOOST_CHECK(deg_size_t(std::distance(p.first, p.second)) == adj.size());
+                BOOST_CHECK_EQUAL(deg_size_t(std::distance(p.first, p.second)), adj.size());
                 for (; p.first != p.second; ++p.first) {
                     vertex_t v = *p.first;
                     BOOST_CHECK(container_contains(adj, v) == true);
