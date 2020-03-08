@@ -60,6 +60,8 @@ namespace SPU_GRAPH
 
     class SpuUltraGraph {
         id_t _graph_id = 0;
+        static id_t global_id_sequence;
+        id_t _global_id;
         SpuUltraGraphTraits _graph_traits;
 
         typedef SPU::Fields<SPU_STRUCTURE_ATTRS> Fields;
@@ -520,6 +522,7 @@ namespace SPU_GRAPH
 
         bool is_edge_id_valid(id_t id) const;
 
+        static id_t get_free_global_id() { return global_id_sequence++; }
         id_t get_free_edge_id();
         id_t get_free_edge_id(id_t min, id_t max) const;
 

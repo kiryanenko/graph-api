@@ -12,9 +12,11 @@ using namespace std;
 
 namespace SPU_GRAPH
 {
+    id_t SpuUltraGraph::global_id_sequence = 0;
 
     SpuUltraGraph::SpuUltraGraph(SPU_GRAPH::id_t graph_id, const SPU_GRAPH::SpuUltraGraphTraits& spu_graph_traits) :
             _graph_id(graph_id),
+            _global_id(get_free_global_id()),
             _graph_traits(spu_graph_traits),
             _edge_id_fields_len({
                                        {EDGE_ID, 0},
