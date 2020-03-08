@@ -409,8 +409,16 @@ namespace SPU_GRAPH
 
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);
-        vertex_descriptor add_vertex(id_t id);
-        vertex_descriptor add_vertex(id_t id, value_t value);
+        vertex_descriptor add_vertex(vertex_descriptor id);
+        vertex_descriptor add_vertex(vertex_descriptor id, value_t value);
+
+        /// Добавляет вершину, если ее нет
+        /// \param id Идентификатор вершины
+        void put_vertex(vertex_descriptor id);
+        /// Изменяет value у вершины. Если вершины нет, то добавляет новую.
+        /// \param id Идентификатор вершины
+        /// \param value Новый value
+        void put_vertex(vertex_descriptor id, value_t value);
 
         void remove_vertex(vertex_descriptor v);
 
@@ -438,6 +446,14 @@ namespace SPU_GRAPH
         edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to);
         edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to);
         edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to, value_t value);
+
+        /// Добавляет ребро, если его нет
+        /// \param id Идентификатор ребра
+        void put_edge(edge_descriptor id);
+        /// Изменяет value у ребра. Если ребра нет, то добавляет новое.
+        /// \param id Идентификатор ребра
+        /// \param value Новый value
+        void put_edge(edge_descriptor id, value_t value);
 
         // Присоединяет как сток вершину vertex к ребру edge
         void add_target(edge_descriptor edge, vertex_descriptor vertex);

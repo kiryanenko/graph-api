@@ -94,6 +94,20 @@ namespace SPU_GRAPH
         return id;
     }
 
+    void SpuUltraGraph::put_vertex(SpuUltraGraph::vertex_descriptor id) {
+        if (!has_vertex(id)) {
+            _add_vertex(id, _graph_traits.default_vertex_value);
+        }
+    }
+
+    void SpuUltraGraph::put_vertex(SpuUltraGraph::vertex_descriptor id, value_t value) {
+        if (!has_vertex(id)) {
+            _add_vertex(id, value);
+        } else {
+            _vertex_struct.insert(vertex_key(id), value);
+        }
+    }
+
 
     SpuUltraGraph::vertices_size_type SpuUltraGraph::num_vertices() const {
         auto key = vertex_key();
@@ -242,6 +256,20 @@ namespace SPU_GRAPH
         _add_source(id, from);
         _add_target(id, to);
         return id;
+    }
+
+    void SpuUltraGraph::put_edge(SpuUltraGraph::edge_descriptor id) {
+        if (!has_edge(id)) {
+            _add_edge(id, _graph_traits.default_edge_value);
+        }
+    }
+
+    void SpuUltraGraph::put_edge(SpuUltraGraph::edge_descriptor id, value_t value) {
+        if (!has_edge(id)) {
+            _add_edge(id, value);
+        } else {
+            _edge_struct.insert(edge_key(id), value);
+        }
     }
 
 
