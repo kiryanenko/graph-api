@@ -686,7 +686,7 @@ namespace SPU_GRAPH
                && (id_t) key[GRAPH_ID] == _graph_id;
     }
 
-    value_t SpuUltraGraph::get_vertex_value(vertex_descriptor v) {
+    value_t SpuUltraGraph::get_vertex_value(vertex_descriptor v) const {
         auto resp = _vertex_struct.search(vertex_key(v));
         if (resp.status == ERR) {
             throw NotFound();
@@ -694,7 +694,7 @@ namespace SPU_GRAPH
         return resp.value;
     }
 
-    value_t SpuUltraGraph::get_edge_value(SpuUltraGraph::edge_descriptor e) {
+    value_t SpuUltraGraph::get_edge_value(SpuUltraGraph::edge_descriptor e) const {
         auto resp = _edge_struct.search(edge_key(e));
         if (resp.status == ERR) {
             throw NotFound();

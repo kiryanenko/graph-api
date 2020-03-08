@@ -402,6 +402,11 @@ namespace SPU_GRAPH
 
         explicit SpuUltraGraph(id_t graph_id = 0, const SpuUltraGraphTraits& spu_graph_traits = SpuUltraGraphTraits());
 
+        /// Возвращает id графа, определенного в структурах
+        id_t get_id() const { return _graph_id; }
+        /// Возвращает глобальный id. Используется, например, для свойств графа.
+        id_t get_global_id() const { return _global_id; }
+
         vertex_descriptor add_vertex();
         vertex_descriptor add_vertex(value_t value);
         vertex_descriptor add_vertex(id_t id);
@@ -467,10 +472,10 @@ namespace SPU_GRAPH
 
         /// Получить данные вершины
         /// \throw NotFound если нет вершины v
-        value_t get_vertex_value(vertex_descriptor v);
+        value_t get_vertex_value(vertex_descriptor v) const;
         /// Получить данные ребра
         /// \throw NotFound если нет вершины e
-        value_t get_edge_value(edge_descriptor e);
+        value_t get_edge_value(edge_descriptor e) const;
 
         /// Возвращает контейнер содержащий все вершины графа
         Vertices vertices() const { return {this}; }
