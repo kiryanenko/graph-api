@@ -4,8 +4,7 @@
 
 
 #include "../SpuUltraGraphAdapter.h"
-
-
+#include "../SpuUltraGraphProperty.h"
 #include <boost/test/unit_test.hpp>
 #include <boost/graph/graph_concepts.hpp>
 #include "graph_test.h"
