@@ -134,5 +134,14 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         graph_tests.test_adjacency_matrix(vertex_set, edge_set, graph);
     }
 
+    //=========================================================================
+    // Карты свойств
+
+    BOOST_FIXTURE_TEST_CASE(test_readable_vertex_property_graph, Fixture)
+    {
+        vector<SPU_GRAPH::id_t> vertex_prop = {v1, v2, v3, v4};
+        graph_tests.test_readable_vertex_property_graph(vertex_prop, vertex_index, graph);
+    }
+
 
 BOOST_AUTO_TEST_SUITE_END()

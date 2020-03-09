@@ -41,6 +41,7 @@ namespace boost {
     typedef spu_ug_readable_property_map<vertex_index_t, SPU_GRAPH::id_t> spu_ug_vertex_id_pm;
     spu_ug_vertex_id_pm get(vertex_index_t, const SpuUltraGraph &g) { return {&g}; }
     SpuUltraGraph::vertex_descriptor get(const spu_ug_vertex_id_pm&, SPU_GRAPH::id_t id) { return id; }
+    SpuUltraGraph::vertex_descriptor get(vertex_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id; }
 
     template <>
     struct property_map<SpuUltraGraph, vertex_index_t> {
@@ -52,6 +53,7 @@ namespace boost {
     typedef spu_ug_readable_property_map<edge_index_t, SpuUltraGraph::edge_descriptor> spu_ug_edge_id_pm;
     spu_ug_edge_id_pm get(edge_index_t, const SpuUltraGraph &g) { return {&g}; }
     SpuUltraGraph::edge_descriptor get(const spu_ug_edge_id_pm&, SPU_GRAPH::id_t id) { return id; }
+    SpuUltraGraph::edge_descriptor get(edge_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id; }
 
     template <>
     struct property_map<SpuUltraGraph, edge_index_t> {
@@ -67,6 +69,7 @@ namespace boost {
     pair<SpuUltraGraph::vertex_descriptor, value_t> get(spu_ug_vertex_data_pm_const &pm, SPU_GRAPH::id_t id) {
         return {id, pm.get_graph()->get_vertex_value(id)};
     }
+    inline pair<SpuUltraGraph::vertex_descriptor, value_t> get(vertex_all_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return get(get(tag, g), id); }
     void put(spu_ug_vertex_data_pm &pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::vertex_descriptor, value_t> value) {
         pm.get_graph()->put_vertex(id, value.second);
     }
@@ -85,6 +88,7 @@ namespace boost {
     pair<SpuUltraGraph::edge_descriptor, value_t> get(spu_ug_edge_data_pm_const &pm, SPU_GRAPH::id_t id) {
         return {id, pm.get_graph()->get_edge_value(id)};
     }
+    inline pair<SpuUltraGraph::edge_descriptor, value_t> get(edge_all_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return get(get(tag, g), id); }
     void put(spu_ug_edge_data_pm &pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::edge_descriptor, value_t> value) {
         pm.get_graph()->put_edge(id, value.second);
     }
