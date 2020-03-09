@@ -72,6 +72,12 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<SpuUltraGraph> ));
         BOOST_CONCEPT_ASSERT(( AdjacencyGraphConcept<SpuUltraGraph> ));
         BOOST_CONCEPT_ASSERT(( AdjacencyMatrixConcept<SpuUltraGraph> ));
+
+        BOOST_CONCEPT_ASSERT(( ReadablePropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, vertex_index_t> ));
+        BOOST_CONCEPT_ASSERT(( ReadablePropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, edge_index_t> ));
+
+        BOOST_CONCEPT_ASSERT(( PropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, vertex_all_t> ));
+        BOOST_CONCEPT_ASSERT(( PropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, edge_all_t> ));
     }
 
     //=========================================================================
@@ -145,6 +151,11 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
     {
         graph_tests.test_readable_vertex_property_graph(vertex_set, vertex_index, graph);
         graph_tests.test_readable_vertex_property_graph(vertex_all_props, vertex_all, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_vertex_property_graph, Fixture)
+    {
+        graph_tests.test_vertex_property_graph(vertex_all_props, vertex_all, graph);
     }
 
 

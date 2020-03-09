@@ -70,9 +70,10 @@ namespace boost {
         return {id, pm.get_graph()->get_vertex_value(id)};
     }
     inline pair<SpuUltraGraph::vertex_descriptor, value_t> get(vertex_all_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return get(get(tag, g), id); }
-    void put(spu_ug_vertex_data_pm &pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::vertex_descriptor, value_t> value) {
+    void put(spu_ug_vertex_data_pm pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::vertex_descriptor, value_t> value) {
         pm.get_graph()->put_vertex(id, value.second);
     }
+    inline void put(vertex_all_t tag, SpuUltraGraph &g, SPU_GRAPH::id_t id, pair<SpuUltraGraph::vertex_descriptor, value_t> value) { put(get(tag, g), id, value); }
 
     template <>
     struct property_map<SpuUltraGraph, vertex_all_t> {
@@ -89,9 +90,10 @@ namespace boost {
         return {id, pm.get_graph()->get_edge_value(id)};
     }
     inline pair<SpuUltraGraph::edge_descriptor, value_t> get(edge_all_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return get(get(tag, g), id); }
-    void put(spu_ug_edge_data_pm &pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::edge_descriptor, value_t> value) {
+    void put(spu_ug_edge_data_pm pm, SPU_GRAPH::id_t id, pair<SpuUltraGraph::edge_descriptor, value_t> value) {
         pm.get_graph()->put_edge(id, value.second);
     }
+    inline void put(edge_all_t tag, SpuUltraGraph &g, SPU_GRAPH::id_t id, pair<SpuUltraGraph::edge_descriptor, value_t> value) { put(get(tag, g), id, value); }
 
     template <>
     struct property_map<SpuUltraGraph, edge_all_t> {
