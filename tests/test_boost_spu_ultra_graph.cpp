@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_remove_uv_edge, Fixture)
     {
-//        graph_tests.test_remove_edge(v1, v2, graph);
+        graph_tests.test_remove_edge(v1, v2, graph);
     }
 
     BOOST_FIXTURE_TEST_CASE(test_remove_edge, Fixture)

@@ -56,11 +56,11 @@ namespace boost {
         };
         struct ignore_edges {
             ignore_edges(vertex_t s, vertex_t t, const Graph& g)
-                    : s(s), t(t), g(g) { }
+                    : s(s), t(t), g(const_cast<Graph*>(&g)) { }
             bool operator()(edge_t x) const {
-                return !(source(x, g) == s && target(x, g) == t);
+                return !(source(x, *g) == s && target(x, *g) == t);
             }
-            vertex_t s; vertex_t t; const Graph& g;
+            vertex_t s; vertex_t t; Graph* g;
         };
 
         //=========================================================================
@@ -282,7 +282,7 @@ namespace boost {
 
             remove_edge(u, v, g);
 
-            BOOST_CHECK(num_edges(g) + occurances == num_edges(cpy));
+            BOOST_CHECK_EQUAL(num_edges(g) + occurances, num_edges(cpy));
             BOOST_CHECK((verify_isomorphism
                     (g, make_filtered_graph(cpy, ignore_edges(u,v,cpy)),
                      iso_map)));

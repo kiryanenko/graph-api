@@ -451,13 +451,18 @@ namespace SPU_GRAPH
             from_edge_key[EDGE_ID] = edge_id;
             _edge_struct.del(from_edge_key);
             try {
-                dec_source_cnt(edge_id);
+                if (dec_source_cnt(edge_id) == 0) {
+                    remove_edge(edge_id);
+                    continue;
+                }
             } catch (NotFound &) {}
 
             to_edge_key[EDGE_ID] = edge_id;
             _edge_struct.del(to_edge_key);
             try {
-                dec_target_cnt(edge_id);
+                if (dec_target_cnt(edge_id) == 0) {
+                    remove_edge(edge_id);
+                }
             } catch (NotFound &) {}
         }
         try {

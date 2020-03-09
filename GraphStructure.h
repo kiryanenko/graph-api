@@ -21,7 +21,7 @@ namespace SPU_GRAPH
         explicit GraphStructure(std::shared_ptr<AbstractStructure> structure) : _struct(structure ? structure : std::shared_ptr<AbstractStructure>(new Structure<>)) {}
 
         void set(std::shared_ptr<Structure<>> structure) { _struct = structure; }
-        GraphStructure& operator=(std::shared_ptr<AbstractStructure> structure) { _struct = structure; }
+        GraphStructure& operator=(std::shared_ptr<AbstractStructure> structure) { _struct = structure; return *this; }
 
         inline status_t insert(SPU::key_t key, value_t value = {0}, flags_t flags = NO_FLAGS) {
             return check_spu_resp_status(_struct->insert( key,  value, flags));
