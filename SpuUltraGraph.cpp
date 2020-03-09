@@ -434,43 +434,19 @@ namespace SPU_GRAPH
     }
 
     /// Удаляются все соединения от вершины from к to.
-    /// Само ребро НЕ удаляется
+    /// Ребро удаляется, если кол-во вершин источников или стоков равно 0
     void SpuUltraGraph::remove_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to) {
         auto from_vertex_key = vertex_key(from);
         auto to_vertex_key = vertex_key(to, 1);
         auto from_edge_key = edge_key(0, 0, from);
         auto to_edge_key = edge_key(0, 1, to);
-        size_t removed_edges_cnt = 0;
         for (auto edge_id : parallel_edges(from, to)) {
-            from_vertex_key[EDGE_ID] = edge_id;
-            _vertex_struct.del(from_vertex_key);
-            to_vertex_key[EDGE_ID] = edge_id;
-            _vertex_struct.del(to_vertex_key);
-            removed_edges_cnt++;
-
-            from_edge_key[EDGE_ID] = edge_id;
-            _edge_struct.del(from_edge_key);
-            try {
-                if (dec_source_cnt(edge_id) == 0) {
-                    remove_edge(edge_id);
-                    continue;
-                }
-            } catch (NotFound &) {}
-
-            to_edge_key[EDGE_ID] = edge_id;
-            _edge_struct.del(to_edge_key);
-            try {
-                if (dec_target_cnt(edge_id) == 0) {
-                    remove_edge(edge_id);
-                }
-            } catch (NotFound &) {}
+            disconnect_source(from, edge_id);
+            disconnect_target(from, edge_id);
+            if (source_cnt(edge_id) == 0 || target_cnt(edge_id) == 0) {
+                remove_edge(edge_id);
+            }
         }
-        try {
-            dec_out_degree(from, removed_edges_cnt);
-        } catch (NotFound &) {}
-        try {
-            dec_in_degree(to, removed_edges_cnt);
-        } catch (NotFound &) {}
     }
 
     SpuUltraGraph::ParallelEdges

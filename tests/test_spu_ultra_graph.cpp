@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_SUITE(testSpuUltraGraph)
         auto e13 = graph.add_edge(v1, v3);
         BOOST_CHECK_EQUAL(graph.num_edges(), 3);
         graph.remove_edge(v1, v2);
-        BOOST_CHECK_EQUAL(graph.num_edges(), 3);
+        BOOST_CHECK_EQUAL(graph.num_edges(), 1);
         BOOST_CHECK_EQUAL(graph.out_degree(v1), 1);
         BOOST_CHECK_EQUAL(graph.in_degree(v2), 0);
     }

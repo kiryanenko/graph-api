@@ -483,7 +483,7 @@ namespace SPU_GRAPH
 
         void remove_edge(edge_descriptor edge);
         /// Удаляются все соединения от вершины from к to.
-        /// Само ребро НЕ удаляется
+        /// Ребро удаляется, если кол-во вершин источников или стоков равно 0
         void remove_edge(vertex_descriptor from, vertex_descriptor to);
 
         /// Получить данные вершины
