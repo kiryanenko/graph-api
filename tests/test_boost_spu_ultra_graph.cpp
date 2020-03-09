@@ -28,11 +28,13 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         std::vector<SpuUltraGraph::vertex_descriptor> vertex_set;
         std::vector< std::pair<SpuUltraGraph::vertex_descriptor, SpuUltraGraph::vertex_descriptor> > edge_set;
 
+        vector<pair<SpuUltraGraph::vertex_descriptor, value_t>> vertex_all_props;
+
         Fixture() : graph()  {
-            v1 = graph.add_vertex();
-            v2 = graph.add_vertex();
-            v3 = graph.add_vertex();
-            v4 = graph.add_vertex();
+            v1 = graph.add_vertex(1, 10);
+            v2 = graph.add_vertex(2, 20);
+            v3 = graph.add_vertex(3, 30);
+            v4 = graph.add_vertex(4, 40);
 
             e11 = graph.add_edge(v1, v1);
             e12_1 = graph.add_edge(v1, v2);
@@ -54,6 +56,8 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
                     {v3, v1},
                     {v3, v2},
             };
+
+            vertex_all_props = {{v1, 10}, {v2, 20}, {v3, 30}, {v4, 40}};
         }
     };
 
@@ -139,8 +143,8 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_readable_vertex_property_graph, Fixture)
     {
-        vector<SPU_GRAPH::id_t> vertex_prop = {v1, v2, v3, v4};
-        graph_tests.test_readable_vertex_property_graph(vertex_prop, vertex_index, graph);
+        graph_tests.test_readable_vertex_property_graph(vertex_set, vertex_index, graph);
+        graph_tests.test_readable_vertex_property_graph(vertex_all_props, vertex_all, graph);
     }
 
 
