@@ -88,6 +88,7 @@ namespace SPU_GRAPH
         struct spu_ultra_graph_traversal_category :
                 public virtual bidirectional_graph_tag,
                 public virtual adjacency_graph_tag,
+                public virtual adjacency_matrix_tag,
                 public virtual vertex_list_graph_tag,
                 public virtual edge_list_graph_tag {};
 
@@ -492,6 +493,10 @@ namespace SPU_GRAPH
         /// Получить данные ребра
         /// \throw NotFound если нет вершины e
         value_t get_edge_value(edge_descriptor e) const;
+
+        /// Возвращает дескриптор первого найденного ребра от вершины from к to.
+        /// Если ребра нет, то возвращается 0
+        edge_descriptor edge(vertex_descriptor from, vertex_descriptor to) const;
 
         /// Возвращает контейнер содержащий все вершины графа
         Vertices vertices() const { return {this}; }

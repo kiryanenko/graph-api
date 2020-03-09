@@ -32,6 +32,12 @@ namespace boost {
     inline SpuUltraGraph::vertex_descriptor source(SpuUltraGraph::edge_descriptor e, const SpuUltraGraph &g) { return g.source(e); }
     inline SpuUltraGraph::vertex_descriptor target(SpuUltraGraph::edge_descriptor e, const SpuUltraGraph &g) { return g.target(e); }
 
+    inline pair<SpuUltraGraph::edge_descriptor, bool>
+    edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, const SpuUltraGraph &g) {
+        auto e = g.edge(u, v);
+        return {e, bool(e)};
+    }
+
 
     inline std::pair<SpuUltraGraph::vertex_iterator, SpuUltraGraph::vertex_iterator> vertices(const SpuUltraGraph &g) {
         auto vertices = g.vertices();

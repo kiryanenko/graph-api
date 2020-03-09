@@ -711,6 +711,15 @@ namespace SPU_GRAPH
         return resp.value;
     }
 
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::edge(vertex_descriptor from, vertex_descriptor to) const {
+        auto edges = parallel_edges(from, to);
+        auto iter = edges.begin();
+        if (iter == edges.end()) {
+            return 0;
+        }
+        return *iter;
+    }
+
 
     void SpuUltraGraph::ParallelEdgesIterator::increment() {
         auto from_key = _graph->vertex_key(_from, 0, _edge);

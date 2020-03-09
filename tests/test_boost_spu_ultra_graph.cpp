@@ -67,6 +67,7 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
         BOOST_CONCEPT_ASSERT(( IncidenceGraphConcept<SpuUltraGraph> ));
         BOOST_CONCEPT_ASSERT(( BidirectionalGraphConcept<SpuUltraGraph> ));
         BOOST_CONCEPT_ASSERT(( AdjacencyGraphConcept<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( AdjacencyMatrixConcept<SpuUltraGraph> ));
     }
 
     //=========================================================================
@@ -126,6 +127,11 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
     BOOST_FIXTURE_TEST_CASE(test_edge_list_graph, Fixture)
     {
         graph_tests.test_edge_list_graph(vertex_set, edge_set, graph);
+    }
+
+    BOOST_FIXTURE_TEST_CASE(test_adjacency_matrix, Fixture)
+    {
+        graph_tests.test_adjacency_matrix(vertex_set, edge_set, graph);
     }
 
 
