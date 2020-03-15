@@ -100,6 +100,18 @@ namespace boost {
         typedef spu_ug_edge_data_pm type;
         typedef spu_ug_edge_data_pm_const const_type;
     };
+
+
+    typedef spu_ug_readable_property_map<edge_weight_t, weight_t> spu_ug_weight_pm;
+    spu_ug_weight_pm get(edge_weight_t, const SpuUltraGraph &g) { return {&g}; }
+    weight_t get(const spu_ug_weight_pm &pm, SPU_GRAPH::id_t id) { return pm.get_graph()->get_weight(id); }
+    inline weight_t get(edge_weight_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return get(get(tag, g), id); }
+
+    template <>
+    struct property_map<SpuUltraGraph, edge_weight_t> {
+        typedef spu_ug_weight_pm const_type;
+        typedef const_type type;
+    };
 }
 
 #endif //GRAPH_API_SPUULTRAGRAPHPROPERTY_H

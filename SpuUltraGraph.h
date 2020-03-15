@@ -471,7 +471,7 @@ namespace SPU_GRAPH
         /// Индекс ребра это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса.
         edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight) const;
         /// Получение веса ребра из edge_descriptor
-        weight_t get_weight(edge_descriptor edge);
+        weight_t get_weight(edge_descriptor edge) const;
 
         edges_size_type num_edges() const;
         edges_size_type source_cnt(edge_descriptor e);
