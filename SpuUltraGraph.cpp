@@ -281,6 +281,16 @@ namespace SPU_GRAPH
         return id;
     }
 
+    // Возвращает свободный дискриптор ребра с определенным весом, для последующего добавления
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_free_edge_descriptor(weight_t weight) const {
+        auto prefix = ((SPU::key_t) _graph_id << u8(1 + _graph_traits.weight_depth)) + weight;
+        auto prefix_depth = _graph_traits.graph_id_depth + 1 + _graph_traits.weight_depth;
+        auto max = FieldsLength<int>::mask(_graph_traits.edge_id_depth) - 1;
+        id_t edge_id = get_free_domain(_edge_struct, _graph_traits.edge_id_depth,
+                                       prefix, prefix_depth, 1, max);
+        return get_edge_descriptor(edge_id, weight);
+    }
+
 
     void SpuUltraGraph::inc_edges_cnt() {
         auto cnt = num_edges();
@@ -566,7 +576,7 @@ namespace SPU_GRAPH
         return res.value;
     }
 
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id) {
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id) const {
         auto fields = Fields(_edge_id_fields_len);
         fields[EDGE_ID] = edge_id;
         fields[WEIGHT] = _graph_traits.default_weight;
@@ -574,7 +584,7 @@ namespace SPU_GRAPH
         return data;
     }
 
-    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id, weight_t weight) {
+    SpuUltraGraph::edge_descriptor SpuUltraGraph::get_edge_descriptor(id_t edge_id, weight_t weight) const {
         auto fields = Fields(_edge_id_fields_len);
         fields[EDGE_ID] = edge_id;
         fields[WEIGHT] = weight;

@@ -463,11 +463,13 @@ namespace SPU_GRAPH
 
         bool has_edge(edge_descriptor id) const;
 
-        edge_descriptor get_edge_descriptor(id_t edge_id);
+        /// Возвращает свободный дискриптор ребра с определенным весом, для последующего добавления
+        edge_descriptor get_free_edge_descriptor(weight_t weight) const;
+        edge_descriptor get_edge_descriptor(id_t edge_id) const;
         /// Формирование edge_descriptor из веса ребра и индекса
         /// Это необходимо, например, для добавления взвешенных ребер.
         /// Индекс ребра это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса.
-        edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);
+        edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight) const;
         /// Получение веса ребра из edge_descriptor
         weight_t get_weight(edge_descriptor edge);
 
