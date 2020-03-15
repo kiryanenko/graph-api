@@ -5,6 +5,7 @@
 #include "SpuUltraGraph.h"
 #include <iostream>
 #include <cstdio>
+#include "utils.h"
 
 
 using namespace std;
@@ -129,32 +130,9 @@ namespace SPU_GRAPH
             }
         }
 
-        auto id = get_free_vertex_id(1, max_vertex_id());
-        if (id == 0) {
-            throw InsufficientStorage();
-        }
+        id_t id = get_free_domain(_vertex_struct, _vertex_fields_len[VERTEX_ID],
+                                  _graph_id << 1, _graph_traits.graph_id_depth + 1, 1, max_vertex_id());
         _free_vertex_id = id + 1;
-        return id;
-    }
-
-    id_t SpuUltraGraph::get_free_vertex_id(id_t min, id_t max) const {
-        auto key = vertex_key(max, 0, 1);
-        auto vertex = _vertex_struct.nsm(key);
-        key = vertex.key;
-        id_t id = key[VERTEX_ID];
-
-        if (vertex.status == ERR || (id_t) key[GRAPH_ID] != _graph_id || id < min) {
-            return min;
-        }
-
-        if (id != max) {
-            return id + 1;
-        }
-
-        id = get_free_vertex_id(min, min + (max - min) / 2);
-        if (!id) {
-            id = get_free_vertex_id(min + (max - min) / 2 + 1, max);
-        }
         return id;
     }
 
@@ -297,34 +275,9 @@ namespace SPU_GRAPH
             }
         }
 
-        auto id = get_free_edge_id(1, max_edge_id());
-        if (id == 0) {
-            throw InsufficientStorage();
-        }
+        id_t id = get_free_domain(_edge_struct, _edge_fields_len[EDGE_ID],
+                _graph_id << 1, _graph_traits.graph_id_depth + 1, 1, max_edge_id());
         _free_edge_id = id + 1;
-        return id;
-    }
-
-    id_t SpuUltraGraph::get_free_edge_id(id_t min, id_t max) const {
-        auto key_f = source_cnt_key(max);
-        auto key = (data_t) key_f + 1;
-
-        auto edge = _edge_struct.nsm(key);
-        key_f = edge.key;
-        id_t id = key_f[EDGE_ID];
-
-        if (edge.status == ERR || (id_t) key_f[GRAPH_ID] != _graph_id || id < min) {
-            return min;
-        }
-
-        if (id != max) {
-            return id + 1;
-        }
-
-        id = get_free_edge_id(min, min + (max - min) / 2);
-        if (!id) {
-            id = get_free_edge_id(min + (max - min) / 2 + 1, max);
-        }
         return id;
     }
 

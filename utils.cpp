@@ -3,27 +3,23 @@
 //
 
 #include "utils.h"
+#include "exceptions.h"
 
 namespace SPU_GRAPH
 {
     using namespace SPU;
 
-    const auto MAX_DATA = FieldsLength<int>::mask(64);
+    const data_t MAX_DATA = FieldsLength<int>::mask(64);
 
-    /// Получение свободного ключа между min и max включительно
-    /// Возвращает 0, если ключ не найден
+    // Получение свободного ключа между min и max включительно
     key_t get_free_key(const GraphStructure &structure, key_t min, key_t max)
     {
-        if (min > max) {
-            return 0;
-        }
-
         if (min == max) {
             auto resp = structure.search(min);
             if (resp.status == ERR) {
                 return min;
             }
-            return 0;
+            throw InsufficientStorage();
         }
 
         auto key = max < MAX_DATA ? max + 1 : max;
@@ -44,10 +40,63 @@ namespace SPU_GRAPH
         }
 
         auto half = ((max - min) >> u8(1));
-        auto res = get_free_key(structure, min, min + half);
-        if (res == key_t(0)) {
-            res = get_free_key(structure, min + half + 1, max);
+        try {
+            return get_free_key(structure, min, min + half);
+        } catch (InsufficientStorage &e) {
+            return get_free_key(structure, min + half + 1, max);
         }
-        return res;
+    }
+
+
+    enum DOMAIN_STRUCT {PREFIX_F, DOMAIN_F, ADDRESS_F};
+
+    // Поиск свободного домена
+    SPU::key_t get_free_domain(const GraphStructure &structure, uint8_t domain_depth, SPU::key_t prefix, uint8_t prefix_depth, SPU::key_t min, SPU::key_t max)
+    {
+        const auto max_domain = FieldsLength<int>::mask(domain_depth);
+        if (max > max_domain) {
+            max = max_domain;
+        }
+        const uint8_t address_depth = 64 - domain_depth - prefix_depth;
+        const auto max_address = FieldsLength<int>::mask(address_depth);
+        Fields<DOMAIN_STRUCT> key_f({
+                                                  {ADDRESS_F, address_depth},
+                                                  {DOMAIN_F, domain_depth},
+                                                  {PREFIX_F, prefix_depth},
+        });
+        key_f[PREFIX_F] = prefix;
+        key_f[DOMAIN_F] = max;
+        key_f[ADDRESS_F] = max_address;
+        key_t key = key_f;
+
+        if (key < MAX_DATA) {
+            ++key;
+        }
+        auto resp = structure.nsm(key);
+        key_f = resp.key;
+        auto domain = key_f[DOMAIN_F];
+
+        if (resp.status == ERR || key_f[PREFIX_F] != prefix || domain < min) {
+            return min;
+        }
+        if (domain < max) {
+            return ++domain;
+        }
+        if (key == MAX_DATA) {
+            resp = structure.search(key);
+            if (resp.status == ERR) {
+                return max;
+            }
+        }
+        if (min == max) {
+            throw InsufficientStorage();
+        }
+
+        auto half = (max - min) >> u8(1);
+        try {
+            return get_free_domain(structure, domain_depth, prefix, prefix_depth, min, min + half);
+        } catch (InsufficientStorage &e) {
+            return get_free_domain(structure, domain_depth, prefix, prefix_depth, min + half + 1, max);
+        }
     }
 }

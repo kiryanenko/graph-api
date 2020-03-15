@@ -531,7 +531,6 @@ namespace SPU_GRAPH
         bool is_vertex_id_valid(id_t id) const;
 
         id_t get_free_vertex_id();
-        id_t get_free_vertex_id(id_t min, id_t max) const;
 
         vertices_size_type inc_vertexes_cnt();
         vertices_size_type dec_vertexes_cnt();
@@ -550,7 +549,6 @@ namespace SPU_GRAPH
 
         static id_t get_free_global_id() { return global_id_sequence++; }
         id_t get_free_edge_id();
-        id_t get_free_edge_id(id_t min, id_t max) const;
 
         void inc_edges_cnt();
         void dec_edges_cnt();

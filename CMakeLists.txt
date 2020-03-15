@@ -15,7 +15,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS} -Wall -ggd
 
 add_library(graph_api
         SpuUltraGraph.cpp SpuUltraGraph.h
-        GraphStructure.h StructureIterator.h SpuUltraGraphAdapter.h SpuUltraGraphProperty.h)
+        GraphStructure.h StructureIterator.h SpuUltraGraphAdapter.h SpuUltraGraphProperty.h
+        utils.h utils.cpp)
 
 include_directories(spu-api/libspu)
 add_subdirectory(spu-api)
@@ -38,5 +39,8 @@ add_test (${TEST} ${TEST})
 
 
 # Примеры
-add_executable(graph_api_example examples/main.cpp)
+add_executable(graph_api_example examples/graph_api_example.cpp)
 target_link_libraries(graph_api_example graph_api ${Boost_LIBRARIES})
+
+add_executable(boost_example examples/boost_example.cpp)
+target_link_libraries(boost_example graph_api ${Boost_LIBRARIES})
