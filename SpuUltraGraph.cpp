@@ -506,7 +506,6 @@ namespace SPU_GRAPH
     }
 
     id_t SpuUltraGraph::max_edge_id() const {
-        auto d = _edge_fields_len.fieldMask(EDGE_ID);
         return _edge_fields_len.fieldMask(EDGE_ID) - 1;
     }
 

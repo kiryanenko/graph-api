@@ -40,9 +40,13 @@ namespace SPU_GRAPH
         GraphStructure vertex_struct;
         GraphStructure edge_struct;
 
+        /// Кол-во бит под id графа
         size_t graph_id_depth = 3;
+        /// Кол-во бит под id вершины
         size_t vertex_id_depth = 28;
+        /// Кол-во бит под индекс ребра (вес ребра не воходит в это число)
         size_t edge_id_depth = 28;
+        /// Кол-во бит под вес ребра
         size_t weight_depth = 4;
 
         data_t default_vertex_value = 0;

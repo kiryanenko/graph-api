@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_SUITE(testSpuUltraGraph)
         auto id3 = graph.add_edge(3);
         BOOST_CHECK_EQUAL(id3, 3);
 
-        auto max_id = graph.add_edge(268435454);
+        auto max_id = graph.add_edge(0xFFFFFFFE);
         auto id4 = graph.add_edge();
         BOOST_CHECK(id4 > id3);
         BOOST_CHECK(id4 < max_id);

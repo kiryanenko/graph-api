@@ -3,7 +3,11 @@
 //
 
 #include <iostream>
-#include "../SpuUltraGraph.h"
+#include "../SpuUltraGraphAdapter.h"
+#include "../SpuUltraGraphProperty.h"
+#include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/graph/graphviz.hpp>
+
 
 using namespace std;
 using namespace SPU_GRAPH;
@@ -30,6 +34,6 @@ int main()
     graph.add_edge(graph.get_free_edge_descriptor(3), 4, 6);
     graph.add_edge(graph.get_free_edge_descriptor(7), 5, 6);
 
-
+    write_graphviz(cout, graph);
     return 0;
 }
