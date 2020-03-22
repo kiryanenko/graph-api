@@ -42,5 +42,5 @@ add_test (${TEST} ${TEST})
 add_executable(graph_api_example examples/graph_api_example.cpp)
 target_link_libraries(graph_api_example graph_api ${Boost_LIBRARIES})
 
-add_executable(boost_example examples/boost_example.cpp)
-target_link_libraries(boost_example graph_api ${Boost_LIBRARIES})
+add_executable(graphvis_example examples/graphvis_example.cpp)
+target_link_libraries(graphvis_example graph_api ${Boost_LIBRARIES})

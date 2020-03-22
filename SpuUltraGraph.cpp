@@ -356,6 +356,7 @@ namespace SPU_GRAPH
 
     weight_t SpuUltraGraph::get_weight(SpuUltraGraph::edge_descriptor edge) const {
         auto fields = Fields(_edge_id_fields_len);
+        fields = edge;
         return fields[WEIGHT];
     }
 
