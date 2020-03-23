@@ -254,6 +254,7 @@ namespace SPU_GRAPH
             edge_descriptor _edge;
 
         public:
+            AdjacentEdgesIterator() : _g(nullptr), _v(0), _edge(0) {}
             AdjacentEdgesIterator(const SpuUltraGraph *g, vertex_descriptor v, edge_descriptor edge=0) : _g(g), _v(v), _edge(edge) {}
             edge_descriptor dereference() const { return _edge; }
             bool equal(const AdjacentEdgesIterator& other) const { return _edge == other._edge; }

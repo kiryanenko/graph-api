@@ -40,8 +40,8 @@ namespace boost {
 
     typedef spu_ug_readable_property_map<vertex_index_t, SPU_GRAPH::id_t> spu_ug_vertex_id_pm;
     spu_ug_vertex_id_pm get(vertex_index_t, const SpuUltraGraph &g) { return {&g}; }
-    SpuUltraGraph::vertex_descriptor get(const spu_ug_vertex_id_pm&, SPU_GRAPH::id_t id) { return id; }
-    SpuUltraGraph::vertex_descriptor get(vertex_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id; }
+    SpuUltraGraph::vertex_descriptor get(const spu_ug_vertex_id_pm&, SPU_GRAPH::id_t id) { return id - 1; }
+    SpuUltraGraph::vertex_descriptor get(vertex_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id - 1; }
 
     template <>
     struct property_map<SpuUltraGraph, vertex_index_t> {
@@ -52,8 +52,8 @@ namespace boost {
 
     typedef spu_ug_readable_property_map<edge_index_t, SpuUltraGraph::edge_descriptor> spu_ug_edge_id_pm;
     spu_ug_edge_id_pm get(edge_index_t, const SpuUltraGraph &g) { return {&g}; }
-    SpuUltraGraph::edge_descriptor get(const spu_ug_edge_id_pm&, SPU_GRAPH::id_t id) { return id; }
-    SpuUltraGraph::edge_descriptor get(edge_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id; }
+    SpuUltraGraph::edge_descriptor get(const spu_ug_edge_id_pm&, SPU_GRAPH::id_t id) { return id - 1; }
+    SpuUltraGraph::edge_descriptor get(edge_index_t tag, const SpuUltraGraph &g, SPU_GRAPH::id_t id) { return id - 1; }
 
     template <>
     struct property_map<SpuUltraGraph, edge_index_t> {
