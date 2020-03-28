@@ -5,6 +5,8 @@
 #ifndef GRAPH_API_GRAPHPERFORMANCETEST_H
 #define GRAPH_API_GRAPHPERFORMANCETEST_H
 
+#include <utility>
+
 #include "utils.h"
 
 
@@ -20,14 +22,15 @@ public:
     size_t start_vertices_cnt = 100;
     size_t inc_vertices_value = 100;
     size_t end_vertices_cnt = 10000;
-
-    size_t start_edges_cnt = 300;
-    size_t inc_edges_value = 300;
-    size_t end_edges_cnt = 30000;
+    size_t edges_per_vertex = 3;
 
     size_t avg_iterations_cnt = 10;
+
+    void (*test_func)() = nullptr;
     string results_file = "results.csv";
 
+    GraphPerformanceTest() = default;
+    GraphPerformanceTest(void (*test_func)(), string results_file) : test_func(test_func), results_file(std::move(results_file)) {}
     void start();
 };
 
