@@ -111,6 +111,9 @@ namespace SPU_GRAPH
         /// Тип, используемый для представления числа исходящих ребер в графе
         typedef size_t degree_size_type;
 
+        typedef pair<vertex_descriptor, value_t> vertex_property_type;
+        typedef pair<vertex_descriptor, value_t> edge_property_type;
+
 
 
         //////////////////// Итераторы и контейнеры /////////////////////////

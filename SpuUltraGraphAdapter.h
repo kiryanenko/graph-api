@@ -13,9 +13,22 @@ namespace boost {
 
     inline SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph &g) { return g.add_vertex(); }
 
+    inline SpuUltraGraph::vertex_descriptor add_vertex(SpuUltraGraph::edge_property_type vp, SpuUltraGraph &g) {
+        return g.add_vertex(vp.first, vp.second);
+    }
+
     inline std::pair<SpuUltraGraph::edge_descriptor, bool>
     add_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, SpuUltraGraph &g) {
         return {g.add_edge(from, to), true};
+    }
+
+    inline std::pair<SpuUltraGraph::edge_descriptor, bool>
+    add_edge(SpuUltraGraph::vertex_descriptor from, SpuUltraGraph::vertex_descriptor to, SpuUltraGraph::edge_property_type ep, SpuUltraGraph &g) {
+        try {
+            return {g.add_edge(ep.first, from, to, ep.second), true};
+        } catch (Conflict &e) {
+            return {0, false};
+        }
     }
 
     inline void remove_edge(SpuUltraGraph::vertex_descriptor u, SpuUltraGraph::vertex_descriptor v, SpuUltraGraph &g) { g.remove_edge(u, v); }

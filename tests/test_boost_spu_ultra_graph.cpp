@@ -79,6 +79,9 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
         BOOST_CONCEPT_ASSERT(( PropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, vertex_all_t> ));
         BOOST_CONCEPT_ASSERT(( PropertyGraphConcept<SpuUltraGraph, SPU_GRAPH::id_t, edge_all_t> ));
+
+        BOOST_CONCEPT_ASSERT(( boost::concepts::VertexMutablePropertyGraph<SpuUltraGraph> ));
+        BOOST_CONCEPT_ASSERT(( boost::concepts::EdgeMutablePropertyGraph<SpuUltraGraph> ));
     }
 
     //=========================================================================
@@ -150,7 +153,8 @@ BOOST_AUTO_TEST_SUITE(testBoostSpuUltraGraph)
 
     BOOST_FIXTURE_TEST_CASE(test_readable_vertex_property_graph, Fixture)
     {
-        graph_tests.test_readable_vertex_property_graph(vertex_set, vertex_index, graph);
+        std::vector<SPU_GRAPH::id_t> vertex_indexes = {0, 1, 2, 3};
+        graph_tests.test_readable_vertex_property_graph(vertex_indexes, vertex_index, graph);
         graph_tests.test_readable_vertex_property_graph(vertex_all_props, vertex_all, graph);
     }
 
