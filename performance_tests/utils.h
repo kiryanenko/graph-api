@@ -14,8 +14,8 @@ using namespace std;
 using namespace boost;
 
 
-//template<class G>
-//typename G::vertex_descriptor add_edge(typename G::vertex_descriptor, typename G::vertex_descriptor, G&);
+template<class G>
+typename G::vertex_descriptor add_edge(typename G::vertex_descriptor, typename G::vertex_descriptor, G&);
 
 template<class G>
 struct fill_options
