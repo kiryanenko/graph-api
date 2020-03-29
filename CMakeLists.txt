@@ -49,8 +49,6 @@ add_executable(dijkstra_example examples/dijkstra_example.cpp)
 target_link_libraries(dijkstra_example graph_api ${Boost_LIBRARIES})
 
 # Тесты производительности
-file(GLOB_RECURSE performance_test_sources
-        performance_tests/utils.h
-        performance_tests/GraphPerformanceTest.h performance_tests/GraphPerformanceTest.cpp)
+file(GLOB_RECURSE performance_test_sources performance_tests/utils.h performance_tests/GraphPerformanceTest.h)
 add_executable(dijkstra_perf performance_tests/dijkstra.cpp ${performance_test_sources})
 target_link_libraries(dijkstra_perf graph_api ${Boost_LIBRARIES})
