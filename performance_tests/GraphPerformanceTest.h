@@ -5,8 +5,6 @@
 #ifndef GRAPH_API_GRAPHPERFORMANCETEST_H
 #define GRAPH_API_GRAPHPERFORMANCETEST_H
 
-#include <utility>
-
 #include "utils.h"
 
 
@@ -21,6 +19,7 @@ public:
     size_t avg_iterations_cnt = 10;
 
     bool should_fill = true;
+    bool is_mutable_test = true;
     pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = add_edge;
 
     size_t start_vertices_cnt = 100;
@@ -33,7 +32,10 @@ public:
     void start();
 
 private:
-    void print_start_info()
+    void print_start_info();
+    void fill(G &graph, size_t vertices_cnt);
+    void run_avg_tests();
+    string time_info();
 };
 
 
