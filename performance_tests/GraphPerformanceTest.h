@@ -16,6 +16,10 @@ class GraphPerformanceTest {
     typedef typename graph_traits<G>::edge_descriptor edge_t;
 
 public:
+    void (*test_func)() = nullptr;
+    string results_file = "results.csv";
+    size_t avg_iterations_cnt = 10;
+
     bool should_fill = true;
     pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = add_edge;
 
@@ -24,14 +28,12 @@ public:
     size_t end_vertices_cnt = 10000;
     size_t edges_per_vertex = 3;
 
-    size_t avg_iterations_cnt = 10;
-
-    void (*test_func)() = nullptr;
-    string results_file = "results.csv";
-
     GraphPerformanceTest() = default;
     GraphPerformanceTest(void (*test_func)(), string results_file) : test_func(test_func), results_file(std::move(results_file)) {}
     void start();
+
+private:
+    void print_start_info()
 };
 
 
