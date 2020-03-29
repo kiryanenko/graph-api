@@ -34,7 +34,8 @@ public:
 private:
     void print_start_info();
     void fill(G &graph, size_t vertices_cnt);
-    void run_avg_tests();
+    double run_avg_tests(size_t vertices_cnt = 0);
+    double run_test(G &graph);
     string time_info();
 };
 
