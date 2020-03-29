@@ -5,8 +5,10 @@
 #ifndef GRAPH_API_GRAPHPERFORMANCETEST_H
 #define GRAPH_API_GRAPHPERFORMANCETEST_H
 
+#include <fstream>
 #include "utils.h"
 
+using namespace std;
 
 template <class G>
 class GraphPerformanceTest {
@@ -22,9 +24,9 @@ public:
     bool is_mutable_test = true;
     pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = add_edge;
 
-    size_t start_vertices_cnt = 100;
-    size_t inc_vertices_value = 200;
-    size_t end_vertices_cnt = 10000;
+    size_t start_vertices_cnt = 500;
+    size_t inc_vertices_value = 500;
+    size_t end_vertices_cnt = 100000;
     size_t edges_per_vertex = 3;
 
     GraphPerformanceTest() = default;
@@ -36,6 +38,7 @@ public:
         auto start_time = clock();
         if (should_fill) {
             auto iterations_cnt = size_t(ceil((end_vertices_cnt - start_vertices_cnt + 0.0) / inc_vertices_value));
+            vector<pair<size_t, double>> results(iterations_cnt);
             for (size_t i = 0; i < iterations_cnt; ++i) {
                 auto vertices_cnt = min(start_vertices_cnt + inc_vertices_value * i, end_vertices_cnt);
 
@@ -46,9 +49,11 @@ public:
                 cout << "---------------------------------------------------------" << endl << endl;
 
                 auto avg_time = run_avg_tests(vertices_cnt);
+                results[i] = {vertices_cnt, avg_time};
             }
+            save_results(results);
         } else {
-            auto avg_time = run_avg_tests();
+            run_avg_tests();
         }
         auto end_time = clock();
 
@@ -144,6 +149,14 @@ private:
         auto lt = time(nullptr);
         auto ptr = localtime(&lt);
         return asctime(ptr);
+    }
+
+    void save_results(vector<pair<size_t, double>> &results) {
+        ofstream f(results_file);
+        for (auto res : results) {
+            f << res.first << ',' << res.second << endl;
+        }
+        f.close();
     }
 };
 
