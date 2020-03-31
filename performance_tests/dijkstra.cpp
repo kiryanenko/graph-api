@@ -21,7 +21,22 @@ typedef boost::adjacency_list <
         property < edge_weight_t, int >
 > AdjacencyListGraph;
 
-//std::pair<AdjacencyListGraph::edge_descriptor, bool> add_edge(AdjacencyListGraph::vertex_descriptor, AdjacencyListGraph::vertex_descriptor, AdjacencyListGraph&);
+
+
+template <class G>
+pair<typename graph_traits<G>::edge_descriptor, bool>
+add_weight_edge(typename graph_traits<G>::vertex_descriptor u, typename graph_traits<G>::vertex_descriptor v, G& g) {
+    auto weight = rand() % 16;
+    return add_edge(u, v, weight, g);
+}
+
+template <>
+pair<typename graph_traits<SpuUltraGraph>::edge_descriptor, bool>
+add_weight_edge(typename graph_traits<SpuUltraGraph>::vertex_descriptor u, typename graph_traits<SpuUltraGraph>::vertex_descriptor v, SpuUltraGraph& g) {
+    auto weight = rand() % 16;
+    return {g.add_edge(g.get_free_edge_descriptor(weight), u, v), true};
+}
+
 
 template <class G>
 void dijkstra_test(G &g) {
@@ -39,12 +54,18 @@ void dijkstra_test(G &g) {
 
 int main()
 {
+    cout << "SpuUltraGraph performance test" << endl;
+    cout << "==========================================" << endl;
     GraphPerformanceTest<SpuUltraGraph> spu_graph_test(dijkstra_test, "dijkstra_test_SpuUltraGraph.csv");
     spu_graph_test.is_mutable_test = false;
+    spu_graph_test.add_edge_func = add_weight_edge;
     spu_graph_test.start();
 
+    cout << "adjacency_list performance test" << endl;
+    cout << "==========================================" << endl;
     GraphPerformanceTest<AdjacencyListGraph> adjacency_list_test(dijkstra_test, "dijkstra_test_adjacency_list.csv");
-    spu_graph_test.is_mutable_test = false;
-    spu_graph_test.start();
+    adjacency_list_test.is_mutable_test = false;
+    adjacency_list_test.add_edge_func = add_weight_edge;
+    adjacency_list_test.start();
     return 0;
 }
