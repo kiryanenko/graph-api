@@ -9,6 +9,7 @@
 #include "utils.h"
 
 using namespace std;
+using namespace boost;
 
 template <class G>
 class GraphPerformanceTest {
@@ -22,11 +23,11 @@ public:
 
     bool should_fill = true;
     bool is_mutable_test = true;
-    pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = add_edge;
+    pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = nullptr;
 
     size_t start_vertices_cnt = 500;
     size_t inc_vertices_value = 500;
-    size_t end_vertices_cnt = 100000;
+    size_t end_vertices_cnt = 10000;
     size_t edges_per_vertex = 3;
 
     GraphPerformanceTest() = default;
@@ -42,7 +43,7 @@ public:
             for (size_t i = 0; i < iterations_cnt; ++i) {
                 auto vertices_cnt = min(start_vertices_cnt + inc_vertices_value * i, end_vertices_cnt);
 
-                cout << time_info() << "Performance iteration " << i + 1 << endl;
+                cout << time_info() << "Performance iteration " << i + 1 << '/' << iterations_cnt << endl;
                 cout << "---------------------------------------------------------" << endl;
                 cout << "Vertices count = " << vertices_cnt << endl;
                 cout << "Edges count = " << vertices_cnt * edges_per_vertex << endl;
@@ -124,7 +125,7 @@ private:
                 delete graph;
             }
 
-            cout << time_info() << "Test " << i + 1 << " completed in " << test_time << " seconds." << endl << endl;
+            cout << time_info() << "Test " << i + 1 << '/' << avg_iterations_cnt << " completed in " << test_time << " seconds." << endl << endl;
             sum_time += test_time;
         }
         auto end_time = clock();

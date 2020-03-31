@@ -14,8 +14,6 @@ using namespace std;
 using namespace boost;
 
 
-template<class G>
-typename G::vertex_descriptor add_edge(typename G::vertex_descriptor, typename G::vertex_descriptor, G&);
 
 template<class G>
 struct fill_options
@@ -24,7 +22,7 @@ struct fill_options
     typedef typename graph_traits<G>::edge_descriptor edge_t;
 
     unsigned long rand_init = 0;
-    pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = add_edge;
+    pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = nullptr;
 };
 
 template<class G>
@@ -38,14 +36,14 @@ void fill_graph(G &g, size_t vertices_cnt, size_t edges_cnt, fill_options<G> opt
         vertices[i] = v;
         if (i > 1) {
             auto u = vertices[rand() % i];
-            opts.add_edge_func(u, v, g);
+            opts.add_edge_func ? opts.add_edge_func(u, v, g) : add_edge(u, v, g);
         }
     }
 
     for (size_t i = 0; i < edges_cnt - vertices_cnt; ++i) {
         auto u = vertices[rand() % vertices_cnt];
         auto v = vertices[rand() % vertices_cnt];
-        opts.add_edge_func(u, v, g);
+        opts.add_edge_func ? opts.add_edge_func(u, v, g) : add_edge(u, v, g);
     }
 }
 
