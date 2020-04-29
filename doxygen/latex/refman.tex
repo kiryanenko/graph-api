@@ -1,0 +1,281 @@
+\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{book}
+
+%% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
+\usepackage{ifthen}
+\ifx\requestedLaTeXdate\undefined
+\usepackage{array}
+\else
+\usepackage{array}[=2016-10-06]
+\fi
+%%
+% Packages required by doxygen
+\usepackage{fixltx2e}
+\usepackage{calc}
+\usepackage{doxygen}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{multirow}
+\PassOptionsToPackage{warn}{textcomp}
+\usepackage{textcomp}
+\usepackage[nointegrals]{wasysym}
+\usepackage[table]{xcolor}
+\usepackage{ifpdf,ifxetex}
+
+% NLS support packages
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% Font selection
+\usepackage[T1]{fontenc}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+\usepackage{amssymb}
+\usepackage{sectsty}
+\renewcommand{\familydefault}{\sfdefault}
+\allsectionsfont{%
+  \fontseries{bc}\selectfont%
+  \color{darkgray}%
+}
+\renewcommand{\DoxyLabelFont}{%
+  \fontseries{bc}\selectfont%
+  \color{darkgray}%
+}
+\newcommand{\+}{\discretionary{\mbox{\scriptsize$\hookleftarrow$}}{}{}}
+
+% Arguments of doxygenemoji:
+% 1) ':<text>:' form of the emoji, already "LaTeX"-escaped
+% 2) file with the name of the emoji without the .png extension
+% in case image exist use this otherwise use the ':<text>:' form
+\newcommand{\doxygenemoji}[2]{%
+  \IfFileExists{./#2.png}{\raisebox{-0.1em}{\includegraphics[height=0.9em]{./#2.png}}}{#1}%
+}
+% Page & text layout
+\usepackage{geometry}
+\geometry{%
+  a4paper,%
+  top=2.5cm,%
+  bottom=2.5cm,%
+  left=2.5cm,%
+  right=2.5cm%
+}
+\tolerance=750
+\hfuzz=15pt
+\hbadness=750
+\setlength{\emergencystretch}{15pt}
+\setlength{\parindent}{0cm}
+\newcommand{\doxynormalparskip}{\setlength{\parskip}{3ex plus 2ex minus 2ex}}
+\newcommand{\doxytocparskip}{\setlength{\parskip}{1ex plus 0ex minus 0ex}}
+\doxynormalparskip
+\makeatletter
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
+    \normalfont\normalsize\bfseries\SS@parafont%
+  }%
+}
+\renewcommand{\subparagraph}{%
+  \@startsection{subparagraph}{5}{0ex}{-1.0ex}{1.0ex}{%
+    \normalfont\normalsize\bfseries\SS@subparafont%
+  }%
+}
+\makeatother
+
+\makeatletter
+\newcommand\hrulefilll{\leavevmode\leaders\hrule\hskip 0pt plus 1filll\kern\z@}
+\makeatother
+
+% Headers & footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhead[LE]{\fancyplain{}{\bfseries\thepage}}
+\fancyhead[CE]{\fancyplain{}{}}
+\fancyhead[RE]{\fancyplain{}{\bfseries\leftmark}}
+\fancyhead[LO]{\fancyplain{}{\bfseries\rightmark}}
+\fancyhead[CO]{\fancyplain{}{}}
+\fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
+\fancyfoot[LE]{\fancyplain{}{}}
+\fancyfoot[CE]{\fancyplain{}{}}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Создано системой Doxygen }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Создано системой Doxygen }}
+\fancyfoot[CO]{\fancyplain{}{}}
+\fancyfoot[RO]{\fancyplain{}{}}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{#1}{}%
+}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\thesection\ #1}%
+}
+
+% Indices & bibliography
+\usepackage{natbib}
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{5}
+\makeindex
+
+\usepackage{newunicodechar}
+  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
+  \newunicodechar{²}{${}^{2}$}% Superscript two
+  \newunicodechar{³}{${}^{3}$}% Superscript three
+
+% Hyperlinks (required, but should be loaded last)
+\ifpdf
+  \usepackage[pdftex,pagebackref=true]{hyperref}
+\else
+  \ifxetex
+    \usepackage[pagebackref=true]{hyperref}
+  \else
+    \usepackage[ps2pdf,pagebackref=true]{hyperref}
+  \fi
+\fi
+
+\hypersetup{%
+  colorlinks=true,%
+  linkcolor=blue,%
+  citecolor=blue,%
+  unicode%
+}
+
+% Custom commands
+\newcommand{\clearemptydoublepage}{%
+  \newpage{\pagestyle{empty}\cleardoublepage}%
+}
+
+\usepackage{caption}
+\captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
+
+\usepackage{etoc}
+\etocsettocstyle{\doxytocparskip}{\doxynormalparskip}
+\renewcommand{\numberline}[1]{#1~}
+%===== C O N T E N T S =====
+
+\begin{document}
+
+% Titlepage & ToC
+\hypersetup{pageanchor=false,
+             bookmarksnumbered=true,
+             pdfencoding=unicode
+            }
+\pagenumbering{alph}
+\begin{titlepage}
+\vspace*{7cm}
+\begin{center}%
+{\Large Библиотека программного интерфейса для обработки графов \\[1ex]\large 0.\+1 }\\
+\vspace*{1cm}
+{\large Создано системой Doxygen 1.8.18}\\
+\end{center}
+\end{titlepage}
+\clearemptydoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearemptydoublepage
+\pagenumbering{arabic}
+\hypersetup{pageanchor=true}
+
+%--- Begin generated contents ---
+\chapter{Принципы обработки графовых моделей для системы с набором дискретной математики}
+\label{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
+\Hypertarget{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
+\input{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
+\chapter{Библиотека элементов программного интерфейса для обработки графов}
+\label{md__r_e_a_d_m_e}
+\Hypertarget{md__r_e_a_d_m_e}
+\input{md__r_e_a_d_m_e}
+\chapter{\# Программный интерфейс процессора обработки структур (СП) Leonhard A\+P\+I0}
+\label{md_spu-api__readme}
+\Hypertarget{md_spu-api__readme}
+\input{md_spu-api__readme}
+\chapter{Иерархический список классов}
+\input{hierarchy}
+\chapter{Алфавитный указатель классов}
+\input{annotated}
+\chapter{Классы}
+\input{class_s_p_u_1_1_abstract_fields}
+\input{class_s_p_u_1_1_abstract_fields_3_01void_01_4}
+\input{class_s_p_u_1_1_abstract_structure}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator}
+\input{class_bad_request}
+\input{class_s_p_u_1_1_base_extern_value}
+\input{class_s_p_u_1_1_base_structure}
+\input{structcmdfrmt__0}
+\input{structcmdfrmt__1}
+\input{structcmdfrmt__2}
+\input{structcmdfrmt__3}
+\input{structcmdfrmt__4}
+\input{structcmdfrmt__5}
+\input{class_command_overflow_error}
+\input{class_conflict}
+\input{struct_s_p_u_1_1_fields_container_1_1_content_struct}
+\input{struct_s_p_u_1_1_could_not_create_structure}
+\input{structdata__container}
+\input{struct_s_p_u_1_1_did_not_found_data_by_name}
+\input{classedge__property__writer}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_iterator}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edges}
+\input{class_s_p_u_1_1_extern_value}
+\input{class_s_p_u_1_1_fields}
+\input{class_s_p_u_1_1_fields_3_01void_01_4}
+\input{class_s_p_u_1_1_fields_container}
+\input{class_s_p_u_1_1_fields_data}
+\input{class_s_p_u_1_1_fields_data_3_01void_01_4}
+\input{class_s_p_u_1_1_fields_length}
+\input{class_s_p_u_1_1_fields_length_3_01void_01_4}
+\input{class_s_p_u_1_1_fields_pointer}
+\input{class_s_p_u_1_1_fields_pointer_3_01void_01_4}
+\input{class_s_p_u_1_1_fileops}
+\input{structfill__options}
+\input{struct_fixture}
+\input{structboost_1_1graph__test}
+\input{class_graph_performance_test}
+\input{class_s_p_u___g_r_a_p_h_1_1_graph_structure}
+\input{structgsid__container}
+\input{class_s_p_u_1_1_hash_map_extern_value}
+\input{structboost_1_1graph__test_1_1ignore__edge}
+\input{structboost_1_1graph__test_1_1ignore__edges}
+\input{structboost_1_1graph__test_1_1ignore__vertex}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_in_edges}
+\input{struct_s_p_u_1_1_abstract_structure_1_1_insert_struct}
+\input{class_insufficient_storage}
+\input{struct_s_p_u_1_1_no_fields_data}
+\input{class_not_found}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_out_edges}
+\input{struct_s_p_u_1_1pair__containter}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges_iterator}
+\input{structboost_1_1property__map_3_01_spu_ultra_graph_00_01edge__all__t_01_4}
+\input{structboost_1_1property__map_3_01_spu_ultra_graph_00_01edge__index__t_01_4}
+\input{structboost_1_1property__map_3_01_spu_ultra_graph_00_01edge__weight__t_01_4}
+\input{structboost_1_1property__map_3_01_spu_ultra_graph_00_01vertex__all__t_01_4}
+\input{structboost_1_1property__map_3_01_spu_ultra_graph_00_01vertex__index__t_01_4}
+\input{class_queue_error}
+\input{structrsltfrmt__0}
+\input{structrsltfrmt__1}
+\input{structrsltfrmt__2}
+\input{classboost_1_1spu__ug__property__map}
+\input{classboost_1_1spu__ug__readable__property__map}
+\input{struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph}
+\input{struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_traits}
+\input{class_s_p_u_1_1_structure}
+\input{class_s_p_u_1_1_structure_3_01void_00_01void_01_4}
+\input{class_s_p_u___g_r_a_p_h_1_1_structure_iterator}
+\input{class_s_p_u___g_r_a_p_h_1_1_structure_range}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_target_iterator}
+\input{classvertex__property__writer}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertex_iterator}
+\input{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertices}
+%--- End generated contents ---
+
+% Index
+\backmatter
+\newpage
+\phantomsection
+\clearemptydoublepage
+\addcontentsline{toc}{chapter}{\indexname}
+\printindex
+
+\end{document}

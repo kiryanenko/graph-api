@@ -1,0 +1,553 @@
+Этот проект содержит исходные тексты и указания к сборке программ с использованием C++ библиотеки {\ttfamily libspu}.
+
+Основное средство сборки -\/ {\ttfamily cmake}. Чтобы собрать собственный проект выполните\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake CMakeLists.txt}
+\DoxyCodeLine{make}
+\end{DoxyCode}
+
+
+Файл {\ttfamily C\+Make\+Lists.\+txt} содержит описатели\+:
+\begin{DoxyItemize}
+\item {\ttfamily S\+P\+U\+\_\+\+A\+R\+CH} -\/ архитектура СП (32, 64)
+\item {\ttfamily S\+P\+U\+\_\+\+S\+I\+M\+U\+L\+A\+T\+OR} -\/ использовать симулятор СП
+\end{DoxyItemize}\hypertarget{md_spu-api__readme_autotoc_md16}{}\doxysection{Основные подключаемые заголовочные файлы (директория $<$em$>$libspu$<$/em$>$)}\label{md_spu-api__readme_autotoc_md16}
+
+\begin{DoxyItemize}
+\item {\ttfamily \mbox{\hyperlink{spu_8h_source}{spu.\+h}}} -\/ совместимый с C99 заголовочный файл поддержки драйвера СП (не обязателен для включения)
+\item {\ttfamily \mbox{\hyperlink{libspu_8hpp_source}{libspu.\+hpp}}} -\/ основной заголовочный файл библиотеки; определяет тип данных data\+\_\+t и основные операции над ним
+\item {\ttfamily \mbox{\hyperlink{structure_8hpp_source}{structure.\+hpp}}} -\/ заголовочный файл, описывающий класс структуры СП
+\item {\ttfamily \mbox{\hyperlink{fields_8hpp_source}{fields.\+hpp}}} -\/ описание класса Fields разметки типа данных data\+\_\+t на поля
+\item {\ttfamily \mbox{\hyperlink{fields__pointer_8hpp_source}{fields\+\_\+pointer.\+hpp}}} -\/ умный указатель на объект класса Fields
+\item {\ttfamily \mbox{\hyperlink{extern__value_8hpp_source}{extern\+\_\+value.\+hpp}}} -\/ описание классов, позволяющий хранить большие объекты вне памяти СП
+\end{DoxyItemize}\hypertarget{md_spu-api__readme_autotoc_md17}{}\doxysection{Для использования описываемых ниже механизмов следует подключать соответствующие заголовочные файлы!}\label{md_spu-api__readme_autotoc_md17}
+\hypertarget{md_spu-api__readme_autotoc_md18}{}\doxysection{Принципы, на которых построена библиотека}\label{md_spu-api__readme_autotoc_md18}
+
+\begin{DoxyEnumerate}
+\item Все описания выполнены в пространстве имён S\+PU ({\ttfamily using namespace S\+PU})
+\item Структуры в памяти СП представляются как объекты (и управляются объектами)
+\item Каждому объекту-\/структуре усваивается уникальный идентификатор -\/ G\+S\+ID (см. тип gsid\+\_\+t)
+\item Использование \char`\"{}длинной арифметики\char`\"{} для поддержки любой разрядности регистров СП (разрядная сетка кратна 32, см. тип {\ttfamily data\+\_\+t})
+\item Поддержка разметки {\ttfamily data\+\_\+t} на поля с естественным порядком следования, произвольной длиной и любым типом данных имени
+\item Поддержка хранения в ОЗУ данных, больших разрядной сетки СП
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md20}{}\doxysubsection{Длинная арифметика $<$tt$>$data\+\_\+t$<$/tt$>$ и $<$tt$>$gsid\+\_\+t$<$/tt$>$ (см. файл $<$tt$>$spu.\+h$<$/tt$>$)}\label{md_spu-api__readme_autotoc_md20}
+Типы данных {\ttfamily data\+\_\+t} и {\ttfamily gsid\+\_\+t} представляют собой структуры, в которых заключён массив 32-\/разрядных беззнаковых целых. Над типами данных определены операции в файле {\ttfamily containres\+\_\+operations.\+hpp}. G\+S\+ID является чисто суррогатным ключем структуры в памяти и имеет ограниченную поддержку \char`\"{}длинной арифметики\char`\"{}.
+
+Тип данных {\ttfamily data\+\_\+t} репрезентует данных в регистрах СП и обязан соответствовать им по сути. Тип строго Little-\/endian, при этом кратность элементов 32 разрядам соответствует кратности регистра СП. Компиляция заголовочного файла {\ttfamily \mbox{\hyperlink{spu_8h_source}{spu.\+h}}} с поддержкой С++ позволяет использовать шаблонный конструктор типа {\ttfamily data\+\_\+t} от любого типа.\hypertarget{md_spu-api__readme_autotoc_md21}{}\doxysubsubsection{Пример использования $<$tt$>$data\+\_\+t$<$/tt$>$}\label{md_spu-api__readme_autotoc_md21}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{C++\}}
+\DoxyCodeLine{ data\_t d1;}
+\DoxyCodeLine{ data\_t d2 = true;}
+\DoxyCodeLine{ data\_t d3 = 10;}
+\DoxyCodeLine{ data\_t d4 = 1.100;}
+\DoxyCodeLine{ data\_t d5 = 0x1234567890adcdef;}
+\DoxyCodeLine{}
+\DoxyCodeLine{ if(d2)}
+\DoxyCodeLine{ \{}
+\DoxyCodeLine{   cout << to\_string(d1) << endl;}
+\DoxyCodeLine{   cout << to\_string(d2) << endl;}
+\DoxyCodeLine{   cout << to\_string(d3) << endl;}
+\DoxyCodeLine{   cout << to\_string(d4) << endl;}
+\DoxyCodeLine{   cout << to\_string(d5) << endl;}
+\DoxyCodeLine{   cout << to\_string(d5 + 1) << endl;}
+\DoxyCodeLine{   cout << to\_string(d5 << 8) << endl;}
+\DoxyCodeLine{   cout << to\_string(\string~d5) << endl;}
+\DoxyCodeLine{ \}}
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md23}{}\doxysubsection{Разметка данных на поля}\label{md_spu-api__readme_autotoc_md23}
+Класс {\ttfamily template$<$NameT$>$ class Fields$<$NameT$>$} определят разметку полей данных. Конструктор класса принимает дескриптор длин полей {\ttfamily Fields\+Length$<$NameT$>$}, в котором описывается имя поля с заданным типом NameT и произвольным значением длины.
+
+Конкретные данные могут быть заданы как дескриптором {\ttfamily Fields\+Data$<$NameT$>$}, так и усвоены из-\/вне готовыми данными типа {\ttfamily data\+\_\+t}. Данные по полям доступны с использованием оператора {\ttfamily \mbox{[}Name name\mbox{]}}. Тип преобразуется к {\ttfamily data\+\_\+t} автоматически при необходимости.
+
+По содержимому полей можно итерироваться конструкцией for C++11.\hypertarget{md_spu-api__readme_autotoc_md24}{}\doxysubsubsection{Пример использования $<$tt$>$\+Fields$<$/tt$>$}\label{md_spu-api__readme_autotoc_md24}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{C++\}}
+\DoxyCodeLine{ Fields<string> F(\{}
+\DoxyCodeLine{   \{ "a", 8 \},}
+\DoxyCodeLine{   \{ "b", 8 \},}
+\DoxyCodeLine{   \{ "c", 8 \},}
+\DoxyCodeLine{   \{ "d", 8 \},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{ F = 0x1234;}
+\DoxyCodeLine{}
+\DoxyCodeLine{ cout << to\_string(F["a"]) << endl; // 4}
+\DoxyCodeLine{ cout << to\_string(F["b"]) << endl; // 3}
+\DoxyCodeLine{ cout << to\_string(F["c"]) << endl; // 2}
+\DoxyCodeLine{ cout << to\_string(F["d"]) << endl; // 1}
+\DoxyCodeLine{}
+\DoxyCodeLine{ F = \{}
+\DoxyCodeLine{   \{ "a", 255 \},}
+\DoxyCodeLine{   \{ "b", 15  \},}
+\DoxyCodeLine{   \{ "c", 13  \},}
+\DoxyCodeLine{   \{ "d", 0   \},}
+\DoxyCodeLine{ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{ cout << to\_string(F) << endl; // 0x00000000-\/0x000D0FFF}
+\DoxyCodeLine{}
+\DoxyCodeLine{ for (auto ex : F)}
+\DoxyCodeLine{ \{}
+\DoxyCodeLine{   cout << ex.name << " is " << to\_string(ex.data) << endl;}
+\DoxyCodeLine{ \}}
+\end{DoxyCode}
+
+
+Для класса {\ttfamily Fields} существует \char`\"{}умный\char`\"{} указатель -\/ класс {\ttfamily template$<$NameT$>$ class Fields\+Pointer$<$NameT$>$}, который конструируется либо от указателя на {\ttfamily Fields}, либо от объекта такого же класса ({\ttfamily Fields\+Pointer}). Класс призван эффективно управлять указателем на разметку полей и не допускать повторного удаления. Этот класс появился поскольку требуется обеспечить множество указателей на класс {\ttfamily Fields} с прозрачным синтаксисом и удалением только одного (без сегментации памяти). Синтаксис этого класс прозрачен как для {\ttfamily Fields}.
+
+Для того, чтобы классы {\ttfamily Fields} и {\ttfamily Fields\+Pointer} имели абсолютно одинаковый синтаксис, создан абстрактный класс {\ttfamily template$<$NameT$>$ class Abstract\+Fields$<$NameT$>$}. Он содержит описания всех методов, что применяются при работе с разметкой полей.
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md26}{}\doxysubsection{Организация структур СП в библиотеке}\label{md_spu-api__readme_autotoc_md26}
+Структуры СП представляются объектами класса {\ttfamily Structure}. Обобщённый интерфейс работы со структурой описывается абстрактным классом Abstract\+Structure (см. {\ttfamily \mbox{\hyperlink{abstract__structure_8hpp_source}{libspu/abstract\+\_\+structure.\+hpp}}}). Структура поддерживает следующие команды СП -\/ методы\+:
+
+
+\begin{DoxyItemize}
+\item status\+\_\+t insert(key, value) -\/ Добавить новую пару key-\/value
+\item insert\+Vector(insert\+\_\+vector) -\/ Добавить в структуру вектор значений
+\item status\+\_\+t del(key) -\/ Удалить пару key-\/value
+\item pair\+\_\+t search(key) -\/ Поиск ключа
+\item pair\+\_\+t min() -\/ Поиск минимальной по ключу пары
+\item pair\+\_\+t max() -\/ Поиск максимальной по ключу пары
+\item pair\+\_\+t next(key) -\/ Следующая по ключу пара
+\item pair\+\_\+t prev(key) -\/ Предыдущая по ключу пара
+\item pair\+\_\+t nsm(key) -\/ Следующая соседняя по ключу снизу пара
+\item pair\+\_\+t ngr(key) -\/ Следующая соседняя по ключу сверху пара
+\item u32 get\+\_\+power() -\/ Получить мощность структуры
+\item gsid\+\_\+t get\+\_\+gsid() -\/ получить G\+S\+ID структуры
+\end{DoxyItemize}\hypertarget{md_spu-api__readme_autotoc_md27}{}\doxysubsubsection{Хранилище пары ключ-\/значение $<$tt$>$pair\+\_\+t$<$/tt$>$ имеет поля ключа, значения и статуса выполнения операции СП}\label{md_spu-api__readme_autotoc_md27}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{struct pair\_t}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    key\_t    key;}
+\DoxyCodeLine{    value\_t  value;}
+\DoxyCodeLine{    status\_t status;}
+\DoxyCodeLine{  \};}
+\end{DoxyCode}
+
+
+Каждая операция имеет флаги выполнения, вызовы по-\/умолчанию исполняются флаги оптимизированные для этой команды. Возможные флаги\+:
+
+
+\begin{DoxyItemize}
+\item N\+O\+\_\+\+F\+L\+A\+GS -\/ Нет флагов исполнения
+\item P\+\_\+\+F\+L\+AG -\/ Флаг ожидания окончания исполнения операции и возврата результата
+\item Q\+\_\+\+F\+L\+AG -\/ Флаг помещения операции в очередь исполнения
+\item R\+\_\+\+F\+L\+AG -\/ Флага сброса очереди исполнения операция
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md29}{}\doxysubsection{Описание структуры СП для использования}\label{md_spu-api__readme_autotoc_md29}
+Структура описывается классом {\ttfamily template$<$Key\+NameT,Value\+NameT$>$ class Structure}. Специализированный класс {\ttfamily Structure$<$void, void$>$} реализует описанный выше интерфейс {\ttfamily Abstract\+Structure}.
+
+Полная шаблонная реализация включает в себя разметку полей ключа и значения. Для описания ключа и значения можно использовать дескрипторы данных полей. Можно получить указатели на объекты классов разметки полей (класс {\ttfamily Fields\+Pointer}) методами {\ttfamily key()} и {\ttfamily value()}. Полученные таким образом ключи и значения будут соответствовать последним данным, полученным из СП или переданному туда (для операций поиска в случае успешного завершения).
+
+Библиотека описывает функции преобразования данных к классу строки C++ {\ttfamily std\+::string}. Эти функции описаны для типа данных {\ttfamily data\+\_\+t}, статуса завершения операции СП и контейнера пары значений ключ-\/значения СП {\ttfamily pair\+\_\+t}. Преобразование типа {\ttfamily pair\+\_\+t} к строке показывает его в формате {\ttfamily Статус завершения\+: Ключ \+: Значение}.\hypertarget{md_spu-api__readme_autotoc_md30}{}\doxysubsubsection{Пример управления специализированной структурой СП}\label{md_spu-api__readme_autotoc_md30}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{C++\}}
+\DoxyCodeLine{ Structure<> S;}
+\DoxyCodeLine{ S.insert(1, 1);}
+\DoxyCodeLine{ S.insertVector(\{}
+\DoxyCodeLine{   \{2, 2\},}
+\DoxyCodeLine{   \{3, 3\},}
+\DoxyCodeLine{   \{4, 4\},}
+\DoxyCodeLine{   \{5, 5\},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{ cout << to\_string(S.min()) << endl;     // OK: 0x00000000-\/0x00000001 : 0x00000000-\/0x00000001}
+\DoxyCodeLine{ cout << to\_string(S.max()) << endl;     // OK: 0x00000000-\/0x00000005 : 0x00000000-\/0x00000005}
+\DoxyCodeLine{ cout << to\_string(S.search(4)) << endl; // OK: 0x00000000-\/0x00000004 : 0x00000000-\/0x00000004}
+\end{DoxyCode}
+\hypertarget{md_spu-api__readme_autotoc_md31}{}\doxysubsubsection{Пример управления структурой СП с разметкой полей}\label{md_spu-api__readme_autotoc_md31}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{C++\}}
+\DoxyCodeLine{ /* Разметка ключа */}
+\DoxyCodeLine{ Structure<string> S\_k(\{ // Задание старшинства разрядов естественная: снизу-\/вверх => слева-\/направо}
+\DoxyCodeLine{   \{ "k\_a", 8 \},}
+\DoxyCodeLine{   \{ "k\_b", 8 \},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Разметка значения */}
+\DoxyCodeLine{ Structure<void, string> S\_v(\{}
+\DoxyCodeLine{   \{ "v\_a", 8 \},}
+\DoxyCodeLine{   \{ "v\_b", 8 \},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Разметка и ключа и значения */}
+\DoxyCodeLine{ Structure<string, string> S\_kv(\{}
+\DoxyCodeLine{   \{ "k\_a", 8 \},}
+\DoxyCodeLine{   \{ "k\_b", 8 \},}
+\DoxyCodeLine{ \},\{}
+\DoxyCodeLine{   \{ "v\_a", 8 \},}
+\DoxyCodeLine{   \{ "v\_b", 8 \},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Получение указателей на объекты ключа и значения */}
+\DoxyCodeLine{ auto S\_kv\_key   = S\_kv.key();  // Автоматически получаются правильные шаблоны класса FieldsPointer}
+\DoxyCodeLine{ auto S\_kv\_value = S\_kv.value();}
+\DoxyCodeLine{}
+\DoxyCodeLine{ S\_kv.insert(\{}
+\DoxyCodeLine{   \{"k\_b", 255\},}
+\DoxyCodeLine{ \},\{}
+\DoxyCodeLine{   \{"v\_a", 16\},}
+\DoxyCodeLine{ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{ cout << to\_string(S\_kv.min()) << endl;                               // OK: 0x00000000-\/0x0000ff00 : 0x00000000-\/0x00000010}
+\DoxyCodeLine{ cout << to\_string(S\_kv\_key) << " " << to\_string(S\_kv\_value) << endl; // 0x00000000-\/0x0000ff00 0x00000000-\/0x00000010}
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md33}{}\doxysubsection{Хранение больших объектов}\label{md_spu-api__readme_autotoc_md33}
+Библиотека имеет класс {\ttfamily Extern\+Value} для хранения больших значений. Значение помещается в список, а её уникальный идентификатор -\/ в память СП.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{C++\}}
+\DoxyCodeLine{ Structure<> S;}
+\DoxyCodeLine{ pair\_t pair;}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Сохранение */}
+\DoxyCodeLine{ string str = "This string stored at hash map. In SPU stored id for a string";}
+\DoxyCodeLine{ BaseExternValue extern\_val = HashMapExternValue<string>(str);}
+\DoxyCodeLine{ S.insert(1, extern\_val);}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Поиск */}
+\DoxyCodeLine{ pair = S.search(1);}
+\DoxyCodeLine{ string res\_str = (HashMapExternValue<string>) pair.value;}
+\DoxyCodeLine{ cout << res\_str << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{ /* Произвольная не пакетированная структура */}
+\DoxyCodeLine{ struct Point \{double x; double y; double z;\};}
+\DoxyCodeLine{ Point p = \{1.5, 2.3, 3.7\};}
+\DoxyCodeLine{ HashMapExternValue<Point> point\_ext;}
+\DoxyCodeLine{ point\_ext << p; // Операторы << и >> делают тоже, что и методы set и get}
+\DoxyCodeLine{ S.insert(2, point\_ext);}
+\DoxyCodeLine{ pair = S.search(2);}
+\DoxyCodeLine{ if (pair.status == OK) \{}
+\DoxyCodeLine{     point\_ext << pair;}
+\DoxyCodeLine{     point\_ext >> p;}
+\DoxyCodeLine{     cout << "Point struct X=" << p.x << " Y=" << p.y << " Z=" << p.z << endl;}
+\DoxyCodeLine{ \}}
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md35}{}\doxysubsection{Управление СП и симулятор СП}\label{md_spu-api__readme_autotoc_md35}
+Управление СП осуществляется классом {\ttfamily Base\+Structure}. При помощи класса {\ttfamily Fileops} он передаёт команды СП и получает результат. Здесь реализованы непосредственные передачи от символьного устройства СП к библиотеке и запись данных.
+
+Альтернативно при установке макроопределения {\ttfamily S\+P\+U\+\_\+\+S\+I\+M\+U\+L\+A\+T\+OR} место класса {\ttfamily Base\+Structure} занимает класс {\ttfamily Simulator}. Этот класс на основе {\ttfamily std\+::map} симулирует (эмулирует) поведение СП по всем поддерживаемым операциям.
+
+Диаграмма классов библиотеки структур приведена ниже.
+
+
+
+\DoxyHorRuler{0}
+\hypertarget{md_spu-api__readme_autotoc_md37}{}\doxysection{Сложный пример алгоритма с использованием библиотеки -\/ Алгоритм Дейкстры}\label{md_spu-api__readme_autotoc_md37}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{\#include <iostream>}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#include <libspu.hpp>}
+\DoxyCodeLine{\#include <structure.hpp>}
+\DoxyCodeLine{}
+\DoxyCodeLine{using namespace std;}
+\DoxyCodeLine{using namespace SPU;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#define INF    0xf}
+\DoxyCodeLine{\#define u\_cnt  5 }
+\DoxyCodeLine{}
+\DoxyCodeLine{/* Graph representation}
+\DoxyCodeLine{}
+\DoxyCodeLine{       7}
+\DoxyCodeLine{ '1' -\/-\/-\/-\/-\/-\/ '3' }
+\DoxyCodeLine{  |        /  \(\backslash\) 7}
+\DoxyCodeLine{  |      /      \(\backslash\) }
+\DoxyCodeLine{ 2|   4 /       '5'}
+\DoxyCodeLine{  |   /         / }
+\DoxyCodeLine{  | /   1     / 6}
+\DoxyCodeLine{ '2' -\/-\/-\/-\/-\/-\/ '4'}
+\DoxyCodeLine{}
+\DoxyCodeLine{*/}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  Structures definitions}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{}
+\DoxyCodeLine{/* Graph of convergence G */}
+\DoxyCodeLine{Structure<void, string> G(\{ // Has data fields but not key fields}
+\DoxyCodeLine{  \{ "Adj[u]", 16 \}, // Has own Fields}
+\DoxyCodeLine{  \{ "w[u]",   20 \}, // Also has own Fields}
+\DoxyCodeLine{  \{ "d[u]",   4  \}, // Max distance is 15}
+\DoxyCodeLine{  \{ "p[u]",   4  \},}
+\DoxyCodeLine{  \{ "u∈Q",    1  \}, // Boolean}
+\DoxyCodeLine{\});}
+\DoxyCodeLine{auto G\_value = G.value();}
+\DoxyCodeLine{}
+\DoxyCodeLine{/* Adj[u] fields */}
+\DoxyCodeLine{Fields<> Adj\_u(\{ // Every field is boolean}
+\DoxyCodeLine{  \{ 1, 1 \},}
+\DoxyCodeLine{  \{ 2, 1 \},}
+\DoxyCodeLine{  \{ 3, 1 \},}
+\DoxyCodeLine{  \{ 4, 1 \},}
+\DoxyCodeLine{  \{ 5, 1 \},}
+\DoxyCodeLine{\});}
+\DoxyCodeLine{}
+\DoxyCodeLine{/* w[u] fields */}
+\DoxyCodeLine{Fields<> w\_u(\{ // Max distance is 16 }
+\DoxyCodeLine{  \{ 1, 4 \},}
+\DoxyCodeLine{  \{ 2, 4 \},}
+\DoxyCodeLine{  \{ 3, 4 \},}
+\DoxyCodeLine{  \{ 4, 4 \},}
+\DoxyCodeLine{  \{ 5, 4 \},}
+\DoxyCodeLine{\});}
+\DoxyCodeLine{}
+\DoxyCodeLine{/* Structure of consideration Q */}
+\DoxyCodeLine{Structure<string> Q(\{}
+\DoxyCodeLine{  \{ "u",    8 \},}
+\DoxyCodeLine{  \{ "d[u]", 4 \}, // d[u] is more important}
+\DoxyCodeLine{\});}
+\DoxyCodeLine{auto Q\_key = Q.key(); // Get Fields to separate Q key}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  End of structures definitions}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{}
+\DoxyCodeLine{/* Helpers */}
+\DoxyCodeLine{void G\_init();}
+\DoxyCodeLine{void Q\_init();}
+\DoxyCodeLine{void G\_print();}
+\DoxyCodeLine{void Q\_print();}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  cout << "Starting Dijkstra algorithm" << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* G */}
+\DoxyCodeLine{  G\_init();}
+\DoxyCodeLine{  G\_print();}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* Q */}
+\DoxyCodeLine{  Q\_init();}
+\DoxyCodeLine{  Q\_print();}
+\DoxyCodeLine{}
+\DoxyCodeLine{  cout << "Starting" << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /*************************************}
+\DoxyCodeLine{    Main algorithm}
+\DoxyCodeLine{  *************************************/}
+\DoxyCodeLine{}
+\DoxyCodeLine{  while(Q.get\_power())}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    /* Get first node from Q and delete it */}
+\DoxyCodeLine{    Q.min();}
+\DoxyCodeLine{    u8 u = Q\_key["u"]; // Index of node}
+\DoxyCodeLine{    Q.del(Q\_key);}
+\DoxyCodeLine{    }
+\DoxyCodeLine{    /* Get G\_value from Q's "u" */}
+\DoxyCodeLine{    G.search(u);}
+\DoxyCodeLine{    Adj\_u      = G\_value["Adj[u]"];}
+\DoxyCodeLine{    data\_t d\_u = G\_value["d[u]"];}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* Unset u∈Q */}
+\DoxyCodeLine{    G\_value["u∈Q"] = false;}
+\DoxyCodeLine{    data\_t u\_value = G\_value;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* Check out all v's from Adj[u] */}
+\DoxyCodeLine{    for(auto ex : Adj\_u)}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{      /* If v in Adj[u] */}
+\DoxyCodeLine{      if(ex.data)}
+\DoxyCodeLine{      \{}
+\DoxyCodeLine{        /* Search for v */}
+\DoxyCodeLine{        u8 v = ex.name;}
+\DoxyCodeLine{        G.search(v); // Now G\_value is value of v key}
+\DoxyCodeLine{        w\_u = G\_value["w[u]"];}
+\DoxyCodeLine{}
+\DoxyCodeLine{        /* v is in Q */}
+\DoxyCodeLine{        if(G\_value["u∈Q"])}
+\DoxyCodeLine{        \{}
+\DoxyCodeLine{          /* Delete v from Q */}
+\DoxyCodeLine{          Q\_key["u"]    = v;}
+\DoxyCodeLine{          Q\_key["d[u]"] = G\_value["d[u]"];}
+\DoxyCodeLine{          Q.del(Q\_key);}
+\DoxyCodeLine{}
+\DoxyCodeLine{          /* Create new length statement */}
+\DoxyCodeLine{          data\_t len = d\_u + w\_u[u];}
+\DoxyCodeLine{          if( G\_value["d[u]"] > len )}
+\DoxyCodeLine{          \{}
+\DoxyCodeLine{            /* Set new data */}
+\DoxyCodeLine{            G\_value["d[u]"] = len;}
+\DoxyCodeLine{            G\_value["p[u]"] = u;}
+\DoxyCodeLine{            }
+\DoxyCodeLine{            /* Save v state */}
+\DoxyCodeLine{            G.insert(v, G\_value);}
+\DoxyCodeLine{}
+\DoxyCodeLine{            /* Insert new v in Q */}
+\DoxyCodeLine{            Q\_key["d[u]"] = G\_value["d[u]"];}
+\DoxyCodeLine{          \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{          Q.insert(Q\_key, 0);}
+\DoxyCodeLine{        \}}
+\DoxyCodeLine{      \}}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* Save u state */}
+\DoxyCodeLine{    G.insert(u, u\_value);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    G\_print();}
+\DoxyCodeLine{    Q\_print();}
+\DoxyCodeLine{}
+\DoxyCodeLine{    if (Q.get\_power())}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{      cout << "Turn" << endl;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{  cout << "Ended" << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{  return 0;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  G initialization}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{void G\_init()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  /* u = 1 */}
+\DoxyCodeLine{  Adj\_u  = \{ \{ 2, true \}, \{ 3, true \} \};}
+\DoxyCodeLine{  w\_u    = \{ \{ 2, 2    \}, \{ 3, 7    \} \};}
+\DoxyCodeLine{  G.insert(1, \{}
+\DoxyCodeLine{    \{ "Adj[u]", Adj\_u \},}
+\DoxyCodeLine{    \{ "w[u]",   w\_u   \},}
+\DoxyCodeLine{    \{ "d[u]",   0     \},}
+\DoxyCodeLine{    \{ "p[u]",   0     \},}
+\DoxyCodeLine{    \{ "u∈Q",    true  \} }
+\DoxyCodeLine{  \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* u = 2 */}
+\DoxyCodeLine{  Adj\_u  = \{ \{ 1, true \}, \{ 3, true \}, \{ 4, true \} \};}
+\DoxyCodeLine{  w\_u    = \{ \{ 1, 2    \}, \{ 3, 4    \}, \{ 4, 1    \} \};}
+\DoxyCodeLine{  G.insert(2, \{}
+\DoxyCodeLine{    \{ "Adj[u]", Adj\_u \},}
+\DoxyCodeLine{    \{ "w[u]",   w\_u   \},}
+\DoxyCodeLine{    \{ "d[u]",   INF   \},}
+\DoxyCodeLine{    \{ "p[u]",   0     \},}
+\DoxyCodeLine{    \{ "u∈Q",    true  \} }
+\DoxyCodeLine{  \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* u = 3 */}
+\DoxyCodeLine{  Adj\_u  = \{ \{ 1, true \}, \{ 2, true \}, \{ 4, true \}, \{ 5, true \} \};}
+\DoxyCodeLine{  w\_u    = \{ \{ 1, 7    \}, \{ 2, 4    \}, \{ 4, 2    \}, \{ 5, 7    \} \};}
+\DoxyCodeLine{  G.insert(3, \{}
+\DoxyCodeLine{    \{ "Adj[u]", Adj\_u \},}
+\DoxyCodeLine{    \{ "w[u]",   w\_u   \},}
+\DoxyCodeLine{    \{ "d[u]",   INF   \},}
+\DoxyCodeLine{    \{ "p[u]",   0     \},}
+\DoxyCodeLine{    \{ "u∈Q",    true  \} }
+\DoxyCodeLine{  \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* u = 4 */}
+\DoxyCodeLine{  Adj\_u  = \{ \{ 2, true \}, \{ 3, true \}, \{ 5, true \} \};}
+\DoxyCodeLine{  w\_u    = \{ \{ 2, 1    \}, \{ 3, 2    \}, \{ 5, 6    \} \};}
+\DoxyCodeLine{  G.insert(4, \{}
+\DoxyCodeLine{    \{ "Adj[u]", Adj\_u \},}
+\DoxyCodeLine{    \{ "w[u]",   w\_u   \},}
+\DoxyCodeLine{    \{ "d[u]",   INF   \},}
+\DoxyCodeLine{    \{ "p[u]",   0     \},}
+\DoxyCodeLine{    \{ "u∈Q",    true  \} }
+\DoxyCodeLine{  \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* u = 5 */}
+\DoxyCodeLine{  Adj\_u  = \{ \{ 3, true \}, \{ 4, true \} \};}
+\DoxyCodeLine{  w\_u    = \{ \{ 3, 7    \}, \{ 4, 6    \} \};}
+\DoxyCodeLine{  G.insert(5, \{}
+\DoxyCodeLine{    \{ "Adj[u]", Adj\_u \},}
+\DoxyCodeLine{    \{ "w[u]",   w\_u   \},}
+\DoxyCodeLine{    \{ "d[u]",   INF   \},}
+\DoxyCodeLine{    \{ "p[u]",   0     \},}
+\DoxyCodeLine{    \{ "u∈Q",    true  \} }
+\DoxyCodeLine{  \});}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  Q initialization}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{void Q\_init()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  /* Q first node init */}
+\DoxyCodeLine{  Q.insert(}
+\DoxyCodeLine{    \{ \{ "d[u]", 0 \},  \{ "u", 1 \} \},}
+\DoxyCodeLine{    0}
+\DoxyCodeLine{  );}
+\DoxyCodeLine{}
+\DoxyCodeLine{  /* Q other nodes init */}
+\DoxyCodeLine{  for(u8 u=2; u<=u\_cnt; u++)}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    Q.insert(}
+\DoxyCodeLine{      \{ \{ "d[u]", INF \},  \{ "u", u \} \},}
+\DoxyCodeLine{      0}
+\DoxyCodeLine{    );}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  G printing}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{void G\_print()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  /* Print out */}
+\DoxyCodeLine{  cout << "G graph is:" << endl;}
+\DoxyCodeLine{  for(u8 u=1; u<=u\_cnt; u++)}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    pair\_t pair =  G.search(u);}
+\DoxyCodeLine{    cout << "\(\backslash\)t u = " << to\_string(pair.key) <<}
+\DoxyCodeLine{      ":  " << to\_string(pair.value, true) << endl;}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{  cout << endl;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{/*************************************}
+\DoxyCodeLine{  Q printing}
+\DoxyCodeLine{*************************************/}
+\DoxyCodeLine{void Q\_print()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{  if (Q.get\_power())}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    /* Print out */}
+\DoxyCodeLine{    cout << "Q structures keys are:" << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* First node */}
+\DoxyCodeLine{    pair\_t pair = Q.min();}
+\DoxyCodeLine{    cout << "\(\backslash\)t " << to\_string(pair.key, true) << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    /* Other nodes */}
+\DoxyCodeLine{    for(u8 u=2; u<=Q.get\_power(); u++)}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{      pair = Q.next(pair.key);}
+\DoxyCodeLine{      cout << "\(\backslash\)t " << to\_string(pair.key, true) << endl;}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{  else}
+\DoxyCodeLine{  \{}
+\DoxyCodeLine{    cout << "Q is empty" << endl;}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+ 

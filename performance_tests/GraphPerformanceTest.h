@@ -27,7 +27,7 @@ public:
 
     size_t start_vertices_cnt = 500;
     size_t inc_vertices_value = 500;
-    size_t end_vertices_cnt = 10000;
+    size_t end_vertices_cnt = 100000;
     size_t edges_per_vertex = 3;
 
     GraphPerformanceTest() = default;

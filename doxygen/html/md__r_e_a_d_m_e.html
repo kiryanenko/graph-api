@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.18"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Библиотека программного интерфейса для обработки графов: Библиотека элементов программного интерфейса для обработки графов</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Библиотека программного интерфейса для обработки графов
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Интерфейс для создания ультраграфов для систем с дискретным набором команд.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">Библиотека элементов программного интерфейса для обработки графов </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Был реализован интерфейс для создания ультраграфов для систем с дискретным набором команд. Библеотека реализует интерфейс графа предоставляемой библиотекой <b>Boost graph library</b>. Т.о. для программ использующих графы предоставляемый библиотекой boost, можно легко перейти на этот граф, просто подменив их. Также реализовав интерфейс графа boost, появляется возможность использовать множество его графовых алгоритмов.</p>
+<h1><a class="anchor" id="autotoc_md14"></a>
+Структуры для хранения ультраграфа</h1>
+<p>Для хранения ультраграфа используется следующие 2 структуры:</p>
+<ol type="1">
+<li><p class="startli"><b>Структура связь вершина -&gt; ребро.</b></p>
+<p class="startli">``` | Ключ | Значение | | -----&mdash; + -------------&mdash; + -------&mdash; + -----&mdash; + -------------------&mdash; | | id графа | Бит инцидетности | id вершины | id ребра | | | -----&mdash; + -------------&mdash; + -------&mdash; + -----&mdash; + -------------------&mdash; | | id графа | 0 | 0..0 | Общее кол-во вершин | <br  />
+ | id графа | 0 | id вершины | 0..0 | Данные вершины | | id графа | 0 | id вершины | 1..1 | Кол-во исходящих ребер | | id графа | 1 | id вершины | 1..1 | Кол-во входящих ребер | ```</p>
+<p class="startli">Структура хранит вершины и исходящие из них ребра. По этой структуре происходит поиск смежных ребер для указанной вершины. Старший аргумент - идентификатор графа Аргумент <code>Бит инцидетности</code> показывает является ли данное ребро входящим или исходящим (0 - исходящее, 1 - входящее), третий аргумент ключа является идентификатор вершины, а младший аргумент - идентификатор смежного ребра. Данные вершины хранятся в значении для записи с ключом, у которого аргумент бит инцидетности рваен 0, аргумент <code>id вершины</code> соответствует этой вершине и аргумент <code>id ребра</code> равен 0.</p>
+</li>
+<li><p class="startli"><b>Структура связь ребро -&gt; вершина.</b></p>
+<p class="startli">``` | Ключ | Значение | | -----&mdash; + -------------&mdash; + -----&mdash; + -------&mdash; + ---------------------------------&mdash; | | id графа | Бит инцидетности | id ребра | id вершины | | | -----&mdash; + -------------&mdash; + -----&mdash; + -------&mdash; + ---------------------------------&mdash; | | id графа | 0 | 0..0 | Общее количество ребер | | id графа | 0 | id ребра | 0..0 | Данные ребра | | id графа | 0 | id ребра | 1..1 | Кол-во вершин, из кот. выходит ребро | | id графа | 1 | id ребра | 1..1 | Кол-во вершин, в кот. входит ребро | ```</p>
+<p class="startli">Структура хранит ребра и вершины, в которые входят эти ребра. По этой структуре происходит поиск смежных вершин для указанного ребра. Аргумент <code>Бит инцидетности</code> показывает является ли данное ребро входящим или исходящим (0 - исходящее, 1 - входящее), третий аргумент ключа является идентификатор ребра, а младший аргумент - идентификатор смежной вершины. К ребру можно прикрепить информацию о ребре. Эти данные хранятся в значении для записи с ключом, у которого аргумент бит инцидетности рваен 0, аргумент <code>id ребра</code> соответствует этому ребру, и аргумент <code>id вершины</code> равен 0.</p>
+</li>
+</ol>
+<p>При поиске имеет та вершина или ребро, что имеет меньший id. Т.о. для взвешенных графов следует формировать id ребра так, чтобы в старших битах идентификатора ребра находился вес этого ребра (для формирования такого идентификатора имеется вспомогательный метод <code>edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight);</code>).</p>
+<h1><a class="anchor" id="autotoc_md15"></a>
+Пример работы с SpuUltraGraph</h1>
+<div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &lt;iostream&gt;</div>
+<div class="line">#include &quot;SpuUltraGraph.h&quot;</div>
+<div class="line"> </div>
+<div class="line">using namespace std;</div>
+<div class="line">using namespace SPU_GRAPH;</div>
+<div class="line">using namespace boost;</div>
+<div class="line"> </div>
+<div class="line">int main()</div>
+<div class="line">{</div>
+<div class="line">    // Инициализация графа по умолчанию</div>
+<div class="line">    // В этом случае id графа будет равно 0</div>
+<div class="line">    SpuUltraGraph graph;</div>
+<div class="line"> </div>
+<div class="line">    // Объект черт графа</div>
+<div class="line">    SpuUltraGraphTraits traits;</div>
+<div class="line">    // Задаю битность. По умолчанию она такая:</div>
+<div class="line">    traits.graph_id_depth = 3;      // Кол-во бит под id графа</div>
+<div class="line">    traits.vertex_id_depth = 28;    // Кол-во бит под id вершины</div>
+<div class="line">    traits.edge_id_depth = 28;      // Кол-во бит под индекс ребра (Индекс ребра НЕ id ребра. id ребра состоит из веса и индекса)</div>
+<div class="line">    traits.weight_depth = 4;        // Кол-во бит под вес ребра</div>
+<div class="line">    // Указывваю структуры, кот будет использовать наш граф</div>
+<div class="line">    GraphStructure vertex_struct, edge_struct;</div>
+<div class="line">    traits.vertex_struct = vertex_struct;</div>
+<div class="line">    traits.edge_struct = edge_struct;</div>
+<div class="line"> </div>
+<div class="line">    // Инициализация графа с id = 5 и указанием черт</div>
+<div class="line">    SpuUltraGraph custom_graph = SpuUltraGraph(5, traits);</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    // SpuUltraGraph::vertex_descriptor - тип идентификатора вершины графа (unsigned long)</div>
+<div class="line">    // SpuUltraGraph::edge_descriptor - тип идентификатора ребра графа (unsigned long)</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    // Добавление вершины</div>
+<div class="line">    SpuUltraGraph::vertex_descriptor v1 = graph.add_vertex();</div>
+<div class="line">    // Добаввление вершины с указанием id</div>
+<div class="line">    auto v2 = graph.add_vertex(2);</div>
+<div class="line">    // Добаввление вершины с id = 3 и value = 123.123</div>
+<div class="line">    auto v3 = graph.add_vertex(3, 123.123);</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    // Добавление ребра</div>
+<div class="line">    SpuUltraGraph::edge_descriptor e1 = graph.add_edge();</div>
+<div class="line">    // Добавление ребра с указанием id</div>
+<div class="line">    auto e2 = graph.add_edge(2);</div>
+<div class="line">    // К ребру можно прикрепить данные</div>
+<div class="line">    auto e3 = graph.add_edge(3, data_t(&quot;abc&quot;));</div>
+<div class="line">    // Добавление ребра от v1 к v2</div>
+<div class="line">    auto e12 = graph.add_edge(v1, v2);</div>
+<div class="line"> </div>
+<div class="line">    // Чтобы добавить ребро с весом, прежде необходимо сформировать edge_descriptor.</div>
+<div class="line">    // Здесь формируется edge_descriptor у которого вес равен 10 и индекс ребра равен 5.</div>
+<div class="line">    // Индекс ребра это не id ребра. Как раз id ребра состоит из веса и индекса.</div>
+<div class="line">    SpuUltraGraph::edge_descriptor e4 = graph.get_edge_descriptor(5, 3);</div>
+<div class="line">    // Добавление ребра e4 от вершины v2 к v3</div>
+<div class="line">    graph.add_edge(e4, v2, v3);</div>
+<div class="line"> </div>
+<div class="line">    // Получение веса ребра из edge_descriptor</div>
+<div class="line">    cout &lt;&lt; &quot;Вес ребра e4 = &quot; &lt;&lt; graph.get_weight(e4) &lt;&lt; endl;</div>
+<div class="line">    // Получение данных вершины. Если вершина не найдена будет исключение</div>
+<div class="line">    cout &lt;&lt; &quot;Данные вершины v3 = &quot; &lt;&lt; (double) graph.get_vertex_value(v3) &lt;&lt; endl;</div>
+<div class="line">    // Получение данных вершины. Если вершина не найдена будет исключение</div>
+<div class="line">    cout &lt;&lt; &quot;Данные ребра e3 = &quot; &lt;&lt; (const char *) graph.get_edge_value(e3) &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    // Проверка наличия вершины</div>
+<div class="line">    cout &lt;&lt; &quot;Наличие вершины v1 = &quot; &lt;&lt; graph.has_vertex(v1) &lt;&lt; endl;</div>
+<div class="line">    // Проверка наличия ребра</div>
+<div class="line">    cout &lt;&lt; &quot;Наличие ребра е1 = &quot; &lt;&lt; graph.has_edge(e1) &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во вершин = &quot; &lt;&lt; graph.num_vertices() &lt;&lt; endl;</div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во ребер = &quot; &lt;&lt; graph.num_edges() &lt;&lt; endl;</div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во исходящих ребер у вершины v1 = &quot; &lt;&lt; graph.out_degree(v1) &lt;&lt; endl;</div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во входящих ребер у вершины v1 = &quot; &lt;&lt; graph.in_degree(v1) &lt;&lt; endl;</div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во вершин &#39;источников&#39; у ребра e12 = &quot; &lt;&lt; graph.source_cnt(e12) &lt;&lt; endl;</div>
+<div class="line">    cout &lt;&lt; &quot;Кол-во вершин &#39;стоков&#39; у ребра e12 = &quot; &lt;&lt; graph.target_cnt(e12) &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    // Удаление вершины</div>
+<div class="line">    graph.remove_vertex(v1);</div>
+<div class="line">    // Удаление всех ребер соединенных с вершиной v2</div>
+<div class="line">    graph.clear_vertex(v2);</div>
+<div class="line"> </div>
+<div class="line">    // Удаление ребра</div>
+<div class="line">    graph.remove_edge(e1);</div>
+<div class="line">    // Удаление всех ребер от v2 к v3</div>
+<div class="line">    graph.remove_edge(v2, v3);</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    v1 = graph.add_vertex(1);</div>
+<div class="line">    graph.add_edge(10, v1, v2);</div>
+<div class="line">    graph.add_edge(11, v1, v2);</div>
+<div class="line">    graph.add_edge(12, v1, v3);</div>
+<div class="line">    graph.add_edge(13, v2, v1);</div>
+<div class="line">    graph.add_edge(14, v2, v1);</div>
+<div class="line">    graph.add_edge(15, v3, v1);</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по всем вершинам: &quot;;</div>
+<div class="line">    for (auto v : graph.vertices())</div>
+<div class="line">        cout &lt;&lt; v &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по всем ребрам: &quot;;</div>
+<div class="line">    for (auto e : graph.edges())</div>
+<div class="line">        cout &lt;&lt; e &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по исходящим ребрам у вершины v1: &quot;;</div>
+<div class="line">    for (auto e : graph.out_edges(v1))</div>
+<div class="line">        cout &lt;&lt; e &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по входящим ребрам у вершины v1: &quot;;</div>
+<div class="line">    for (auto e : graph.in_edges(v1))</div>
+<div class="line">        cout &lt;&lt; e &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по параллельным ребрам от вершины v1 к v2: &quot;;</div>
+<div class="line">    for (auto e : graph.parallel_edges(v1, v2))</div>
+<div class="line">        cout &lt;&lt; e &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; &quot;Итерация по смежным вершинам для v1: &quot;;</div>
+<div class="line">    for (auto v : graph.adjacent_vertices(v1))</div>
+<div class="line">        cout &lt;&lt; v &lt;&lt;  &#39; &#39;;</div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    return 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.18
+</small></address>
+</body>
+</html>

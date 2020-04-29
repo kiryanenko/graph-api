@@ -1,0 +1,790 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.18"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Библиотека программного интерфейса для обработки графов: Класс SPU_GRAPH::SpuUltraGraph</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Библиотека программного интерфейса для обработки графов
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Интерфейс для создания ультраграфов для систем с дискретным набором команд.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>SPU_GRAPH</b></li><li class="navelem"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html">SpuUltraGraph</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Классы</a> &#124;
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="#pro-static-methods">Защищенные статические члены</a> &#124;
+<a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Класс SPU_GRAPH::SpuUltraGraph</div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html">AdjacentEdgesIterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices.html">AdjacentVertices</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер содержащий все ребра графа  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html">AdjacentVerticesIterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_iterator.html">EdgeIterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edges.html">Edges</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер содержащий все ребра графа  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edges.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_in_edges.html">InEdges</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_out_edges.html">OutEdges</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges.html">ParallelEdges</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер параллельных ребер от вершины from к to.  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges_iterator.html">ParallelEdgesIterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по параллельным ребрам от вершины from к to.  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges_iterator.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category.html">spu_ultra_graph_traversal_category</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Категория обхода отражает поддерживаемые графовым классом виды итераторов  <a href="struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_target_iterator.html">TargetIterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по стокам для ребра e.  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_target_iterator.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertex_iterator.html">VertexIterator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertices.html">Vertices</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер содержащий все ребра графа  <a href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertices.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:ac639c2679b6d9547625dfe514b2c641d"><td class="memItemLeft" align="right" valign="top"><a id="ac639c2679b6d9547625dfe514b2c641d"></a>
+typedef id_t&#160;</td><td class="memItemRight" valign="bottom"><b>vertex_descriptor</b></td></tr>
+<tr class="separator:ac639c2679b6d9547625dfe514b2c641d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f3776e003ef0a1648f1d9f84289810b"><td class="memItemLeft" align="right" valign="top"><a id="a5f3776e003ef0a1648f1d9f84289810b"></a>
+typedef id_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a></td></tr>
+<tr class="memdesc:a5f3776e003ef0a1648f1d9f84289810b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тип объектов, используемых для идентификации ребер в графе. <br /></td></tr>
+<tr class="separator:a5f3776e003ef0a1648f1d9f84289810b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9130a0489302bded920012c8810ac4a"><td class="memItemLeft" align="right" valign="top"><a id="ac9130a0489302bded920012c8810ac4a"></a>
+typedef directed_tag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ac9130a0489302bded920012c8810ac4a">directed_category</a></td></tr>
+<tr class="memdesc:ac9130a0489302bded920012c8810ac4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Предоставляет информацию о том, что граф ориентированный <br /></td></tr>
+<tr class="separator:ac9130a0489302bded920012c8810ac4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ae78f833e62e7fddd57b9c466e75255"><td class="memItemLeft" align="right" valign="top">typedef allow_parallel_edge_tag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a6ae78f833e62e7fddd57b9c466e75255">edge_parallel_category</a></td></tr>
+<tr class="separator:a6ae78f833e62e7fddd57b9c466e75255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a489ed5ac88364fdac58607d539de975e"><td class="memItemLeft" align="right" valign="top"><a id="a489ed5ac88364fdac58607d539de975e"></a>
+typedef <a class="el" href="struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category.html">spu_ultra_graph_traversal_category</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a489ed5ac88364fdac58607d539de975e">traversal_category</a></td></tr>
+<tr class="memdesc:a489ed5ac88364fdac58607d539de975e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Категория обхода отражает поддерживаемые графовым классом виды итераторов <br /></td></tr>
+<tr class="separator:a489ed5ac88364fdac58607d539de975e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8312efee580452b40e3750d8acf3b08"><td class="memItemLeft" align="right" valign="top"><a id="af8312efee580452b40e3750d8acf3b08"></a>
+typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a></td></tr>
+<tr class="memdesc:af8312efee580452b40e3750d8acf3b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тип, используемый для представления числа вершин в графе <br /></td></tr>
+<tr class="separator:af8312efee580452b40e3750d8acf3b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82496f8d87c7dfab766f15a989a05aa4"><td class="memItemLeft" align="right" valign="top"><a id="a82496f8d87c7dfab766f15a989a05aa4"></a>
+typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a></td></tr>
+<tr class="memdesc:a82496f8d87c7dfab766f15a989a05aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тип, используемый для представления числа ребер в графе <br /></td></tr>
+<tr class="separator:a82496f8d87c7dfab766f15a989a05aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f24316ee9d0c5ea1b136cf4cf18c926"><td class="memItemLeft" align="right" valign="top"><a id="a0f24316ee9d0c5ea1b136cf4cf18c926"></a>
+typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a0f24316ee9d0c5ea1b136cf4cf18c926">degree_size_type</a></td></tr>
+<tr class="memdesc:a0f24316ee9d0c5ea1b136cf4cf18c926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тип, используемый для представления числа исходящих ребер в графе <br /></td></tr>
+<tr class="separator:a0f24316ee9d0c5ea1b136cf4cf18c926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b134691c15bbb48d3c213fa1492d49"><td class="memItemLeft" align="right" valign="top"><a id="a29b134691c15bbb48d3c213fa1492d49"></a>
+typedef pair&lt; vertex_descriptor, value_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vertex_property_type</b></td></tr>
+<tr class="separator:a29b134691c15bbb48d3c213fa1492d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2947d1a0c4a1e9bbb75e878511664127"><td class="memItemLeft" align="right" valign="top"><a id="a2947d1a0c4a1e9bbb75e878511664127"></a>
+typedef pair&lt; vertex_descriptor, value_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>edge_property_type</b></td></tr>
+<tr class="separator:a2947d1a0c4a1e9bbb75e878511664127"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06163cbc87b2e49334b4bcc46c7b0c89"><td class="memItemLeft" align="right" valign="top"><a id="a06163cbc87b2e49334b4bcc46c7b0c89"></a>
+typedef <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertex_iterator.html">VertexIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a06163cbc87b2e49334b4bcc46c7b0c89">vertex_iterator</a></td></tr>
+<tr class="memdesc:a06163cbc87b2e49334b4bcc46c7b0c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по всем вершинам <br /></td></tr>
+<tr class="separator:a06163cbc87b2e49334b4bcc46c7b0c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3933dd7a8c18410837fee58a8a8a10"><td class="memItemLeft" align="right" valign="top"><a id="abf3933dd7a8c18410837fee58a8a8a10"></a>
+typedef <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_iterator.html">EdgeIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#abf3933dd7a8c18410837fee58a8a8a10">edge_iterator</a></td></tr>
+<tr class="memdesc:abf3933dd7a8c18410837fee58a8a8a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по всем ребрам <br /></td></tr>
+<tr class="separator:abf3933dd7a8c18410837fee58a8a8a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adccd2b84a437514b4c5d341ccfea6f8b"><td class="memItemLeft" align="right" valign="top"><a id="adccd2b84a437514b4c5d341ccfea6f8b"></a>
+typedef <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html">AdjacentEdgesIterator</a>&lt; 0 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#adccd2b84a437514b4c5d341ccfea6f8b">out_edge_iterator</a></td></tr>
+<tr class="memdesc:adccd2b84a437514b4c5d341ccfea6f8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по исходящим ребрам <br /></td></tr>
+<tr class="separator:adccd2b84a437514b4c5d341ccfea6f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae658ac8b09fc1b84711e434354e027cd"><td class="memItemLeft" align="right" valign="top"><a id="ae658ac8b09fc1b84711e434354e027cd"></a>
+typedef <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html">AdjacentEdgesIterator</a>&lt; 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ae658ac8b09fc1b84711e434354e027cd">in_edge_iterator</a></td></tr>
+<tr class="memdesc:ae658ac8b09fc1b84711e434354e027cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по входящим ребрам <br /></td></tr>
+<tr class="separator:ae658ac8b09fc1b84711e434354e027cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae50dab54e277cf22d3e318d468e7585c"><td class="memItemLeft" align="right" valign="top"><a id="ae50dab54e277cf22d3e318d468e7585c"></a>
+typedef <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html">AdjacentVerticesIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ae50dab54e277cf22d3e318d468e7585c">adjacency_iterator</a></td></tr>
+<tr class="memdesc:ae50dab54e277cf22d3e318d468e7585c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Итератор по смежным вершинам <br /></td></tr>
+<tr class="separator:ae50dab54e277cf22d3e318d468e7585c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a5092cab48140d2f7ce989555c118e783"><td class="memItemLeft" align="right" valign="top"><a id="a5092cab48140d2f7ce989555c118e783"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SpuUltraGraph</b> (id_t graph_id=0, const <a class="el" href="struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_traits.html">SpuUltraGraphTraits</a> &amp;spu_graph_traits=<a class="el" href="struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_traits.html">SpuUltraGraphTraits</a>())</td></tr>
+<tr class="separator:a5092cab48140d2f7ce989555c118e783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedf362fe38b37dc25a7b028855718c25"><td class="memItemLeft" align="right" valign="top"><a id="aedf362fe38b37dc25a7b028855718c25"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#aedf362fe38b37dc25a7b028855718c25">get_id</a> () const</td></tr>
+<tr class="memdesc:aedf362fe38b37dc25a7b028855718c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает id графа, определенного в структурах <br /></td></tr>
+<tr class="separator:aedf362fe38b37dc25a7b028855718c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4614b3f8123569a41a872141a1c5594"><td class="memItemLeft" align="right" valign="top"><a id="ad4614b3f8123569a41a872141a1c5594"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ad4614b3f8123569a41a872141a1c5594">get_global_id</a> () const</td></tr>
+<tr class="memdesc:ad4614b3f8123569a41a872141a1c5594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает глобальный id. Используется, например, для свойств графа. <br /></td></tr>
+<tr class="separator:ad4614b3f8123569a41a872141a1c5594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b2210821bf0f6bce69fe8ec2756b2f7"><td class="memItemLeft" align="right" valign="top"><a id="a2b2210821bf0f6bce69fe8ec2756b2f7"></a>
+vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>add_vertex</b> ()</td></tr>
+<tr class="separator:a2b2210821bf0f6bce69fe8ec2756b2f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c5c1c97abc61017a5e188cd7975e688"><td class="memItemLeft" align="right" valign="top"><a id="a8c5c1c97abc61017a5e188cd7975e688"></a>
+vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>add_vertex</b> (value_t value)</td></tr>
+<tr class="separator:a8c5c1c97abc61017a5e188cd7975e688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ab2bed50a562ddb4b3a3718cf7a50ab"><td class="memItemLeft" align="right" valign="top"><a id="a0ab2bed50a562ddb4b3a3718cf7a50ab"></a>
+vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>add_vertex</b> (vertex_descriptor id)</td></tr>
+<tr class="separator:a0ab2bed50a562ddb4b3a3718cf7a50ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66c63dc4bf4c8a47abd2974f4e16a83c"><td class="memItemLeft" align="right" valign="top"><a id="a66c63dc4bf4c8a47abd2974f4e16a83c"></a>
+vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>add_vertex</b> (vertex_descriptor id, value_t value)</td></tr>
+<tr class="separator:a66c63dc4bf4c8a47abd2974f4e16a83c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70ef248cfbbebeda913dcde3507bb9ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a70ef248cfbbebeda913dcde3507bb9ef">put_vertex</a> (vertex_descriptor id)</td></tr>
+<tr class="separator:a70ef248cfbbebeda913dcde3507bb9ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15f743f63444cd9cb8ecc1c9f611083f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a15f743f63444cd9cb8ecc1c9f611083f">put_vertex</a> (vertex_descriptor id, value_t value)</td></tr>
+<tr class="separator:a15f743f63444cd9cb8ecc1c9f611083f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a981bb0adc93500e1650d9f2a4c0f023e"><td class="memItemLeft" align="right" valign="top"><a id="a981bb0adc93500e1650d9f2a4c0f023e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_vertex</b> (vertex_descriptor v)</td></tr>
+<tr class="separator:a981bb0adc93500e1650d9f2a4c0f023e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a829d00276794f555b8620219f2f14be4"><td class="memItemLeft" align="right" valign="top"><a id="a829d00276794f555b8620219f2f14be4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_vertex</b> (vertex_descriptor id) const</td></tr>
+<tr class="separator:a829d00276794f555b8620219f2f14be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3815fc3e3cac1198e50ce271d6e67000"><td class="memItemLeft" align="right" valign="top"><a id="a3815fc3e3cac1198e50ce271d6e67000"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>num_vertices</b> () const</td></tr>
+<tr class="separator:a3815fc3e3cac1198e50ce271d6e67000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998c3045e8f40869bdcc5a0f12199cd7"><td class="memItemLeft" align="right" valign="top"><a id="a998c3045e8f40869bdcc5a0f12199cd7"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>degree</b> (vertex_descriptor v) const</td></tr>
+<tr class="separator:a998c3045e8f40869bdcc5a0f12199cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5dfc7cb77da61beb1d30bfdd4658a92"><td class="memItemLeft" align="right" valign="top"><a id="af5dfc7cb77da61beb1d30bfdd4658a92"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>out_degree</b> (vertex_descriptor v) const</td></tr>
+<tr class="separator:af5dfc7cb77da61beb1d30bfdd4658a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46cab7fb9993e412b5147a7c9e120273"><td class="memItemLeft" align="right" valign="top"><a id="a46cab7fb9993e412b5147a7c9e120273"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>in_degree</b> (vertex_descriptor v) const</td></tr>
+<tr class="separator:a46cab7fb9993e412b5147a7c9e120273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf0f5b7b79b93ef295c39a615b51c71a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#adf0f5b7b79b93ef295c39a615b51c71a">clear_vertex</a> (vertex_descriptor v, bool remove_edges=true)</td></tr>
+<tr class="separator:adf0f5b7b79b93ef295c39a615b51c71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b9453c72f66fc00e2b2958a9670340"><td class="memItemLeft" align="right" valign="top"><a id="ad8b9453c72f66fc00e2b2958a9670340"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect_source</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e)</td></tr>
+<tr class="separator:ad8b9453c72f66fc00e2b2958a9670340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a896f0dd1c031841a9c16c03ed72235a0"><td class="memItemLeft" align="right" valign="top"><a id="a896f0dd1c031841a9c16c03ed72235a0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnect_target</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e)</td></tr>
+<tr class="separator:a896f0dd1c031841a9c16c03ed72235a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d1dccd777a9686e72b775ebc3151936"><td class="memItemLeft" align="right" valign="top"><a id="a5d1dccd777a9686e72b775ebc3151936"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> ()</td></tr>
+<tr class="separator:a5d1dccd777a9686e72b775ebc3151936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92ccccf0d18bd2dd146b605ae32a5ae1"><td class="memItemLeft" align="right" valign="top"><a id="a92ccccf0d18bd2dd146b605ae32a5ae1"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (value_t value)</td></tr>
+<tr class="separator:a92ccccf0d18bd2dd146b605ae32a5ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74ca9423994b1dc3804d5fe62bb1a097"><td class="memItemLeft" align="right" valign="top"><a id="a74ca9423994b1dc3804d5fe62bb1a097"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id)</td></tr>
+<tr class="separator:a74ca9423994b1dc3804d5fe62bb1a097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a869529155dcb1e380f8fb3a16720ee"><td class="memItemLeft" align="right" valign="top"><a id="a8a869529155dcb1e380f8fb3a16720ee"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id, value_t value)</td></tr>
+<tr class="separator:a8a869529155dcb1e380f8fb3a16720ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf32b6a942095ea0c61b52b6596c8ecb"><td class="memItemLeft" align="right" valign="top"><a id="acf32b6a942095ea0c61b52b6596c8ecb"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (vertex_descriptor from, vertex_descriptor to)</td></tr>
+<tr class="separator:acf32b6a942095ea0c61b52b6596c8ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a498c64e2dafbb4b294367ec325536b4f"><td class="memItemLeft" align="right" valign="top"><a id="a498c64e2dafbb4b294367ec325536b4f"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id, vertex_descriptor from, vertex_descriptor to)</td></tr>
+<tr class="separator:a498c64e2dafbb4b294367ec325536b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5389e1991a4c62b9da22b9dfd9e21f6"><td class="memItemLeft" align="right" valign="top"><a id="ab5389e1991a4c62b9da22b9dfd9e21f6"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id, vertex_descriptor from, vertex_descriptor to, value_t value)</td></tr>
+<tr class="separator:ab5389e1991a4c62b9da22b9dfd9e21f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2039e0d5257d32c98a3207fdadb9f0b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a2039e0d5257d32c98a3207fdadb9f0b1">put_edge</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id)</td></tr>
+<tr class="separator:a2039e0d5257d32c98a3207fdadb9f0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0688a06a76998bb616c6e8e97e86572c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a0688a06a76998bb616c6e8e97e86572c">put_edge</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id, value_t value)</td></tr>
+<tr class="separator:a0688a06a76998bb616c6e8e97e86572c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545275ffcc2429db9496d89807d9235d"><td class="memItemLeft" align="right" valign="top"><a id="a545275ffcc2429db9496d89807d9235d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_target</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>, vertex_descriptor vertex)</td></tr>
+<tr class="separator:a545275ffcc2429db9496d89807d9235d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade233930d826a9bafdb6be51f62eaea4"><td class="memItemLeft" align="right" valign="top"><a id="ade233930d826a9bafdb6be51f62eaea4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add_source</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>, vertex_descriptor vertex)</td></tr>
+<tr class="separator:ade233930d826a9bafdb6be51f62eaea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19a04e44979bf73fb3cb8c84d4ba80f2"><td class="memItemLeft" align="right" valign="top"><a id="a19a04e44979bf73fb3cb8c84d4ba80f2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id) const</td></tr>
+<tr class="separator:a19a04e44979bf73fb3cb8c84d4ba80f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2575209b0a91ff66d45554a9d3733eb9"><td class="memItemLeft" align="right" valign="top"><a id="a2575209b0a91ff66d45554a9d3733eb9"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a2575209b0a91ff66d45554a9d3733eb9">get_free_edge_descriptor</a> (weight_t weight) const</td></tr>
+<tr class="memdesc:a2575209b0a91ff66d45554a9d3733eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает свободный дискриптор ребра с определенным весом, для последующего добавления <br /></td></tr>
+<tr class="separator:a2575209b0a91ff66d45554a9d3733eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c75efb2d557d1e54d9881e38a42bf9b"><td class="memItemLeft" align="right" valign="top"><a id="a4c75efb2d557d1e54d9881e38a42bf9b"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_edge_descriptor</b> (id_t edge_id) const</td></tr>
+<tr class="separator:a4c75efb2d557d1e54d9881e38a42bf9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c69c77768c92f5b4c657289ef1b129"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a42c69c77768c92f5b4c657289ef1b129">get_edge_descriptor</a> (id_t edge_id, weight_t weight) const</td></tr>
+<tr class="separator:a42c69c77768c92f5b4c657289ef1b129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74eeded7f53b4a4d18bd1519fcce8086"><td class="memItemLeft" align="right" valign="top"><a id="a74eeded7f53b4a4d18bd1519fcce8086"></a>
+weight_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a74eeded7f53b4a4d18bd1519fcce8086">get_weight</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>) const</td></tr>
+<tr class="memdesc:a74eeded7f53b4a4d18bd1519fcce8086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получение веса ребра из edge_descriptor. <br /></td></tr>
+<tr class="separator:a74eeded7f53b4a4d18bd1519fcce8086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7b8a89aa7b971f90018194e11e57c2b"><td class="memItemLeft" align="right" valign="top"><a id="ae7b8a89aa7b971f90018194e11e57c2b"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>num_edges</b> () const</td></tr>
+<tr class="separator:ae7b8a89aa7b971f90018194e11e57c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb41721305bfef5dcff6311abbbda7ec"><td class="memItemLeft" align="right" valign="top"><a id="aeb41721305bfef5dcff6311abbbda7ec"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>source_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e)</td></tr>
+<tr class="separator:aeb41721305bfef5dcff6311abbbda7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f78492495fcda18c53902af7a8fe760"><td class="memItemLeft" align="right" valign="top"><a id="a2f78492495fcda18c53902af7a8fe760"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>target_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e)</td></tr>
+<tr class="separator:a2f78492495fcda18c53902af7a8fe760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16ea4ca22965b3dae74ca8c17b130fd8"><td class="memItemLeft" align="right" valign="top">vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a16ea4ca22965b3dae74ca8c17b130fd8">source</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e) const</td></tr>
+<tr class="separator:a16ea4ca22965b3dae74ca8c17b130fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08fadbb34b68b030cfa09bada3ca8f56"><td class="memItemLeft" align="right" valign="top">vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a08fadbb34b68b030cfa09bada3ca8f56">target</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e) const</td></tr>
+<tr class="separator:a08fadbb34b68b030cfa09bada3ca8f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1cfb4a7f1b4fecc6b2ef5d3d3af39bc"><td class="memItemLeft" align="right" valign="top"><a id="ad1cfb4a7f1b4fecc6b2ef5d3d3af39bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remove_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>)</td></tr>
+<tr class="separator:ad1cfb4a7f1b4fecc6b2ef5d3d3af39bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25193f9b7e0b9df947d8e9bc82da6fdf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a25193f9b7e0b9df947d8e9bc82da6fdf">remove_edge</a> (vertex_descriptor from, vertex_descriptor to)</td></tr>
+<tr class="separator:a25193f9b7e0b9df947d8e9bc82da6fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b4f0766c244af3081a37d61fdf2faae"><td class="memItemLeft" align="right" valign="top">value_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a3b4f0766c244af3081a37d61fdf2faae">get_vertex_value</a> (vertex_descriptor v) const</td></tr>
+<tr class="separator:a3b4f0766c244af3081a37d61fdf2faae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa508f7947fae83893eb2eacab3631ec2"><td class="memItemLeft" align="right" valign="top">value_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#aa508f7947fae83893eb2eacab3631ec2">get_edge_value</a> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e) const</td></tr>
+<tr class="separator:aa508f7947fae83893eb2eacab3631ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51468aa2278d3abb0c338ffbeac7747a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a> (vertex_descriptor from, vertex_descriptor to) const</td></tr>
+<tr class="separator:a51468aa2278d3abb0c338ffbeac7747a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2227b9c29b84b1fa6e2a10f11af5df6"><td class="memItemLeft" align="right" valign="top"><a id="ab2227b9c29b84b1fa6e2a10f11af5df6"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertices.html">Vertices</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ab2227b9c29b84b1fa6e2a10f11af5df6">vertices</a> () const</td></tr>
+<tr class="memdesc:ab2227b9c29b84b1fa6e2a10f11af5df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер содержащий все вершины графа <br /></td></tr>
+<tr class="separator:ab2227b9c29b84b1fa6e2a10f11af5df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54da90f2ff56cd153a0b23521316e24d"><td class="memItemLeft" align="right" valign="top"><a id="a54da90f2ff56cd153a0b23521316e24d"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices.html">AdjacentVertices</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a54da90f2ff56cd153a0b23521316e24d">adjacent_vertices</a> (vertex_descriptor v) const</td></tr>
+<tr class="memdesc:a54da90f2ff56cd153a0b23521316e24d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер содержащий вершины смежные вершине v. <br /></td></tr>
+<tr class="separator:a54da90f2ff56cd153a0b23521316e24d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcef05b6bc051e5d854ee6376539b084"><td class="memItemLeft" align="right" valign="top"><a id="adcef05b6bc051e5d854ee6376539b084"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edges.html">Edges</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#adcef05b6bc051e5d854ee6376539b084">edges</a> () const</td></tr>
+<tr class="memdesc:adcef05b6bc051e5d854ee6376539b084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер содержащий все ребра графа <br /></td></tr>
+<tr class="separator:adcef05b6bc051e5d854ee6376539b084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e3d9d5f45f98173847d5a0254a4a1f"><td class="memItemLeft" align="right" valign="top"><a id="a95e3d9d5f45f98173847d5a0254a4a1f"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges.html">ParallelEdges</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a95e3d9d5f45f98173847d5a0254a4a1f">parallel_edges</a> (vertex_descriptor from, vertex_descriptor to) const</td></tr>
+<tr class="memdesc:a95e3d9d5f45f98173847d5a0254a4a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер параллельных ребер от вершины from к to. <br /></td></tr>
+<tr class="separator:a95e3d9d5f45f98173847d5a0254a4a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1bda5ef7eb9a69b09c044b3365ee4d4"><td class="memItemLeft" align="right" valign="top"><a id="ab1bda5ef7eb9a69b09c044b3365ee4d4"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_out_edges.html">OutEdges</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ab1bda5ef7eb9a69b09c044b3365ee4d4">out_edges</a> (vertex_descriptor v) const</td></tr>
+<tr class="memdesc:ab1bda5ef7eb9a69b09c044b3365ee4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер исходящих ребер от вершины v. <br /></td></tr>
+<tr class="separator:ab1bda5ef7eb9a69b09c044b3365ee4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c59a6f12d139a9bcf98e00e8c4297a"><td class="memItemLeft" align="right" valign="top"><a id="a43c59a6f12d139a9bcf98e00e8c4297a"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_in_edges.html">InEdges</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a43c59a6f12d139a9bcf98e00e8c4297a">in_edges</a> (vertex_descriptor v) const</td></tr>
+<tr class="memdesc:a43c59a6f12d139a9bcf98e00e8c4297a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает контейнер исходящих ребер от вершины v. <br /></td></tr>
+<tr class="separator:a43c59a6f12d139a9bcf98e00e8c4297a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d0c196f4acbc30f17a2444c384b8af"><td class="memItemLeft" align="right" valign="top"><a id="af5d0c196f4acbc30f17a2444c384b8af"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af5d0c196f4acbc30f17a2444c384b8af">print_vertex_struct</a> () const</td></tr>
+<tr class="memdesc:af5d0c196f4acbc30f17a2444c384b8af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод для отладки. Распечатывает структуру vertex. <br /></td></tr>
+<tr class="separator:af5d0c196f4acbc30f17a2444c384b8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bb6913fcff6a6ea7571e7b3e338a6a7"><td class="memItemLeft" align="right" valign="top"><a id="a3bb6913fcff6a6ea7571e7b3e338a6a7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a3bb6913fcff6a6ea7571e7b3e338a6a7">print_edge_struct</a> () const</td></tr>
+<tr class="memdesc:a3bb6913fcff6a6ea7571e7b3e338a6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод для отладки. Распечатывает структуру edge. <br /></td></tr>
+<tr class="separator:a3bb6913fcff6a6ea7571e7b3e338a6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:a82de737110404734e13195c78c00ec04"><td class="memItemLeft" align="right" valign="top"><a id="a82de737110404734e13195c78c00ec04"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>vertex_key</b> (id_t vertex=0, uint8_t incidence=0, id_t <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>=0) const</td></tr>
+<tr class="separator:a82de737110404734e13195c78c00ec04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad38ed0654546e116eda62960688ab014"><td class="memItemLeft" align="right" valign="top"><a id="ad38ed0654546e116eda62960688ab014"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>edge_key</b> (id_t <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>=0, uint8_t incidence=0, id_t vertex=0) const</td></tr>
+<tr class="separator:ad38ed0654546e116eda62960688ab014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a878dcbdf2ab86bae044145e890b5fb29"><td class="memItemLeft" align="right" valign="top"><a id="a878dcbdf2ab86bae044145e890b5fb29"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>out_degree_key</b> (vertex_descriptor v) const</td></tr>
+<tr class="separator:a878dcbdf2ab86bae044145e890b5fb29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf8c23a3fa97c2a426dd9ec551197cea"><td class="memItemLeft" align="right" valign="top"><a id="acf8c23a3fa97c2a426dd9ec551197cea"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>in_degree_key</b> (vertex_descriptor v) const</td></tr>
+<tr class="separator:acf8c23a3fa97c2a426dd9ec551197cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee27272166a6ffb584dea3409751ae40"><td class="memItemLeft" align="right" valign="top"><a id="aee27272166a6ffb584dea3409751ae40"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>target_cnt_key</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e) const</td></tr>
+<tr class="separator:aee27272166a6ffb584dea3409751ae40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cbcd4e0e830f2d6b39965d111a74123"><td class="memItemLeft" align="right" valign="top"><a id="a8cbcd4e0e830f2d6b39965d111a74123"></a>
+<a class="el" href="class_s_p_u_1_1_fields.html">Fields</a>&#160;</td><td class="memItemRight" valign="bottom"><b>source_cnt_key</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e) const</td></tr>
+<tr class="separator:a8cbcd4e0e830f2d6b39965d111a74123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab737d34a76c1712bc84ca7990481d2fc"><td class="memItemLeft" align="right" valign="top"><a id="ab737d34a76c1712bc84ca7990481d2fc"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_vertex_id</b> () const</td></tr>
+<tr class="separator:ab737d34a76c1712bc84ca7990481d2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a4e46b23fdaf3d3e51865a2b6812bce"><td class="memItemLeft" align="right" valign="top"><a id="a7a4e46b23fdaf3d3e51865a2b6812bce"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_edge_id</b> () const</td></tr>
+<tr class="separator:a7a4e46b23fdaf3d3e51865a2b6812bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab82648f43be4f893c946652d75d9009"><td class="memItemLeft" align="right" valign="top"><a id="aab82648f43be4f893c946652d75d9009"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><b>max_weight</b> () const</td></tr>
+<tr class="separator:aab82648f43be4f893c946652d75d9009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accb02121a50d69bf3f03d45aa2c904d6"><td class="memItemLeft" align="right" valign="top"><a id="accb02121a50d69bf3f03d45aa2c904d6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_vertex_id_valid</b> (id_t id) const</td></tr>
+<tr class="separator:accb02121a50d69bf3f03d45aa2c904d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a9aef9c9a3a06bc0b7b50907ca813d"><td class="memItemLeft" align="right" valign="top"><a id="a40a9aef9c9a3a06bc0b7b50907ca813d"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_free_vertex_id</b> ()</td></tr>
+<tr class="separator:a40a9aef9c9a3a06bc0b7b50907ca813d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f02ba5ba51856e46cb978d1c7eca76"><td class="memItemLeft" align="right" valign="top"><a id="a77f02ba5ba51856e46cb978d1c7eca76"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inc_vertexes_cnt</b> ()</td></tr>
+<tr class="separator:a77f02ba5ba51856e46cb978d1c7eca76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7284a29b119ca4c90cb9edd24afcdf43"><td class="memItemLeft" align="right" valign="top"><a id="a7284a29b119ca4c90cb9edd24afcdf43"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dec_vertexes_cnt</b> ()</td></tr>
+<tr class="separator:a7284a29b119ca4c90cb9edd24afcdf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964caeb8a151b899a994b97ae728b4be"><td class="memItemLeft" align="right" valign="top"><a id="a964caeb8a151b899a994b97ae728b4be"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inc_out_degree</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a> val=1)</td></tr>
+<tr class="separator:a964caeb8a151b899a994b97ae728b4be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1360f8e031451bce54bb0a8dd2afbb1c"><td class="memItemLeft" align="right" valign="top"><a id="a1360f8e031451bce54bb0a8dd2afbb1c"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dec_out_degree</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a> val=1)</td></tr>
+<tr class="separator:a1360f8e031451bce54bb0a8dd2afbb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc32912c2c3bfa0a1f186525f30dc3d1"><td class="memItemLeft" align="right" valign="top"><a id="afc32912c2c3bfa0a1f186525f30dc3d1"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inc_in_degree</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a> val=1)</td></tr>
+<tr class="separator:afc32912c2c3bfa0a1f186525f30dc3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af053863088fb04356c851771caeaca05"><td class="memItemLeft" align="right" valign="top"><a id="af053863088fb04356c851771caeaca05"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dec_in_degree</b> (vertex_descriptor v, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#af8312efee580452b40e3750d8acf3b08">vertices_size_type</a> val=1)</td></tr>
+<tr class="separator:af053863088fb04356c851771caeaca05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99e00909a2edb10ad81ac1e9057c1053"><td class="memItemLeft" align="right" valign="top"><a id="a99e00909a2edb10ad81ac1e9057c1053"></a>
+vertex_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>_add_vertex</b> (vertex_descriptor id, value_t value)</td></tr>
+<tr class="separator:a99e00909a2edb10ad81ac1e9057c1053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df0d5f597fe51d49caa4e8f292fa20f"><td class="memItemLeft" align="right" valign="top"><a id="a9df0d5f597fe51d49caa4e8f292fa20f"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_add_edge</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> id, value_t value)</td></tr>
+<tr class="separator:a9df0d5f597fe51d49caa4e8f292fa20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e5faafc5cc68bd20357de2d3d11ebc2"><td class="memItemLeft" align="right" valign="top"><a id="a4e5faafc5cc68bd20357de2d3d11ebc2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_add_target</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>, vertex_descriptor vertex)</td></tr>
+<tr class="separator:a4e5faafc5cc68bd20357de2d3d11ebc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2434edd7a6f1b35ea9e67379a4c12ddd"><td class="memItemLeft" align="right" valign="top"><a id="a2434edd7a6f1b35ea9e67379a4c12ddd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_add_source</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>, vertex_descriptor vertex)</td></tr>
+<tr class="separator:a2434edd7a6f1b35ea9e67379a4c12ddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53da0a5c180690322919dacfc635da8c"><td class="memItemLeft" align="right" valign="top"><a id="a53da0a5c180690322919dacfc635da8c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_edge_id_valid</b> (id_t id) const</td></tr>
+<tr class="separator:a53da0a5c180690322919dacfc635da8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147a1360ecb5b9076f9d39fd8b535ae7"><td class="memItemLeft" align="right" valign="top"><a id="a147a1360ecb5b9076f9d39fd8b535ae7"></a>
+id_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_free_edge_id</b> ()</td></tr>
+<tr class="separator:a147a1360ecb5b9076f9d39fd8b535ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30fb4596eff47c3a37e4877ffccb673c"><td class="memItemLeft" align="right" valign="top"><a id="a30fb4596eff47c3a37e4877ffccb673c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>inc_edges_cnt</b> ()</td></tr>
+<tr class="separator:a30fb4596eff47c3a37e4877ffccb673c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcdcd8d58cb37290e5bb6463b41917b4"><td class="memItemLeft" align="right" valign="top"><a id="afcdcd8d58cb37290e5bb6463b41917b4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>dec_edges_cnt</b> ()</td></tr>
+<tr class="separator:afcdcd8d58cb37290e5bb6463b41917b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbba9ab825107d30abaad6ad755181dc"><td class="memItemLeft" align="right" valign="top"><a id="afbba9ab825107d30abaad6ad755181dc"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inc_target_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a> val=1)</td></tr>
+<tr class="separator:afbba9ab825107d30abaad6ad755181dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecd72c93789f6e72393bb4caa65f2890"><td class="memItemLeft" align="right" valign="top"><a id="aecd72c93789f6e72393bb4caa65f2890"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dec_target_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a> val=1)</td></tr>
+<tr class="separator:aecd72c93789f6e72393bb4caa65f2890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c708ee126c83806d8bfacd380951f34"><td class="memItemLeft" align="right" valign="top"><a id="a0c708ee126c83806d8bfacd380951f34"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>inc_source_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a> val=1)</td></tr>
+<tr class="separator:a0c708ee126c83806d8bfacd380951f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae846ac80c5e12c728da4b61406591448"><td class="memItemLeft" align="right" valign="top"><a id="ae846ac80c5e12c728da4b61406591448"></a>
+<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dec_source_cnt</b> (<a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> e, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a82496f8d87c7dfab766f15a989a05aa4">edges_size_type</a> val=1)</td></tr>
+<tr class="separator:ae846ac80c5e12c728da4b61406591448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256800f8d21b759cb2b40f170cb7a808"><td class="memItemLeft" align="right" valign="top"><a id="a256800f8d21b759cb2b40f170cb7a808"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_valid_edge_resp</b> (<a class="el" href="struct_s_p_u_1_1pair__containter.html">pair_t</a> resp, <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">edge_descriptor</a> <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a51468aa2278d3abb0c338ffbeac7747a">edge</a>, uint8_t incidence=0) const</td></tr>
+<tr class="separator:a256800f8d21b759cb2b40f170cb7a808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Защищенные статические члены</h2></td></tr>
+<tr class="memitem:ab121f2ee5eaa47372394fe785ae80b43"><td class="memItemLeft" align="right" valign="top"><a id="ab121f2ee5eaa47372394fe785ae80b43"></a>
+static id_t&#160;</td><td class="memItemRight" valign="bottom"><b>get_free_global_id</b> ()</td></tr>
+<tr class="separator:ab121f2ee5eaa47372394fe785ae80b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Определения типов</h2>
+<a id="a6ae78f833e62e7fddd57b9c466e75255"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ae78f833e62e7fddd57b9c466e75255">&#9670;&nbsp;</a></span>edge_parallel_category</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef allow_parallel_edge_tag <a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a6ae78f833e62e7fddd57b9c466e75255">SPU_GRAPH::SpuUltraGraph::edge_parallel_category</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Дает информацию о том, что граф позволяет вставку параллельных ребер (ребер, у которых одна и та же начальная и конечная вершины) </p>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="adf0f5b7b79b93ef295c39a615b51c71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf0f5b7b79b93ef295c39a615b51c71a">&#9670;&nbsp;</a></span>clear_vertex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::clear_vertex </td>
+          <td>(</td>
+          <td class="paramtype">SpuUltraGraph::vertex_descriptor&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>remove_edges</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Отсоединяет вершину v от всех ребер </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Вершина </td></tr>
+    <tr><td class="paramname">remove_edges</td><td>При true если у ребра не останется вершин "источников" или "стоков", то ребро будет удалено</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Отсоединяет вершину v от всех ребер Если после ребро не соединено ни с одной вершиной, то оно удаляется </p>
+
+</div>
+</div>
+<a id="a51468aa2278d3abb0c338ffbeac7747a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51468aa2278d3abb0c338ffbeac7747a">&#9670;&nbsp;</a></span>edge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a> SPU_GRAPH::SpuUltraGraph::edge </td>
+          <td>(</td>
+          <td class="paramtype">vertex_descriptor&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vertex_descriptor&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Возвращает дескриптор первого найденного ребра от вершины from к to. Если ребра нет, то возвращается 0 </p>
+
+</div>
+</div>
+<a id="a42c69c77768c92f5b4c657289ef1b129"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42c69c77768c92f5b4c657289ef1b129">&#9670;&nbsp;</a></span>get_edge_descriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a> SPU_GRAPH::SpuUltraGraph::get_edge_descriptor </td>
+          <td>(</td>
+          <td class="paramtype">id_t&#160;</td>
+          <td class="paramname"><em>edge_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">weight_t&#160;</td>
+          <td class="paramname"><em>weight</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Формирование edge_descriptor из веса ребра и индекса Это необходимо, например, для добавления взвешенных ребер. Индекс ребра это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса. </p>
+
+</div>
+</div>
+<a id="aa508f7947fae83893eb2eacab3631ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa508f7947fae83893eb2eacab3631ec2">&#9670;&nbsp;</a></span>get_edge_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">value_t SPU_GRAPH::SpuUltraGraph::get_edge_value </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a>&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Получить данные ребра </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_not_found.html">NotFound</a></td><td>если нет вершины e </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3b4f0766c244af3081a37d61fdf2faae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b4f0766c244af3081a37d61fdf2faae">&#9670;&nbsp;</a></span>get_vertex_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">value_t SPU_GRAPH::SpuUltraGraph::get_vertex_value </td>
+          <td>(</td>
+          <td class="paramtype">vertex_descriptor&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Получить данные вершины </p><dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_not_found.html">NotFound</a></td><td>если нет вершины v </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2039e0d5257d32c98a3207fdadb9f0b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2039e0d5257d32c98a3207fdadb9f0b1">&#9670;&nbsp;</a></span>put_edge() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::put_edge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Добавляет ребро, если его нет </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор ребра </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0688a06a76998bb616c6e8e97e86572c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0688a06a76998bb616c6e8e97e86572c">&#9670;&nbsp;</a></span>put_edge() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::put_edge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a>&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">value_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Изменяет value у ребра. Если ребра нет, то добавляет новое. </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор ребра </td></tr>
+    <tr><td class="paramname">value</td><td>Новый value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70ef248cfbbebeda913dcde3507bb9ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70ef248cfbbebeda913dcde3507bb9ef">&#9670;&nbsp;</a></span>put_vertex() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::put_vertex </td>
+          <td>(</td>
+          <td class="paramtype">SpuUltraGraph::vertex_descriptor&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Добавляет вершину, если ее нет </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор вершины </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a15f743f63444cd9cb8ecc1c9f611083f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15f743f63444cd9cb8ecc1c9f611083f">&#9670;&nbsp;</a></span>put_vertex() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::put_vertex </td>
+          <td>(</td>
+          <td class="paramtype">SpuUltraGraph::vertex_descriptor&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">value_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Изменяет value у вершины. Если вершины нет, то добавляет новую. </p><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Идентификатор вершины </td></tr>
+    <tr><td class="paramname">value</td><td>Новый value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a25193f9b7e0b9df947d8e9bc82da6fdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25193f9b7e0b9df947d8e9bc82da6fdf">&#9670;&nbsp;</a></span>remove_edge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SPU_GRAPH::SpuUltraGraph::remove_edge </td>
+          <td>(</td>
+          <td class="paramtype">SpuUltraGraph::vertex_descriptor&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SpuUltraGraph::vertex_descriptor&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Удаляются все соединения от вершины from к to. Ребро удаляется, если кол-во вершин источников или стоков равно 0 </p>
+
+</div>
+</div>
+<a id="a16ea4ca22965b3dae74ca8c17b130fd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16ea4ca22965b3dae74ca8c17b130fd8">&#9670;&nbsp;</a></span>source()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SpuUltraGraph::vertex_descriptor SPU_GRAPH::SpuUltraGraph::source </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a>&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Возвращает первую вершину источник для ребра e Если источников, нет то вернет 0 </p>
+
+</div>
+</div>
+<a id="a08fadbb34b68b030cfa09bada3ca8f56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08fadbb34b68b030cfa09bada3ca8f56">&#9670;&nbsp;</a></span>target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SpuUltraGraph::vertex_descriptor SPU_GRAPH::SpuUltraGraph::target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5f3776e003ef0a1648f1d9f84289810b">SpuUltraGraph::edge_descriptor</a>&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Возвращает первую вершину сток для ребра e Если стоков нет, то вернет 0 </p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов классов находятся в файлах:<ul>
+<li><a class="el" href="_spu_ultra_graph_8h_source.html">SpuUltraGraph.h</a></li>
+<li>SpuUltraGraph.cpp</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.18
+</small></address>
+</body>
+</html>

@@ -1,0 +1,152 @@
+Был реализован интерфейс для создания ультраграфов для систем с дискретным набором команд. Библеотека реализует интерфейс графа предоставляемой библиотекой {\bfseries{Boost graph library}}. Т.\+о. для программ использующих графы предоставляемый библиотекой boost, можно легко перейти на этот граф, просто подменив их. Также реализовав интерфейс графа boost, появляется возможность использовать множество его графовых алгоритмов.\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysection{Структуры для хранения ультраграфа}\label{md__r_e_a_d_m_e_autotoc_md14}
+Для хранения ультраграфа используется следующие 2 структуры\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Структура связь вершина -\/$>$ ребро.}}
+
+\`{}\`{}\`{} $\vert$ Ключ $\vert$ Значение $\vert$ $\vert$ -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- $\vert$ $\vert$ id графа $\vert$ Бит инцидетности $\vert$ id вершины $\vert$ id ребра $\vert$ $\vert$ $\vert$ -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- $\vert$ $\vert$ id графа $\vert$ 0 $\vert$ 0..0 $\vert$ Общее кол-\/во вершин $\vert$ ~\newline
+ $\vert$ id графа $\vert$ 0 $\vert$ id вершины $\vert$ 0..0 $\vert$ Данные вершины $\vert$ $\vert$ id графа $\vert$ 0 $\vert$ id вершины $\vert$ 1..1 $\vert$ Кол-\/во исходящих ребер $\vert$ $\vert$ id графа $\vert$ 1 $\vert$ id вершины $\vert$ 1..1 $\vert$ Кол-\/во входящих ребер $\vert$ \`{}\`{}\`{}
+
+Структура хранит вершины и исходящие из них ребра. По этой структуре происходит поиск смежных ребер для указанной вершины. Старший аргумент -\/ идентификатор графа Аргумент {\ttfamily Бит инцидетности} показывает является ли данное ребро входящим или исходящим (0 -\/ исходящее, 1 -\/ входящее), третий аргумент ключа является идентификатор вершины, а младший аргумент -\/ идентификатор смежного ребра. Данные вершины хранятся в значении для записи с ключом, у которого аргумент бит инцидетности рваен 0, аргумент {\ttfamily id вершины} соответствует этой вершине и аргумент {\ttfamily id ребра} равен 0.
+\item {\bfseries{Структура связь ребро -\/$>$ вершина.}}
+
+\`{}\`{}\`{} $\vert$ Ключ $\vert$ Значение $\vert$ $\vert$ -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- $\vert$ $\vert$ id графа $\vert$ Бит инцидетности $\vert$ id ребра $\vert$ id вершины $\vert$ $\vert$ $\vert$ -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/--- + -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- $\vert$ $\vert$ id графа $\vert$ 0 $\vert$ 0..0 $\vert$ Общее количество ребер $\vert$ $\vert$ id графа $\vert$ 0 $\vert$ id ребра $\vert$ 0..0 $\vert$ Данные ребра $\vert$ $\vert$ id графа $\vert$ 0 $\vert$ id ребра $\vert$ 1..1 $\vert$ Кол-\/во вершин, из кот. выходит ребро $\vert$ $\vert$ id графа $\vert$ 1 $\vert$ id ребра $\vert$ 1..1 $\vert$ Кол-\/во вершин, в кот. входит ребро $\vert$ \`{}\`{}\`{}
+
+Структура хранит ребра и вершины, в которые входят эти ребра. По этой структуре происходит поиск смежных вершин для указанного ребра. Аргумент {\ttfamily Бит инцидетности} показывает является ли данное ребро входящим или исходящим (0 -\/ исходящее, 1 -\/ входящее), третий аргумент ключа является идентификатор ребра, а младший аргумент -\/ идентификатор смежной вершины. К ребру можно прикрепить информацию о ребре. Эти данные хранятся в значении для записи с ключом, у которого аргумент бит инцидетности рваен 0, аргумент {\ttfamily id ребра} соответствует этому ребру, и аргумент {\ttfamily id вершины} равен 0.
+\end{DoxyEnumerate}
+
+При поиске имеет та вершина или ребро, что имеет меньший id. Т.\+о. для взвешенных графов следует формировать id ребра так, чтобы в старших битах идентификатора ребра находился вес этого ребра (для формирования такого идентификатора имеется вспомогательный метод {\ttfamily edge\+\_\+descriptor get\+\_\+edge\+\_\+descriptor(id\+\_\+t edge\+\_\+id, weight\+\_\+t weight);}).\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysection{Пример работы с Spu\+Ultra\+Graph}\label{md__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{c++\}}
+\DoxyCodeLine{\#include <iostream>}
+\DoxyCodeLine{\#include "SpuUltraGraph.h"}
+\DoxyCodeLine{}
+\DoxyCodeLine{using namespace std;}
+\DoxyCodeLine{using namespace SPU\_GRAPH;}
+\DoxyCodeLine{using namespace boost;}
+\DoxyCodeLine{}
+\DoxyCodeLine{int main()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    // Инициализация графа по умолчанию}
+\DoxyCodeLine{    // В этом случае id графа будет равно 0}
+\DoxyCodeLine{    SpuUltraGraph graph;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Объект черт графа}
+\DoxyCodeLine{    SpuUltraGraphTraits traits;}
+\DoxyCodeLine{    // Задаю битность. По умолчанию она такая:}
+\DoxyCodeLine{    traits.graph\_id\_depth = 3;      // Кол-\/во бит под id графа}
+\DoxyCodeLine{    traits.vertex\_id\_depth = 28;    // Кол-\/во бит под id вершины}
+\DoxyCodeLine{    traits.edge\_id\_depth = 28;      // Кол-\/во бит под индекс ребра (Индекс ребра НЕ id ребра. id ребра состоит из веса и индекса)}
+\DoxyCodeLine{    traits.weight\_depth = 4;        // Кол-\/во бит под вес ребра}
+\DoxyCodeLine{    // Указывваю структуры, кот будет использовать наш граф}
+\DoxyCodeLine{    GraphStructure vertex\_struct, edge\_struct;}
+\DoxyCodeLine{    traits.vertex\_struct = vertex\_struct;}
+\DoxyCodeLine{    traits.edge\_struct = edge\_struct;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Инициализация графа с id = 5 и указанием черт}
+\DoxyCodeLine{    SpuUltraGraph custom\_graph = SpuUltraGraph(5, traits);}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // SpuUltraGraph::vertex\_descriptor -\/ тип идентификатора вершины графа (unsigned long)}
+\DoxyCodeLine{    // SpuUltraGraph::edge\_descriptor -\/ тип идентификатора ребра графа (unsigned long)}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Добавление вершины}
+\DoxyCodeLine{    SpuUltraGraph::vertex\_descriptor v1 = graph.add\_vertex();}
+\DoxyCodeLine{    // Добаввление вершины с указанием id}
+\DoxyCodeLine{    auto v2 = graph.add\_vertex(2);}
+\DoxyCodeLine{    // Добаввление вершины с id = 3 и value = 123.123}
+\DoxyCodeLine{    auto v3 = graph.add\_vertex(3, 123.123);}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Добавление ребра}
+\DoxyCodeLine{    SpuUltraGraph::edge\_descriptor e1 = graph.add\_edge();}
+\DoxyCodeLine{    // Добавление ребра с указанием id}
+\DoxyCodeLine{    auto e2 = graph.add\_edge(2);}
+\DoxyCodeLine{    // К ребру можно прикрепить данные}
+\DoxyCodeLine{    auto e3 = graph.add\_edge(3, data\_t("abc"));}
+\DoxyCodeLine{    // Добавление ребра от v1 к v2}
+\DoxyCodeLine{    auto e12 = graph.add\_edge(v1, v2);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Чтобы добавить ребро с весом, прежде необходимо сформировать edge\_descriptor.}
+\DoxyCodeLine{    // Здесь формируется edge\_descriptor у которого вес равен 10 и индекс ребра равен 5.}
+\DoxyCodeLine{    // Индекс ребра это не id ребра. Как раз id ребра состоит из веса и индекса.}
+\DoxyCodeLine{    SpuUltraGraph::edge\_descriptor e4 = graph.get\_edge\_descriptor(5, 3);}
+\DoxyCodeLine{    // Добавление ребра e4 от вершины v2 к v3}
+\DoxyCodeLine{    graph.add\_edge(e4, v2, v3);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Получение веса ребра из edge\_descriptor}
+\DoxyCodeLine{    cout << "Вес ребра e4 = " << graph.get\_weight(e4) << endl;}
+\DoxyCodeLine{    // Получение данных вершины. Если вершина не найдена будет исключение}
+\DoxyCodeLine{    cout << "Данные вершины v3 = " << (double) graph.get\_vertex\_value(v3) << endl;}
+\DoxyCodeLine{    // Получение данных вершины. Если вершина не найдена будет исключение}
+\DoxyCodeLine{    cout << "Данные ребра e3 = " << (const char *) graph.get\_edge\_value(e3) << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Проверка наличия вершины}
+\DoxyCodeLine{    cout << "Наличие вершины v1 = " << graph.has\_vertex(v1) << endl;}
+\DoxyCodeLine{    // Проверка наличия ребра}
+\DoxyCodeLine{    cout << "Наличие ребра е1 = " << graph.has\_edge(e1) << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Кол-\/во вершин = " << graph.num\_vertices() << endl;}
+\DoxyCodeLine{    cout << "Кол-\/во ребер = " << graph.num\_edges() << endl;}
+\DoxyCodeLine{    cout << "Кол-\/во исходящих ребер у вершины v1 = " << graph.out\_degree(v1) << endl;}
+\DoxyCodeLine{    cout << "Кол-\/во входящих ребер у вершины v1 = " << graph.in\_degree(v1) << endl;}
+\DoxyCodeLine{    cout << "Кол-\/во вершин 'источников' у ребра e12 = " << graph.source\_cnt(e12) << endl;}
+\DoxyCodeLine{    cout << "Кол-\/во вершин 'стоков' у ребра e12 = " << graph.target\_cnt(e12) << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Удаление вершины}
+\DoxyCodeLine{    graph.remove\_vertex(v1);}
+\DoxyCodeLine{    // Удаление всех ребер соединенных с вершиной v2}
+\DoxyCodeLine{    graph.clear\_vertex(v2);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    // Удаление ребра}
+\DoxyCodeLine{    graph.remove\_edge(e1);}
+\DoxyCodeLine{    // Удаление всех ребер от v2 к v3}
+\DoxyCodeLine{    graph.remove\_edge(v2, v3);}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    v1 = graph.add\_vertex(1);}
+\DoxyCodeLine{    graph.add\_edge(10, v1, v2);}
+\DoxyCodeLine{    graph.add\_edge(11, v1, v2);}
+\DoxyCodeLine{    graph.add\_edge(12, v1, v3);}
+\DoxyCodeLine{    graph.add\_edge(13, v2, v1);}
+\DoxyCodeLine{    graph.add\_edge(14, v2, v1);}
+\DoxyCodeLine{    graph.add\_edge(15, v3, v1);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по всем вершинам: ";}
+\DoxyCodeLine{    for (auto v : graph.vertices())}
+\DoxyCodeLine{        cout << v <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по всем ребрам: ";}
+\DoxyCodeLine{    for (auto e : graph.edges())}
+\DoxyCodeLine{        cout << e <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по исходящим ребрам у вершины v1: ";}
+\DoxyCodeLine{    for (auto e : graph.out\_edges(v1))}
+\DoxyCodeLine{        cout << e <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по входящим ребрам у вершины v1: ";}
+\DoxyCodeLine{    for (auto e : graph.in\_edges(v1))}
+\DoxyCodeLine{        cout << e <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по параллельным ребрам от вершины v1 к v2: ";}
+\DoxyCodeLine{    for (auto e : graph.parallel\_edges(v1, v2))}
+\DoxyCodeLine{        cout << e <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    cout << "Итерация по смежным вершинам для v1: ";}
+\DoxyCodeLine{    for (auto v : graph.adjacent\_vertices(v1))}
+\DoxyCodeLine{        cout << v <<  ' ';}
+\DoxyCodeLine{    cout << endl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    return 0;}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+ 

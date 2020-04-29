@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.18"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Библиотека программного интерфейса для обработки графов: # Программный интерфейс процессора обработки структур (СП) Leonhard API0</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Библиотека программного интерфейса для обработки графов
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Интерфейс для создания ультраграфов для систем с дискретным набором команд.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.18 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title"># Программный интерфейс процессора обработки структур (СП) Leonhard API0 </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>Этот проект содержит исходные тексты и указания к сборке программ с использованием C++ библиотеки <code>libspu</code>.</p>
+<p>Основное средство сборки - <code>cmake</code>. Чтобы собрать собственный проект выполните:</p>
+<div class="fragment"><div class="line">cmake CMakeLists.txt</div>
+<div class="line">make</div>
+</div><!-- fragment --><p>Файл <code>CMakeLists.txt</code> содержит описатели:</p><ul>
+<li><code>SPU_ARCH</code> - архитектура СП (32, 64)</li>
+<li><code>SPU_SIMULATOR</code> - использовать симулятор СП</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md16"></a>
+Основные подключаемые заголовочные файлы (директория &lt;em&gt;libspu&lt;/em&gt;)</h1>
+<ul>
+<li><code><a class="el" href="spu_8h_source.html">spu.h</a></code> - совместимый с C99 заголовочный файл поддержки драйвера СП (не обязателен для включения)</li>
+<li><code><a class="el" href="libspu_8hpp_source.html">libspu.hpp</a></code> - основной заголовочный файл библиотеки; определяет тип данных data_t и основные операции над ним</li>
+<li><code><a class="el" href="structure_8hpp_source.html">structure.hpp</a></code> - заголовочный файл, описывающий класс структуры СП</li>
+<li><code><a class="el" href="fields_8hpp_source.html">fields.hpp</a></code> - описание класса Fields разметки типа данных data_t на поля</li>
+<li><code><a class="el" href="fields__pointer_8hpp_source.html">fields_pointer.hpp</a></code> - умный указатель на объект класса Fields</li>
+<li><code><a class="el" href="extern__value_8hpp_source.html">extern_value.hpp</a></code> - описание классов, позволяющий хранить большие объекты вне памяти СП</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md17"></a>
+Для использования описываемых ниже механизмов следует подключать соответствующие заголовочные файлы!</h1>
+<h1><a class="anchor" id="autotoc_md18"></a>
+Принципы, на которых построена библиотека</h1>
+<ol type="1">
+<li>Все описания выполнены в пространстве имён SPU (<code>using namespace SPU</code>)</li>
+<li>Структуры в памяти СП представляются как объекты (и управляются объектами)</li>
+<li>Каждому объекту-структуре усваивается уникальный идентификатор - GSID (см. тип gsid_t)</li>
+<li>Использование "длинной арифметики" для поддержки любой разрядности регистров СП (разрядная сетка кратна 32, см. тип <code>data_t</code>)</li>
+<li>Поддержка разметки <code>data_t</code> на поля с естественным порядком следования, произвольной длиной и любым типом данных имени</li>
+<li>Поддержка хранения в ОЗУ данных, больших разрядной сетки СП</li>
+</ol>
+<hr  />
+<h2><a class="anchor" id="autotoc_md20"></a>
+Длинная арифметика &lt;tt&gt;data_t&lt;/tt&gt; и &lt;tt&gt;gsid_t&lt;/tt&gt; (см. файл &lt;tt&gt;spu.h&lt;/tt&gt;)</h2>
+<p>Типы данных <code>data_t</code> и <code>gsid_t</code> представляют собой структуры, в которых заключён массив 32-разрядных беззнаковых целых. Над типами данных определены операции в файле <code>containres_operations.hpp</code>. GSID является чисто суррогатным ключем структуры в памяти и имеет ограниченную поддержку "длинной арифметики".</p>
+<p>Тип данных <code>data_t</code> репрезентует данных в регистрах СП и обязан соответствовать им по сути. Тип строго Little-endian, при этом кратность элементов 32 разрядам соответствует кратности регистра СП. Компиляция заголовочного файла <code><a class="el" href="spu_8h_source.html">spu.h</a></code> с поддержкой С++ позволяет использовать шаблонный конструктор типа <code>data_t</code> от любого типа.</p>
+<h3><a class="anchor" id="autotoc_md21"></a>
+Пример использования &lt;tt&gt;data_t&lt;/tt&gt;</h3>
+<div class="fragment"><div class="line">{C++}</div>
+<div class="line"> data_t d1;</div>
+<div class="line"> data_t d2 = true;</div>
+<div class="line"> data_t d3 = 10;</div>
+<div class="line"> data_t d4 = 1.100;</div>
+<div class="line"> data_t d5 = 0x1234567890adcdef;</div>
+<div class="line"> </div>
+<div class="line"> if(d2)</div>
+<div class="line"> {</div>
+<div class="line">   cout &lt;&lt; to_string(d1) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d2) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d3) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d4) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d5) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d5 + 1) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(d5 &lt;&lt; 8) &lt;&lt; endl;</div>
+<div class="line">   cout &lt;&lt; to_string(~d5) &lt;&lt; endl;</div>
+<div class="line"> }</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md23"></a>
+Разметка данных на поля</h2>
+<p>Класс <code>template&lt;NameT&gt; class Fields&lt;NameT&gt;</code> определят разметку полей данных. Конструктор класса принимает дескриптор длин полей <code>FieldsLength&lt;NameT&gt;</code>, в котором описывается имя поля с заданным типом NameT и произвольным значением длины.</p>
+<p>Конкретные данные могут быть заданы как дескриптором <code>FieldsData&lt;NameT&gt;</code>, так и усвоены из-вне готовыми данными типа <code>data_t</code>. Данные по полям доступны с использованием оператора <code>[Name name]</code>. Тип преобразуется к <code>data_t</code> автоматически при необходимости.</p>
+<p>По содержимому полей можно итерироваться конструкцией for C++11.</p>
+<h3><a class="anchor" id="autotoc_md24"></a>
+Пример использования &lt;tt&gt;Fields&lt;/tt&gt;</h3>
+<div class="fragment"><div class="line">{C++}</div>
+<div class="line"> Fields&lt;string&gt; F({</div>
+<div class="line">   { &quot;a&quot;, 8 },</div>
+<div class="line">   { &quot;b&quot;, 8 },</div>
+<div class="line">   { &quot;c&quot;, 8 },</div>
+<div class="line">   { &quot;d&quot;, 8 },</div>
+<div class="line"> });</div>
+<div class="line"> </div>
+<div class="line"> F = 0x1234;</div>
+<div class="line"> </div>
+<div class="line"> cout &lt;&lt; to_string(F[&quot;a&quot;]) &lt;&lt; endl; // 4</div>
+<div class="line"> cout &lt;&lt; to_string(F[&quot;b&quot;]) &lt;&lt; endl; // 3</div>
+<div class="line"> cout &lt;&lt; to_string(F[&quot;c&quot;]) &lt;&lt; endl; // 2</div>
+<div class="line"> cout &lt;&lt; to_string(F[&quot;d&quot;]) &lt;&lt; endl; // 1</div>
+<div class="line"> </div>
+<div class="line"> F = {</div>
+<div class="line">   { &quot;a&quot;, 255 },</div>
+<div class="line">   { &quot;b&quot;, 15  },</div>
+<div class="line">   { &quot;c&quot;, 13  },</div>
+<div class="line">   { &quot;d&quot;, 0   },</div>
+<div class="line"> };</div>
+<div class="line"> </div>
+<div class="line"> cout &lt;&lt; to_string(F) &lt;&lt; endl; // 0x00000000-0x000D0FFF</div>
+<div class="line"> </div>
+<div class="line"> for (auto ex : F)</div>
+<div class="line"> {</div>
+<div class="line">   cout &lt;&lt; ex.name &lt;&lt; &quot; is &quot; &lt;&lt; to_string(ex.data) &lt;&lt; endl;</div>
+<div class="line"> }</div>
+</div><!-- fragment --><p>Для класса <code>Fields</code> существует "умный" указатель - класс <code>template&lt;NameT&gt; class FieldsPointer&lt;NameT&gt;</code>, который конструируется либо от указателя на <code>Fields</code>, либо от объекта такого же класса (<code>FieldsPointer</code>). Класс призван эффективно управлять указателем на разметку полей и не допускать повторного удаления. Этот класс появился поскольку требуется обеспечить множество указателей на класс <code>Fields</code> с прозрачным синтаксисом и удалением только одного (без сегментации памяти). Синтаксис этого класс прозрачен как для <code>Fields</code>.</p>
+<p>Для того, чтобы классы <code>Fields</code> и <code>FieldsPointer</code> имели абсолютно одинаковый синтаксис, создан абстрактный класс <code>template&lt;NameT&gt; class AbstractFields&lt;NameT&gt;</code>. Он содержит описания всех методов, что применяются при работе с разметкой полей.</p>
+<hr  />
+<h2><a class="anchor" id="autotoc_md26"></a>
+Организация структур СП в библиотеке</h2>
+<p>Структуры СП представляются объектами класса <code>Structure</code>. Обобщённый интерфейс работы со структурой описывается абстрактным классом AbstractStructure (см. <code><a class="el" href="abstract__structure_8hpp_source.html">libspu/abstract_structure.hpp</a></code>). Структура поддерживает следующие команды СП - методы:</p>
+<ul>
+<li>status_t insert(key, value) - Добавить новую пару key-value</li>
+<li>insertVector(insert_vector) - Добавить в структуру вектор значений</li>
+<li>status_t del(key) - Удалить пару key-value</li>
+<li>pair_t search(key) - Поиск ключа</li>
+<li>pair_t min() - Поиск минимальной по ключу пары</li>
+<li>pair_t max() - Поиск максимальной по ключу пары</li>
+<li>pair_t next(key) - Следующая по ключу пара</li>
+<li>pair_t prev(key) - Предыдущая по ключу пара</li>
+<li>pair_t nsm(key) - Следующая соседняя по ключу снизу пара</li>
+<li>pair_t ngr(key) - Следующая соседняя по ключу сверху пара</li>
+<li>u32 get_power() - Получить мощность структуры</li>
+<li>gsid_t get_gsid() - получить GSID структуры</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md27"></a>
+Хранилище пары ключ-значение &lt;tt&gt;pair_t&lt;/tt&gt; имеет поля ключа, значения и статуса выполнения операции СП</h3>
+<div class="fragment"><div class="line"> {C++}</div>
+<div class="line">struct pair_t</div>
+<div class="line">  {</div>
+<div class="line">    key_t    key;</div>
+<div class="line">    value_t  value;</div>
+<div class="line">    status_t status;</div>
+<div class="line">  };</div>
+</div><!-- fragment --><p>Каждая операция имеет флаги выполнения, вызовы по-умолчанию исполняются флаги оптимизированные для этой команды. Возможные флаги:</p>
+<ul>
+<li>NO_FLAGS - Нет флагов исполнения</li>
+<li>P_FLAG - Флаг ожидания окончания исполнения операции и возврата результата</li>
+<li>Q_FLAG - Флаг помещения операции в очередь исполнения</li>
+<li>R_FLAG - Флага сброса очереди исполнения операция</li>
+</ul>
+<hr  />
+<h2><a class="anchor" id="autotoc_md29"></a>
+Описание структуры СП для использования</h2>
+<p>Структура описывается классом <code>template&lt;KeyNameT,ValueNameT&gt; class Structure</code>. Специализированный класс <code>Structure&lt;void, void&gt;</code> реализует описанный выше интерфейс <code>AbstractStructure</code>.</p>
+<p>Полная шаблонная реализация включает в себя разметку полей ключа и значения. Для описания ключа и значения можно использовать дескрипторы данных полей. Можно получить указатели на объекты классов разметки полей (класс <code>FieldsPointer</code>) методами <code>key()</code> и <code>value()</code>. Полученные таким образом ключи и значения будут соответствовать последним данным, полученным из СП или переданному туда (для операций поиска в случае успешного завершения).</p>
+<p>Библиотека описывает функции преобразования данных к классу строки C++ <code>std::string</code>. Эти функции описаны для типа данных <code>data_t</code>, статуса завершения операции СП и контейнера пары значений ключ-значения СП <code>pair_t</code>. Преобразование типа <code>pair_t</code> к строке показывает его в формате <code>Статус завершения: Ключ : Значение</code>.</p>
+<h3><a class="anchor" id="autotoc_md30"></a>
+Пример управления специализированной структурой СП</h3>
+<div class="fragment"><div class="line">{C++}</div>
+<div class="line"> Structure&lt;&gt; S;</div>
+<div class="line"> S.insert(1, 1);</div>
+<div class="line"> S.insertVector({</div>
+<div class="line">   {2, 2},</div>
+<div class="line">   {3, 3},</div>
+<div class="line">   {4, 4},</div>
+<div class="line">   {5, 5},</div>
+<div class="line"> });</div>
+<div class="line"> cout &lt;&lt; to_string(S.min()) &lt;&lt; endl;     // OK: 0x00000000-0x00000001 : 0x00000000-0x00000001</div>
+<div class="line"> cout &lt;&lt; to_string(S.max()) &lt;&lt; endl;     // OK: 0x00000000-0x00000005 : 0x00000000-0x00000005</div>
+<div class="line"> cout &lt;&lt; to_string(S.search(4)) &lt;&lt; endl; // OK: 0x00000000-0x00000004 : 0x00000000-0x00000004</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md31"></a>
+Пример управления структурой СП с разметкой полей</h3>
+<div class="fragment"><div class="line">{C++}</div>
+<div class="line"> /* Разметка ключа */</div>
+<div class="line"> Structure&lt;string&gt; S_k({ // Задание старшинства разрядов естественная: снизу-вверх =&gt; слева-направо</div>
+<div class="line">   { &quot;k_a&quot;, 8 },</div>
+<div class="line">   { &quot;k_b&quot;, 8 },</div>
+<div class="line"> });</div>
+<div class="line"> </div>
+<div class="line"> /* Разметка значения */</div>
+<div class="line"> Structure&lt;void, string&gt; S_v({</div>
+<div class="line">   { &quot;v_a&quot;, 8 },</div>
+<div class="line">   { &quot;v_b&quot;, 8 },</div>
+<div class="line"> });</div>
+<div class="line"> </div>
+<div class="line"> /* Разметка и ключа и значения */</div>
+<div class="line"> Structure&lt;string, string&gt; S_kv({</div>
+<div class="line">   { &quot;k_a&quot;, 8 },</div>
+<div class="line">   { &quot;k_b&quot;, 8 },</div>
+<div class="line"> },{</div>
+<div class="line">   { &quot;v_a&quot;, 8 },</div>
+<div class="line">   { &quot;v_b&quot;, 8 },</div>
+<div class="line"> });</div>
+<div class="line"> </div>
+<div class="line"> /* Получение указателей на объекты ключа и значения */</div>
+<div class="line"> auto S_kv_key   = S_kv.key();  // Автоматически получаются правильные шаблоны класса FieldsPointer</div>
+<div class="line"> auto S_kv_value = S_kv.value();</div>
+<div class="line"> </div>
+<div class="line"> S_kv.insert({</div>
+<div class="line">   {&quot;k_b&quot;, 255},</div>
+<div class="line"> },{</div>
+<div class="line">   {&quot;v_a&quot;, 16},</div>
+<div class="line"> });</div>
+<div class="line"> </div>
+<div class="line"> cout &lt;&lt; to_string(S_kv.min()) &lt;&lt; endl;                               // OK: 0x00000000-0x0000ff00 : 0x00000000-0x00000010</div>
+<div class="line"> cout &lt;&lt; to_string(S_kv_key) &lt;&lt; &quot; &quot; &lt;&lt; to_string(S_kv_value) &lt;&lt; endl; // 0x00000000-0x0000ff00 0x00000000-0x00000010</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md33"></a>
+Хранение больших объектов</h2>
+<p>Библиотека имеет класс <code>ExternValue</code> для хранения больших значений. Значение помещается в список, а её уникальный идентификатор - в память СП.</p>
+<div class="fragment"><div class="line">{C++}</div>
+<div class="line"> Structure&lt;&gt; S;</div>
+<div class="line"> pair_t pair;</div>
+<div class="line"> </div>
+<div class="line"> /* Сохранение */</div>
+<div class="line"> string str = &quot;This string stored at hash map. In SPU stored id for a string&quot;;</div>
+<div class="line"> BaseExternValue extern_val = HashMapExternValue&lt;string&gt;(str);</div>
+<div class="line"> S.insert(1, extern_val);</div>
+<div class="line"> </div>
+<div class="line"> /* Поиск */</div>
+<div class="line"> pair = S.search(1);</div>
+<div class="line"> string res_str = (HashMapExternValue&lt;string&gt;) pair.value;</div>
+<div class="line"> cout &lt;&lt; res_str &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line"> /* Произвольная не пакетированная структура */</div>
+<div class="line"> struct Point {double x; double y; double z;};</div>
+<div class="line"> Point p = {1.5, 2.3, 3.7};</div>
+<div class="line"> HashMapExternValue&lt;Point&gt; point_ext;</div>
+<div class="line"> point_ext &lt;&lt; p; // Операторы &lt;&lt; и &gt;&gt; делают тоже, что и методы set и get</div>
+<div class="line"> S.insert(2, point_ext);</div>
+<div class="line"> pair = S.search(2);</div>
+<div class="line"> if (pair.status == OK) {</div>
+<div class="line">     point_ext &lt;&lt; pair;</div>
+<div class="line">     point_ext &gt;&gt; p;</div>
+<div class="line">     cout &lt;&lt; &quot;Point struct X=&quot; &lt;&lt; p.x &lt;&lt; &quot; Y=&quot; &lt;&lt; p.y &lt;&lt; &quot; Z=&quot; &lt;&lt; p.z &lt;&lt; endl;</div>
+<div class="line"> }</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md35"></a>
+Управление СП и симулятор СП</h2>
+<p>Управление СП осуществляется классом <code>BaseStructure</code>. При помощи класса <code>Fileops</code> он передаёт команды СП и получает результат. Здесь реализованы непосредственные передачи от символьного устройства СП к библиотеке и запись данных.</p>
+<p>Альтернативно при установке макроопределения <code>SPU_SIMULATOR</code> место класса <code>BaseStructure</code> занимает класс <code>Simulator</code>. Этот класс на основе <code>std::map</code> симулирует (эмулирует) поведение СП по всем поддерживаемым операциям.</p>
+<p>Диаграмма классов библиотеки структур приведена ниже.</p>
+<p><img src="structures.svg" alt="Диаграмма классов структур" style="pointer-events: none;" class="inline"/></p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md37"></a>
+Сложный пример алгоритма с использованием библиотеки - Алгоритм Дейкстры</h1>
+<div class="fragment"><div class="line"> {C++}</div>
+<div class="line">#include &lt;iostream&gt;</div>
+<div class="line"> </div>
+<div class="line">#include &lt;libspu.hpp&gt;</div>
+<div class="line">#include &lt;structure.hpp&gt;</div>
+<div class="line"> </div>
+<div class="line">using namespace std;</div>
+<div class="line">using namespace SPU;</div>
+<div class="line"> </div>
+<div class="line">#define INF    0xf</div>
+<div class="line">#define u_cnt  5 </div>
+<div class="line"> </div>
+<div class="line">/* Graph representation</div>
+<div class="line"> </div>
+<div class="line">       7</div>
+<div class="line"> &#39;1&#39; ------ &#39;3&#39; </div>
+<div class="line">  |        /  \ 7</div>
+<div class="line">  |      /      \ </div>
+<div class="line"> 2|   4 /       &#39;5&#39;</div>
+<div class="line">  |   /         / </div>
+<div class="line">  | /   1     / 6</div>
+<div class="line"> &#39;2&#39; ------ &#39;4&#39;</div>
+<div class="line"> </div>
+<div class="line">*/</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  Structures definitions</div>
+<div class="line">*************************************/</div>
+<div class="line"> </div>
+<div class="line">/* Graph of convergence G */</div>
+<div class="line">Structure&lt;void, string&gt; G({ // Has data fields but not key fields</div>
+<div class="line">  { &quot;Adj[u]&quot;, 16 }, // Has own Fields</div>
+<div class="line">  { &quot;w[u]&quot;,   20 }, // Also has own Fields</div>
+<div class="line">  { &quot;d[u]&quot;,   4  }, // Max distance is 15</div>
+<div class="line">  { &quot;p[u]&quot;,   4  },</div>
+<div class="line">  { &quot;u∈Q&quot;,    1  }, // Boolean</div>
+<div class="line">});</div>
+<div class="line">auto G_value = G.value();</div>
+<div class="line"> </div>
+<div class="line">/* Adj[u] fields */</div>
+<div class="line">Fields&lt;&gt; Adj_u({ // Every field is boolean</div>
+<div class="line">  { 1, 1 },</div>
+<div class="line">  { 2, 1 },</div>
+<div class="line">  { 3, 1 },</div>
+<div class="line">  { 4, 1 },</div>
+<div class="line">  { 5, 1 },</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line">/* w[u] fields */</div>
+<div class="line">Fields&lt;&gt; w_u({ // Max distance is 16 </div>
+<div class="line">  { 1, 4 },</div>
+<div class="line">  { 2, 4 },</div>
+<div class="line">  { 3, 4 },</div>
+<div class="line">  { 4, 4 },</div>
+<div class="line">  { 5, 4 },</div>
+<div class="line">});</div>
+<div class="line"> </div>
+<div class="line">/* Structure of consideration Q */</div>
+<div class="line">Structure&lt;string&gt; Q({</div>
+<div class="line">  { &quot;u&quot;,    8 },</div>
+<div class="line">  { &quot;d[u]&quot;, 4 }, // d[u] is more important</div>
+<div class="line">});</div>
+<div class="line">auto Q_key = Q.key(); // Get Fields to separate Q key</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  End of structures definitions</div>
+<div class="line">*************************************/</div>
+<div class="line"> </div>
+<div class="line">/* Helpers */</div>
+<div class="line">void G_init();</div>
+<div class="line">void Q_init();</div>
+<div class="line">void G_print();</div>
+<div class="line">void Q_print();</div>
+<div class="line"> </div>
+<div class="line">int main()</div>
+<div class="line">{</div>
+<div class="line">  cout &lt;&lt; &quot;Starting Dijkstra algorithm&quot; &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">  /* G */</div>
+<div class="line">  G_init();</div>
+<div class="line">  G_print();</div>
+<div class="line"> </div>
+<div class="line">  /* Q */</div>
+<div class="line">  Q_init();</div>
+<div class="line">  Q_print();</div>
+<div class="line"> </div>
+<div class="line">  cout &lt;&lt; &quot;Starting&quot; &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">  /*************************************</div>
+<div class="line">    Main algorithm</div>
+<div class="line">  *************************************/</div>
+<div class="line"> </div>
+<div class="line">  while(Q.get_power())</div>
+<div class="line">  {</div>
+<div class="line">    /* Get first node from Q and delete it */</div>
+<div class="line">    Q.min();</div>
+<div class="line">    u8 u = Q_key[&quot;u&quot;]; // Index of node</div>
+<div class="line">    Q.del(Q_key);</div>
+<div class="line">    </div>
+<div class="line">    /* Get G_value from Q&#39;s &quot;u&quot; */</div>
+<div class="line">    G.search(u);</div>
+<div class="line">    Adj_u      = G_value[&quot;Adj[u]&quot;];</div>
+<div class="line">    data_t d_u = G_value[&quot;d[u]&quot;];</div>
+<div class="line"> </div>
+<div class="line">    /* Unset u∈Q */</div>
+<div class="line">    G_value[&quot;u∈Q&quot;] = false;</div>
+<div class="line">    data_t u_value = G_value;</div>
+<div class="line"> </div>
+<div class="line">    /* Check out all v&#39;s from Adj[u] */</div>
+<div class="line">    for(auto ex : Adj_u)</div>
+<div class="line">    {</div>
+<div class="line">      /* If v in Adj[u] */</div>
+<div class="line">      if(ex.data)</div>
+<div class="line">      {</div>
+<div class="line">        /* Search for v */</div>
+<div class="line">        u8 v = ex.name;</div>
+<div class="line">        G.search(v); // Now G_value is value of v key</div>
+<div class="line">        w_u = G_value[&quot;w[u]&quot;];</div>
+<div class="line"> </div>
+<div class="line">        /* v is in Q */</div>
+<div class="line">        if(G_value[&quot;u∈Q&quot;])</div>
+<div class="line">        {</div>
+<div class="line">          /* Delete v from Q */</div>
+<div class="line">          Q_key[&quot;u&quot;]    = v;</div>
+<div class="line">          Q_key[&quot;d[u]&quot;] = G_value[&quot;d[u]&quot;];</div>
+<div class="line">          Q.del(Q_key);</div>
+<div class="line"> </div>
+<div class="line">          /* Create new length statement */</div>
+<div class="line">          data_t len = d_u + w_u[u];</div>
+<div class="line">          if( G_value[&quot;d[u]&quot;] &gt; len )</div>
+<div class="line">          {</div>
+<div class="line">            /* Set new data */</div>
+<div class="line">            G_value[&quot;d[u]&quot;] = len;</div>
+<div class="line">            G_value[&quot;p[u]&quot;] = u;</div>
+<div class="line">            </div>
+<div class="line">            /* Save v state */</div>
+<div class="line">            G.insert(v, G_value);</div>
+<div class="line"> </div>
+<div class="line">            /* Insert new v in Q */</div>
+<div class="line">            Q_key[&quot;d[u]&quot;] = G_value[&quot;d[u]&quot;];</div>
+<div class="line">          }</div>
+<div class="line"> </div>
+<div class="line">          Q.insert(Q_key, 0);</div>
+<div class="line">        }</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    /* Save u state */</div>
+<div class="line">    G.insert(u, u_value);</div>
+<div class="line"> </div>
+<div class="line">    G_print();</div>
+<div class="line">    Q_print();</div>
+<div class="line"> </div>
+<div class="line">    if (Q.get_power())</div>
+<div class="line">    {</div>
+<div class="line">      cout &lt;&lt; &quot;Turn&quot; &lt;&lt; endl;</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  cout &lt;&lt; &quot;Ended&quot; &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">  return 0;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  G initialization</div>
+<div class="line">*************************************/</div>
+<div class="line">void G_init()</div>
+<div class="line">{</div>
+<div class="line">  /* u = 1 */</div>
+<div class="line">  Adj_u  = { { 2, true }, { 3, true } };</div>
+<div class="line">  w_u    = { { 2, 2    }, { 3, 7    } };</div>
+<div class="line">  G.insert(1, {</div>
+<div class="line">    { &quot;Adj[u]&quot;, Adj_u },</div>
+<div class="line">    { &quot;w[u]&quot;,   w_u   },</div>
+<div class="line">    { &quot;d[u]&quot;,   0     },</div>
+<div class="line">    { &quot;p[u]&quot;,   0     },</div>
+<div class="line">    { &quot;u∈Q&quot;,    true  } </div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  /* u = 2 */</div>
+<div class="line">  Adj_u  = { { 1, true }, { 3, true }, { 4, true } };</div>
+<div class="line">  w_u    = { { 1, 2    }, { 3, 4    }, { 4, 1    } };</div>
+<div class="line">  G.insert(2, {</div>
+<div class="line">    { &quot;Adj[u]&quot;, Adj_u },</div>
+<div class="line">    { &quot;w[u]&quot;,   w_u   },</div>
+<div class="line">    { &quot;d[u]&quot;,   INF   },</div>
+<div class="line">    { &quot;p[u]&quot;,   0     },</div>
+<div class="line">    { &quot;u∈Q&quot;,    true  } </div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  /* u = 3 */</div>
+<div class="line">  Adj_u  = { { 1, true }, { 2, true }, { 4, true }, { 5, true } };</div>
+<div class="line">  w_u    = { { 1, 7    }, { 2, 4    }, { 4, 2    }, { 5, 7    } };</div>
+<div class="line">  G.insert(3, {</div>
+<div class="line">    { &quot;Adj[u]&quot;, Adj_u },</div>
+<div class="line">    { &quot;w[u]&quot;,   w_u   },</div>
+<div class="line">    { &quot;d[u]&quot;,   INF   },</div>
+<div class="line">    { &quot;p[u]&quot;,   0     },</div>
+<div class="line">    { &quot;u∈Q&quot;,    true  } </div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  /* u = 4 */</div>
+<div class="line">  Adj_u  = { { 2, true }, { 3, true }, { 5, true } };</div>
+<div class="line">  w_u    = { { 2, 1    }, { 3, 2    }, { 5, 6    } };</div>
+<div class="line">  G.insert(4, {</div>
+<div class="line">    { &quot;Adj[u]&quot;, Adj_u },</div>
+<div class="line">    { &quot;w[u]&quot;,   w_u   },</div>
+<div class="line">    { &quot;d[u]&quot;,   INF   },</div>
+<div class="line">    { &quot;p[u]&quot;,   0     },</div>
+<div class="line">    { &quot;u∈Q&quot;,    true  } </div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  /* u = 5 */</div>
+<div class="line">  Adj_u  = { { 3, true }, { 4, true } };</div>
+<div class="line">  w_u    = { { 3, 7    }, { 4, 6    } };</div>
+<div class="line">  G.insert(5, {</div>
+<div class="line">    { &quot;Adj[u]&quot;, Adj_u },</div>
+<div class="line">    { &quot;w[u]&quot;,   w_u   },</div>
+<div class="line">    { &quot;d[u]&quot;,   INF   },</div>
+<div class="line">    { &quot;p[u]&quot;,   0     },</div>
+<div class="line">    { &quot;u∈Q&quot;,    true  } </div>
+<div class="line">  });</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  Q initialization</div>
+<div class="line">*************************************/</div>
+<div class="line">void Q_init()</div>
+<div class="line">{</div>
+<div class="line">  /* Q first node init */</div>
+<div class="line">  Q.insert(</div>
+<div class="line">    { { &quot;d[u]&quot;, 0 },  { &quot;u&quot;, 1 } },</div>
+<div class="line">    0</div>
+<div class="line">  );</div>
+<div class="line"> </div>
+<div class="line">  /* Q other nodes init */</div>
+<div class="line">  for(u8 u=2; u&lt;=u_cnt; u++)</div>
+<div class="line">  {</div>
+<div class="line">    Q.insert(</div>
+<div class="line">      { { &quot;d[u]&quot;, INF },  { &quot;u&quot;, u } },</div>
+<div class="line">      0</div>
+<div class="line">    );</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  G printing</div>
+<div class="line">*************************************/</div>
+<div class="line">void G_print()</div>
+<div class="line">{</div>
+<div class="line">  /* Print out */</div>
+<div class="line">  cout &lt;&lt; &quot;G graph is:&quot; &lt;&lt; endl;</div>
+<div class="line">  for(u8 u=1; u&lt;=u_cnt; u++)</div>
+<div class="line">  {</div>
+<div class="line">    pair_t pair =  G.search(u);</div>
+<div class="line">    cout &lt;&lt; &quot;\t u = &quot; &lt;&lt; to_string(pair.key) &lt;&lt;</div>
+<div class="line">      &quot;:  &quot; &lt;&lt; to_string(pair.value, true) &lt;&lt; endl;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  cout &lt;&lt; endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">/*************************************</div>
+<div class="line">  Q printing</div>
+<div class="line">*************************************/</div>
+<div class="line">void Q_print()</div>
+<div class="line">{</div>
+<div class="line">  if (Q.get_power())</div>
+<div class="line">  {</div>
+<div class="line">    /* Print out */</div>
+<div class="line">    cout &lt;&lt; &quot;Q structures keys are:&quot; &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    /* First node */</div>
+<div class="line">    pair_t pair = Q.min();</div>
+<div class="line">    cout &lt;&lt; &quot;\t &quot; &lt;&lt; to_string(pair.key, true) &lt;&lt; endl;</div>
+<div class="line"> </div>
+<div class="line">    /* Other nodes */</div>
+<div class="line">    for(u8 u=2; u&lt;=Q.get_power(); u++)</div>
+<div class="line">    {</div>
+<div class="line">      pair = Q.next(pair.key);</div>
+<div class="line">      cout &lt;&lt; &quot;\t &quot; &lt;&lt; to_string(pair.key, true) &lt;&lt; endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    cout &lt;&lt; endl;</div>
+<div class="line">  }</div>
+<div class="line">  else</div>
+<div class="line">  {</div>
+<div class="line">    cout &lt;&lt; &quot;Q is empty&quot; &lt;&lt; endl;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.18
+</small></address>
+</body>
+</html>

@@ -1,0 +1,85 @@
+\hypertarget{structboost_1_1graph__test}{}\doxysection{Шаблон структуры boost\+::graph\+\_\+test$<$ Graph $>$}
+\label{structboost_1_1graph__test}\index{boost::graph\_test$<$ Graph $>$@{boost::graph\_test$<$ Graph $>$}}
+\doxysubsection*{Классы}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structboost_1_1graph__test_1_1ignore__edge}{ignore\+\_\+edge}}
+\item 
+struct \mbox{\hyperlink{structboost_1_1graph__test_1_1ignore__edges}{ignore\+\_\+edges}}
+\item 
+struct \mbox{\hyperlink{structboost_1_1graph__test_1_1ignore__vertex}{ignore\+\_\+vertex}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые типы}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ade600640dfb2ffd1bbcc4bb9db60a3f7}\label{structboost_1_1graph__test_ade600640dfb2ffd1bbcc4bb9db60a3f7}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::vertex\+\_\+descriptor {\bfseries vertex\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_af426fe5948619eec56e311e769173650}\label{structboost_1_1graph__test_af426fe5948619eec56e311e769173650}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::edge\+\_\+descriptor {\bfseries edge\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a7cb70f96e2f1b68138299800859de7e8}\label{structboost_1_1graph__test_a7cb70f96e2f1b68138299800859de7e8}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::vertices\+\_\+size\+\_\+type {\bfseries v\+\_\+size\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a063b71a61ac5e050f81bdb790bc88647}\label{structboost_1_1graph__test_a063b71a61ac5e050f81bdb790bc88647}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::degree\+\_\+size\+\_\+type {\bfseries deg\+\_\+size\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a1c3818cea225fb663045266a1126a64e}\label{structboost_1_1graph__test_a1c3818cea225fb663045266a1126a64e}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::edges\+\_\+size\+\_\+type {\bfseries e\+\_\+size\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ad37c27a29bf93c0df05d38b842e6cee1}\label{structboost_1_1graph__test_ad37c27a29bf93c0df05d38b842e6cee1}} 
+typedef graph\+\_\+traits$<$ Graph $>$\+::out\+\_\+edge\+\_\+iterator {\bfseries out\+\_\+edge\+\_\+iter}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_abfc2081c0b9832f714e8da51f072c95f}\label{structboost_1_1graph__test_abfc2081c0b9832f714e8da51f072c95f}} 
+typedef property\+\_\+map$<$ Graph, vertex\+\_\+index\+\_\+t $>$\+::type {\bfseries index\+\_\+map\+\_\+t}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a5b4424db594ea6f0f239f40cff5d0034}\label{structboost_1_1graph__test_a5b4424db594ea6f0f239f40cff5d0034}} 
+typedef iterator\+\_\+property\+\_\+map$<$ typename std\+::vector$<$ vertex\+\_\+t $>$\+::iterator, index\+\_\+map\+\_\+t, vertex\+\_\+t, vertex\+\_\+t \& $>$ {\bfseries Iso\+Map}
+\end{DoxyCompactItemize}
+\doxysubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a1c7f7f3025d6523d3260544effcc8d35}\label{structboost_1_1graph__test_a1c7f7f3025d6523d3260544effcc8d35}} 
+void {\bfseries test\+\_\+incidence\+\_\+graph} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const std\+::vector$<$ std\+::pair$<$ vertex\+\_\+t, vertex\+\_\+t $>$ $>$ \&edge\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_aab436d06abc494be6a64da18ec09ecb3}\label{structboost_1_1graph__test_aab436d06abc494be6a64da18ec09ecb3}} 
+void {\bfseries test\+\_\+bidirectional\+\_\+graph} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const std\+::vector$<$ std\+::pair$<$ vertex\+\_\+t, vertex\+\_\+t $>$ $>$ \&edge\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ab01e5d59de01d3a2f7a756142c3daef3}\label{structboost_1_1graph__test_ab01e5d59de01d3a2f7a756142c3daef3}} 
+void {\bfseries test\+\_\+adjacency\+\_\+graph} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const std\+::vector$<$ std\+::pair$<$ vertex\+\_\+t, vertex\+\_\+t $>$ $>$ \&edge\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a6cf2bad7292277561a091d605022de3e}\label{structboost_1_1graph__test_a6cf2bad7292277561a091d605022de3e}} 
+void {\bfseries test\+\_\+vertex\+\_\+list\+\_\+graph} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ada50db1e8060efeb6ed21843d46b5eb4}\label{structboost_1_1graph__test_ada50db1e8060efeb6ed21843d46b5eb4}} 
+void {\bfseries test\+\_\+edge\+\_\+list\+\_\+graph} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const std\+::vector$<$ std\+::pair$<$ vertex\+\_\+t, vertex\+\_\+t $>$ $>$ \&edge\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a0cfbd7948aba361ecaf9242add8fd3b4}\label{structboost_1_1graph__test_a0cfbd7948aba361ecaf9242add8fd3b4}} 
+void {\bfseries test\+\_\+adjacency\+\_\+matrix} (const std\+::vector$<$ vertex\+\_\+t $>$ \&vertex\+\_\+set, const std\+::vector$<$ std\+::pair$<$ vertex\+\_\+t, vertex\+\_\+t $>$ $>$ \&edge\+\_\+set, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a353001b6205a774e1c01538b948cab21}\label{structboost_1_1graph__test_a353001b6205a774e1c01538b948cab21}} 
+void {\bfseries test\+\_\+add\+\_\+vertex} (Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ab1af5311dedf501d46ea89c702021410}\label{structboost_1_1graph__test_ab1af5311dedf501d46ea89c702021410}} 
+void {\bfseries test\+\_\+add\+\_\+edge} (vertex\+\_\+t u, vertex\+\_\+t v, Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_ae769902ab95a2bd8a2665d30f97230c2}\label{structboost_1_1graph__test_ae769902ab95a2bd8a2665d30f97230c2}} 
+void {\bfseries test\+\_\+remove\+\_\+edge} (vertex\+\_\+t u, vertex\+\_\+t v, Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a52655c001000960e476e7eebcce0fa74}\label{structboost_1_1graph__test_a52655c001000960e476e7eebcce0fa74}} 
+void {\bfseries test\+\_\+remove\+\_\+edge} (edge\+\_\+t e, Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_aabd61820629d6c8355c840f37a006250}\label{structboost_1_1graph__test_aabd61820629d6c8355c840f37a006250}} 
+void {\bfseries test\+\_\+clear\+\_\+vertex} (vertex\+\_\+t v, Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a799ea10186b6a78ee02b2d0ef903f0fd}\label{structboost_1_1graph__test_a799ea10186b6a78ee02b2d0ef903f0fd}} 
+{\footnotesize template$<$typename Prop\+Val , typename Property\+Tag $>$ }\\void {\bfseries test\+\_\+readable\+\_\+vertex\+\_\+property\+\_\+graph} (const std\+::vector$<$ Prop\+Val $>$ \&vertex\+\_\+prop, Property\+Tag tag, const Graph \&g)
+\item 
+\mbox{\Hypertarget{structboost_1_1graph__test_a77e36a1f163c6c8c73a62954503bb21c}\label{structboost_1_1graph__test_a77e36a1f163c6c8c73a62954503bb21c}} 
+{\footnotesize template$<$typename Prop\+Val , typename Property\+Tag $>$ }\\void {\bfseries test\+\_\+vertex\+\_\+property\+\_\+graph} (const std\+::vector$<$ Prop\+Val $>$ \&vertex\+\_\+prop, Property\+Tag tag, Graph \&g)
+\end{DoxyCompactItemize}
+
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+tests/graph\+\_\+test.\+h\end{DoxyCompactItemize}
