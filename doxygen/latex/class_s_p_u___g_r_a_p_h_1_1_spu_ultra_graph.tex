@@ -359,7 +359,14 @@ static id\+\_\+t {\bfseries get\+\_\+free\+\_\+global\+\_\+id} ()
 \doxysubsubsection{\texorpdfstring{get\_edge\_descriptor()}{get\_edge\_descriptor()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a5f3776e003ef0a1648f1d9f84289810b}{Spu\+Ultra\+Graph\+::edge\+\_\+descriptor}} S\+P\+U\+\_\+\+G\+R\+A\+P\+H\+::\+Spu\+Ultra\+Graph\+::get\+\_\+edge\+\_\+descriptor (\begin{DoxyParamCaption}\item[{id\+\_\+t}]{edge\+\_\+id,  }\item[{weight\+\_\+t}]{weight }\end{DoxyParamCaption}) const}
 
-Формирование edge\+\_\+descriptor из веса ребра и индекса Это необходимо, например, для добавления взвешенных ребер. Индекс ребра это не id ребра. Как раз id ребра (edge\+\_\+descriptor) состоит из веса и индекса. \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_aa508f7947fae83893eb2eacab3631ec2}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_aa508f7947fae83893eb2eacab3631ec2}} 
+Формирование edge\+\_\+descriptor из веса ребра и индекса Это необходимо, например, для добавления взвешенных ребер. 
+\begin{DoxyParams}{Аргументы}
+{\em edge\+\_\+id} & Индекс ребра. Это не id ребра. Как раз id ребра (edge\+\_\+descriptor) состоит из веса и индекса. \\
+\hline
+{\em weight} & Вес ребра \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_aa508f7947fae83893eb2eacab3631ec2}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_aa508f7947fae83893eb2eacab3631ec2}} 
 \index{SPU\_GRAPH::SpuUltraGraph@{SPU\_GRAPH::SpuUltraGraph}!get\_edge\_value@{get\_edge\_value}}
 \index{get\_edge\_value@{get\_edge\_value}!SPU\_GRAPH::SpuUltraGraph@{SPU\_GRAPH::SpuUltraGraph}}
 \doxysubsubsection{\texorpdfstring{get\_edge\_value()}{get\_edge\_value()}}

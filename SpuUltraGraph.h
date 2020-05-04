@@ -476,7 +476,8 @@ namespace SPU_GRAPH
         edge_descriptor get_edge_descriptor(id_t edge_id) const;
         /// Формирование edge_descriptor из веса ребра и индекса
         /// Это необходимо, например, для добавления взвешенных ребер.
-        /// Индекс ребра это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса.
+        /// \param edge_id Индекс ребра. Это не id ребра. Как раз id ребра (edge_descriptor) состоит из веса и индекса.
+        /// \param weight Вес ребра
         edge_descriptor get_edge_descriptor(id_t edge_id, weight_t weight) const;
         /// Получение веса ребра из edge_descriptor
         weight_t get_weight(edge_descriptor edge) const;
