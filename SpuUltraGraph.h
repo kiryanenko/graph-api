@@ -546,6 +546,10 @@ namespace SPU_GRAPH
         Vertices vertices() const { return {this}; }
         /// Возвращает контейнер содержащий вершины смежные вершине v
         AdjacentVertices adjacent_vertices(vertex_descriptor v) const { return {this, v}; }
+        /// Возвращает контейнер содержащий источники для ребра e
+        Sources sources(edge_descriptor e) const { return {this, e}; }
+        /// Возвращает контейнер содержащий стоки для ребра e
+        Targets targets(edge_descriptor e) const { return {this, e}; }
         /// Возвращает контейнер содержащий все ребра графа
         Edges edges() const { return {this}; }
         /// Возвращает контейнер параллельных ребер от вершины from к to
