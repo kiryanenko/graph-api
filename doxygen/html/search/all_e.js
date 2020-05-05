@@ -2,7 +2,7 @@ var searchData=
 [
   ['source_103',['source',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a16ea4ca22965b3dae74ca8c17b130fd8',1,'SPU_GRAPH::SpuUltraGraph']]],
   ['sourceiterator_104',['SourceIterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a417ef28fead78f635ab0a67d0bf5cef9',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['sources_105',['Sources',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#affd7f90cfb9b255be603cb8756dfc80d',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['sources_105',['sources',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a1d0b0fab46b32b8ffebd435f7e5ae835',1,'SPU_GRAPH::SpuUltraGraph::sources(edge_descriptor e) const'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#affd7f90cfb9b255be603cb8756dfc80d',1,'SPU_GRAPH::SpuUltraGraph::Sources()']]],
   ['spu_5fug_5fproperty_5fmap_106',['spu_ug_property_map',['../classboost_1_1spu__ug__property__map.html',1,'boost']]],
   ['spu_5fug_5freadable_5fproperty_5fmap_107',['spu_ug_readable_property_map',['../classboost_1_1spu__ug__readable__property__map.html',1,'boost']]],
   ['spu_5fultra_5fgraph_5ftraversal_5fcategory_108',['spu_ultra_graph_traversal_category',['../struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category.html',1,'SPU_GRAPH::SpuUltraGraph']]],
