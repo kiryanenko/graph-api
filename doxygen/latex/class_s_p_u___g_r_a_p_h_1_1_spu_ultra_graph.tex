@@ -3,28 +3,28 @@
 \doxysubsection*{Классы}
 \begin{DoxyCompactItemize}
 \item 
+class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges}{Adjacent\+Edges}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий смежные ребра для вершины v. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator}{Adjacent\+Edges\+Iterator}}
 \item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices}{Adjacent\+Vertices}}
-\begin{DoxyCompactList}\small\item\em Контейнер содержащий все ребра графа \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий вершины смежные вершине v. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator}{Adjacent\+Vertices\+Iterator}}
 \item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_iterator}{Edge\+Iterator}}
 \item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edges}{Edges}}
 \begin{DoxyCompactList}\small\item\em Контейнер содержащий все ребра графа \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_in_edges}{In\+Edges}}
-\item 
-class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_out_edges}{Out\+Edges}}
-\item 
+class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices}{Edge\+Vertices}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий все источники для ребра e. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices_iterator}{Edge\+Vertices\+Iterator}}
+\begin{DoxyCompactList}\small\item\em Итератор по смежным вершинам для ребра e. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges}{Parallel\+Edges}}
 \begin{DoxyCompactList}\small\item\em Контейнер параллельных ребер от вершины from к to. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges_iterator}{Parallel\+Edges\+Iterator}}
 \begin{DoxyCompactList}\small\item\em Итератор по параллельным ребрам от вершины from к to. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{struct_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1spu__ultra__graph__traversal__category}{spu\+\_\+ultra\+\_\+graph\+\_\+traversal\+\_\+category}}
 \begin{DoxyCompactList}\small\item\em Категория обхода отражает поддерживаемые графовым классом виды итераторов \end{DoxyCompactList}\item 
-class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_target_iterator}{Target\+Iterator}}
-\begin{DoxyCompactList}\small\item\em Итератор по стокам для ребра e. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertex_iterator}{Vertex\+Iterator}}
 \item 
 class \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_vertices}{Vertices}}
@@ -73,6 +73,24 @@ typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacen
 \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae658ac8b09fc1b84711e434354e027cd}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae658ac8b09fc1b84711e434354e027cd}} 
 typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator}{Adjacent\+Edges\+Iterator}}$<$ 1 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae658ac8b09fc1b84711e434354e027cd}{in\+\_\+edge\+\_\+iterator}}
 \begin{DoxyCompactList}\small\item\em Итератор по входящим ребрам \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae0fda272e54e0400446887572a5b4587}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae0fda272e54e0400446887572a5b4587}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges}{Adjacent\+Edges}}$<$ 0 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae0fda272e54e0400446887572a5b4587}{Out\+Edges}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий исходящие ребра для вершины v. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a3fc2875b9d11620ffa74cd83e544a95e}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a3fc2875b9d11620ffa74cd83e544a95e}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges}{Adjacent\+Edges}}$<$ 1 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a3fc2875b9d11620ffa74cd83e544a95e}{In\+Edges}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий входящие ребра для вершины v. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a417ef28fead78f635ab0a67d0bf5cef9}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a417ef28fead78f635ab0a67d0bf5cef9}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices_iterator}{Edge\+Vertices\+Iterator}}$<$ 0 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a417ef28fead78f635ab0a67d0bf5cef9}{Source\+Iterator}}
+\begin{DoxyCompactList}\small\item\em Итератор по источникам для ребра e. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a01da8848cb9d0515936072ad07187ce5}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a01da8848cb9d0515936072ad07187ce5}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices_iterator}{Edge\+Vertices\+Iterator}}$<$ 1 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a01da8848cb9d0515936072ad07187ce5}{Target\+Iterator}}
+\begin{DoxyCompactList}\small\item\em Итератор по стокам для ребра e. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_affd7f90cfb9b255be603cb8756dfc80d}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_affd7f90cfb9b255be603cb8756dfc80d}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices}{Edge\+Vertices}}$<$ 0 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_affd7f90cfb9b255be603cb8756dfc80d}{Sources}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий все источники для ребра e. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae5b5d18bbcc112b25285ad2c06d32f07}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae5b5d18bbcc112b25285ad2c06d32f07}} 
+typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_edge_vertices}{Edge\+Vertices}}$<$ 1 $>$ \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae5b5d18bbcc112b25285ad2c06d32f07}{Targets}}
+\begin{DoxyCompactList}\small\item\em Контейнер содержащий все стоки для ребра e. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae50dab54e277cf22d3e318d468e7585c}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae50dab54e277cf22d3e318d468e7585c}} 
 typedef \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator}{Adjacent\+Vertices\+Iterator}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae50dab54e277cf22d3e318d468e7585c}{adjacency\+\_\+iterator}}
 \begin{DoxyCompactList}\small\item\em Итератор по смежным вершинам \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -212,10 +230,10 @@ value\+\_\+t \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_aa508f
 \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_parallel_edges}{Parallel\+Edges}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a95e3d9d5f45f98173847d5a0254a4a1f}{parallel\+\_\+edges}} (vertex\+\_\+descriptor from, vertex\+\_\+descriptor to) const
 \begin{DoxyCompactList}\small\item\em Возвращает контейнер параллельных ребер от вершины from к to. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ab1bda5ef7eb9a69b09c044b3365ee4d4}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ab1bda5ef7eb9a69b09c044b3365ee4d4}} 
-\mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_out_edges}{Out\+Edges}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ab1bda5ef7eb9a69b09c044b3365ee4d4}{out\+\_\+edges}} (vertex\+\_\+descriptor v) const
+\mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ae0fda272e54e0400446887572a5b4587}{Out\+Edges}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_ab1bda5ef7eb9a69b09c044b3365ee4d4}{out\+\_\+edges}} (vertex\+\_\+descriptor v) const
 \begin{DoxyCompactList}\small\item\em Возвращает контейнер исходящих ребер от вершины v. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a43c59a6f12d139a9bcf98e00e8c4297a}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a43c59a6f12d139a9bcf98e00e8c4297a}} 
-\mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_in_edges}{In\+Edges}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a43c59a6f12d139a9bcf98e00e8c4297a}{in\+\_\+edges}} (vertex\+\_\+descriptor v) const
+\mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a3fc2875b9d11620ffa74cd83e544a95e}{In\+Edges}} \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_a43c59a6f12d139a9bcf98e00e8c4297a}{in\+\_\+edges}} (vertex\+\_\+descriptor v) const
 \begin{DoxyCompactList}\small\item\em Возвращает контейнер исходящих ребер от вершины v. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_af5d0c196f4acbc30f17a2444c384b8af}\label{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_af5d0c196f4acbc30f17a2444c384b8af}} 
 void \mbox{\hyperlink{class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_af5d0c196f4acbc30f17a2444c384b8af}{print\+\_\+vertex\+\_\+struct}} () const

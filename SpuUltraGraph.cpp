@@ -823,36 +823,36 @@ namespace SPU_GRAPH
 
 
     void SpuUltraGraph::AdjacentVerticesIterator::increment() {
-        if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
+        if (_edge_iter == OutEdges(_g, _v).rend()) {
             ++_edge_iter;
-            _target_iter = TargetIterator::begin(_g, *_edge_iter);
+            _target_iter = Targets(_g, *_edge_iter).begin();
             return;
         }
         ++_target_iter;
-        while (_target_iter == TargetIterator::end(_g, *_edge_iter)) {
+        while (_target_iter == Targets(_g, *_edge_iter).end()) {
             ++_edge_iter;
-            if (_edge_iter == out_edge_iterator::end(_g, _v)) {
-                _target_iter = TargetIterator::end(_g, _g->max_edge_id() + 1);
+            if (_edge_iter == OutEdges(_g, _v).end()) {
+                _target_iter = Targets(_g, *_edge_iter).end();
                 return;
             }
-            _target_iter = TargetIterator::begin(_g, *_edge_iter);
+            _target_iter = Targets(_g, *_edge_iter).begin();
         }
     }
 
     void SpuUltraGraph::AdjacentVerticesIterator::decrement() {
-        if (_edge_iter == out_edge_iterator::end(_g, _v)) {
+        if (_edge_iter == OutEdges(_g, _v).end()) {
             --_edge_iter;
-            _target_iter = TargetIterator::rbegin(_g, *_edge_iter);
+            _target_iter = Targets(_g, *_edge_iter).rbegin();
             return;
         }
         --_target_iter;
-        while (_target_iter == TargetIterator::rend(_g, *_edge_iter)) {
+        while (_target_iter == Targets(_g, *_edge_iter).rend()) {
             --_edge_iter;
-            if (_edge_iter == out_edge_iterator::rend(_g, _v)) {
-                _target_iter = TargetIterator::rend(_g, 0);
+            if (_edge_iter == OutEdges(_g, _v).rend()) {
+                _target_iter = Targets(_g, *_edge_iter).rend();
                 return;
             }
-            _target_iter = TargetIterator::rbegin(_g, *_edge_iter);
+            _target_iter = Targets(_g, *_edge_iter).rbegin();
         }
     }
 }
