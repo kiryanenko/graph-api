@@ -5,6 +5,7 @@
 #ifndef GRAPH_API_GRAPHSTRUCTURE_H
 #define GRAPH_API_GRAPHSTRUCTURE_H
 
+#include <memory>
 #include <spu.h>
 #include <structure.hpp>
 #include "exceptions.h"

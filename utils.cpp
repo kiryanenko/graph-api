@@ -12,7 +12,7 @@ namespace SPU_GRAPH
     const data_t MAX_DATA = FieldsLength<int>::mask(64);
 
     // Получение свободного ключа между min и max включительно
-    key_t get_free_key(const GraphStructure &structure, key_t min, key_t max)
+    SPU::key_t get_free_key(const GraphStructure &structure, SPU::key_t min, SPU::key_t max)
     {
         if (min == max) {
             auto resp = structure.search(min);
@@ -67,7 +67,7 @@ namespace SPU_GRAPH
         key_f[PREFIX_F] = prefix;
         key_f[DOMAIN_F] = max;
         key_f[ADDRESS_F] = max_address;
-        key_t key = key_f;
+        SPU::key_t key = key_f;
 
         if (key < MAX_DATA) {
             ++key;
