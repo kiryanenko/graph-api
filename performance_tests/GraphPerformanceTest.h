@@ -19,16 +19,16 @@ class GraphPerformanceTest {
 public:
     void (*test_func)(G&) = nullptr;
     string results_file = "results.csv";
-    size_t avg_iterations_cnt = 10;
+    size_t avg_iterations_cnt = 3;
 
     bool should_fill = true;
     bool is_mutable_test = true;
     pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = nullptr;
 
-    size_t start_vertices_cnt = 500;
-    size_t inc_vertices_value = 500;
+    size_t start_vertices_cnt = 1000;
+    size_t inc_vertices_value = 1000;
     size_t end_vertices_cnt = 100000;
-    size_t edges_per_vertex = 3;
+    size_t edges_per_vertex = 2;
 
     GraphPerformanceTest() = default;
     GraphPerformanceTest(void (*test_func)(G&), string results_file) : test_func(test_func), results_file(std::move(results_file)) {}
@@ -95,7 +95,7 @@ private:
         opts.add_edge_func = add_edge_func;
 
         auto start_time = clock();
-        fill_graph(graph, vertices_cnt, vertices_cnt * edges_per_vertex, opts);
+        fill_grid_graph(graph, vertices_cnt, vertices_cnt * edges_per_vertex, opts);
         auto end_time = clock();
 
         cout << time_info() << "Graph filling completed in " << double(end_time - start_time) / CLOCKS_PER_SEC << " seconds." << endl << endl;
