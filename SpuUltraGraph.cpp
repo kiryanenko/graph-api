@@ -251,6 +251,7 @@ namespace SPU_GRAPH
     }
 
 
+    // Количество ребер в графе
     SpuUltraGraph::edges_size_type SpuUltraGraph::num_edges() const {
         auto key = edge_key();
         auto res = _edge_struct.search(key);
@@ -540,6 +541,7 @@ namespace SPU_GRAPH
         cout << endl;
     }
 
+    // Возвращает количество исходящих ребер
     SpuUltraGraph::vertices_size_type SpuUltraGraph::out_degree(SpuUltraGraph::vertex_descriptor v) const {
         auto key = out_degree_key(v);
         auto res = _vertex_struct.search(key);
@@ -549,6 +551,7 @@ namespace SPU_GRAPH
         return res.value;
     }
 
+    // Возвращает количество входящих ребер.
     SpuUltraGraph::vertices_size_type SpuUltraGraph::in_degree(SpuUltraGraph::vertex_descriptor v) const {
         auto key = in_degree_key(v);
         auto res = _vertex_struct.search(key);
@@ -618,6 +621,7 @@ namespace SPU_GRAPH
         }
     }
 
+    // Удаляет вершину v из графа
     void SpuUltraGraph::remove_vertex(SpuUltraGraph::vertex_descriptor v) {
         if (!has_vertex(v)) return;
         clear_vertex(v);
@@ -627,6 +631,7 @@ namespace SPU_GRAPH
         dec_vertexes_cnt();
     }
 
+    // Возвращает источник для ребра e
     SpuUltraGraph::vertex_descriptor SpuUltraGraph::source(SpuUltraGraph::edge_descriptor e) const {
         auto key = edge_key(e);
         auto resp = _edge_struct.ngr(key);

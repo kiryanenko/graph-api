@@ -449,9 +449,21 @@ namespace SPU_GRAPH
         /// Возвращает глобальный id. Используется, например, для свойств графа.
         id_t get_global_id() const { return _global_id; }
 
+        /// Добавляет вершину в граф
+        /// \return Дескриптор добавленной вершины
         vertex_descriptor add_vertex();
+        /// Добавляет вершину в граф
+        /// \param value Значение вершины
+        /// \return Дескриптор добавленной вершины
         vertex_descriptor add_vertex(value_t value);
+        /// Добавляет вершину в граф
+        /// \param id Дескриптор новой вершины
+        /// \return Дескриптор добавленной вершины
         vertex_descriptor add_vertex(vertex_descriptor id);
+        /// Добавляет вершину в граф
+        /// \param id Дескриптор новой вершины
+        /// \param value Значение вершины
+        /// \return Дескриптор добавленной вершины
         vertex_descriptor add_vertex(vertex_descriptor id, value_t value);
 
         /// Добавляет вершину, если ее нет
@@ -462,13 +474,18 @@ namespace SPU_GRAPH
         /// \param value Новый value
         void put_vertex(vertex_descriptor id, value_t value);
 
+        /// Удаляет вершину v из графа
         void remove_vertex(vertex_descriptor v);
 
         bool has_vertex(vertex_descriptor id) const;
 
+        /// Количество вершин в графе
         vertices_size_type num_vertices() const;
+        /// Возвращает степень вершины
         vertices_size_type degree(vertex_descriptor v) const { return out_degree(v) + in_degree(v); }
+        /// Возвращает количество исходящих ребер
         vertices_size_type out_degree(vertex_descriptor v) const;
+        /// Возвращает количество входящих ребер
         vertices_size_type in_degree(vertex_descriptor v) const;
 
         /// Отсоединяет вершину v от всех ребер
@@ -481,12 +498,39 @@ namespace SPU_GRAPH
         // Отсоединят сток v от ребра e
         void disconnect_target(vertex_descriptor v, edge_descriptor e);
 
+        /// Вставляет ребро в граф
+        /// \return Дескриптор добавленного ре
         edge_descriptor add_edge();
+        /// Вставляет ребро в граф
+        /// \param value Значение ребра
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(value_t value);
+        /// Вставляет ребро в граф
+        /// \param id Дескриптор для нового ребра
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(edge_descriptor id);
+        /// Вставляет ребро в граф
+        /// \param id Дескриптор для нового ребра
+        /// \param value Значение ребра
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(edge_descriptor id, value_t value);
+        /// Вставляет ребро в граф от вершины from к to.
+        /// \param from Вершина источник
+        /// \param to Вершина сток
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(vertex_descriptor from, vertex_descriptor to);
+        /// Вставляет ребро в граф от вершины from к to.
+        /// \param id Дескриптор для нового ребра
+        /// \param from Вершина источник
+        /// \param to Вершина сток
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to);
+        /// Вставляет ребро в граф от вершины from к to.
+        /// \param id Дескриптор для нового ребра
+        /// \param from Вершина источник
+        /// \param to Вершина сток
+        /// \param value Значение ребра
+        /// \return Дескриптор добавленного ребра
         edge_descriptor add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to, value_t value);
 
         /// Добавляет ребро, если его нет
@@ -515,6 +559,7 @@ namespace SPU_GRAPH
         /// Получение веса ребра из edge_descriptor
         weight_t get_weight(edge_descriptor edge) const;
 
+        /// Количество ребер в графе
         edges_size_type num_edges() const;
         edges_size_type source_cnt(edge_descriptor e);
         edges_size_type target_cnt(edge_descriptor e);
@@ -526,6 +571,7 @@ namespace SPU_GRAPH
         /// Если стоков нет, то вернет 0
         vertex_descriptor target(edge_descriptor e) const;
 
+        /// Удаляет ребро edge из графа
         void remove_edge(edge_descriptor edge);
         /// Удаляются все соединения от вершины from к to.
         /// Ребро удаляется, если кол-во вершин источников или стоков равно 0
