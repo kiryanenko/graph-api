@@ -378,9 +378,9 @@ namespace SPU_GRAPH
 
 
         /// Итератор по источникам для ребра e
-        typedef EdgeVerticesIterator<0> SourceIterator;
+        typedef EdgeVerticesIterator<0> source_iterator;
         /// Итератор по стокам для ребра e
-        typedef EdgeVerticesIterator<1> TargetIterator;
+        typedef EdgeVerticesIterator<1> target_iterator;
         /// Контейнер содержащий все источники для ребра e
         typedef EdgeVertices<0> Sources;
         /// Контейнер содержащий все стоки для ребра e
@@ -403,7 +403,7 @@ namespace SPU_GRAPH
             const SpuUltraGraph *_g;
             vertex_descriptor _v;
             out_edge_iterator _edge_iter;
-            TargetIterator _target_iter;
+            target_iterator _target_iter;
 
         public:
             /// Конструктор итератора по вершинам смежным вершине v
@@ -493,11 +493,6 @@ namespace SPU_GRAPH
         /// \param remove_edges При true если у ребра не останется вершин "источников" или "стоков", то ребро будет удалено
         void clear_vertex(vertex_descriptor v, bool remove_edges=true);
 
-        // Отсоединят источник v от ребра e
-        void disconnect_source(vertex_descriptor v, edge_descriptor e);
-        // Отсоединят сток v от ребра e
-        void disconnect_target(vertex_descriptor v, edge_descriptor e);
-
         /// Вставляет ребро в граф
         /// \return Дескриптор добавленного ре
         edge_descriptor add_edge();
@@ -541,10 +536,14 @@ namespace SPU_GRAPH
         /// \param value Новый value
         void put_edge(edge_descriptor id, value_t value);
 
-        // Присоединяет как сток вершину vertex к ребру edge
-        void add_target(edge_descriptor edge, vertex_descriptor vertex);
-        // Присоединяет как источник вершину vertex к ребру edge
-        void add_source(edge_descriptor edge, vertex_descriptor vertex);
+        /// Присоединяет как сток вершину vertex к ребру edge
+        void connect_target(edge_descriptor edge, vertex_descriptor vertex);
+        /// Присоединяет как источник вершину vertex к ребру edge
+        void connect_source(edge_descriptor edge, vertex_descriptor vertex);
+        /// Отсоединят сток v от ребра e
+        void disconnect_target(edge_descriptor e, vertex_descriptor v);
+        /// Отсоединят источник v от ребра e
+        void disconnect_source(edge_descriptor e, vertex_descriptor v);
 
         bool has_edge(edge_descriptor id) const;
 
@@ -561,8 +560,10 @@ namespace SPU_GRAPH
 
         /// Количество ребер в графе
         edges_size_type num_edges() const;
-        edges_size_type source_cnt(edge_descriptor e);
-        edges_size_type target_cnt(edge_descriptor e);
+        /// Возвращает количество вершин «источников» для ребра e
+        degree_size_type num_sources(edge_descriptor e) const;
+        /// Возвращает количество вершин «стоков» для ребра e
+        degree_size_type num_targets(edge_descriptor e) const;
 
         /// Возвращает первую вершину источник для ребра e
         /// Если источников, нет то вернет 0

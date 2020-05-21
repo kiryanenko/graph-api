@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.18"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Библиотека программного интерфейса для обработки графов: Шаблон класса GraphPerformanceTest&lt; G &gt;</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Библиотека программного интерфейса для обработки графов
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">0.3</span>
    </div>
    <div id="projectbrief">Интерфейс для создания ультраграфов для систем с дискретным набором команд.</div>
   </td>
@@ -31,21 +31,18 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.18 -->
+<!-- Создано системой Doxygen 1.8.13 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
-/* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -90,7 +87,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><b>test_func</b> )(G &
 string&#160;</td><td class="memItemRight" valign="bottom"><b>results_file</b> = &quot;results.csv&quot;</td></tr>
 <tr class="separator:a29b8d1216b085d2e59b9373e57e8c215"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea61a34b1ef7ae8c1c33361242c2c7c4"><td class="memItemLeft" align="right" valign="top"><a id="aea61a34b1ef7ae8c1c33361242c2c7c4"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>avg_iterations_cnt</b> = 10</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>avg_iterations_cnt</b> = 3</td></tr>
 <tr class="separator:aea61a34b1ef7ae8c1c33361242c2c7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76c584ed92d5cb9bfe5c7f454fb3d437"><td class="memItemLeft" align="right" valign="top"><a id="a76c584ed92d5cb9bfe5c7f454fb3d437"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>should_fill</b> = true</td></tr>
@@ -102,16 +99,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mutable_test</b> =
 pair&lt; edge_t, bool &gt;(*&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge_func</b> )(vertex_t, vertex_t, G &amp;) = nullptr</td></tr>
 <tr class="separator:a3a6c213cd32e751e1652c97397340bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2d7566c76d0743fd89a6e74f5280100"><td class="memItemLeft" align="right" valign="top"><a id="ad2d7566c76d0743fd89a6e74f5280100"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>start_vertices_cnt</b> = 500</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>start_vertices_cnt</b> = 1000</td></tr>
 <tr class="separator:ad2d7566c76d0743fd89a6e74f5280100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5335c67d0198d70412f02a0a14a38fa2"><td class="memItemLeft" align="right" valign="top"><a id="a5335c67d0198d70412f02a0a14a38fa2"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>inc_vertices_value</b> = 500</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>inc_vertices_value</b> = 1000</td></tr>
 <tr class="separator:a5335c67d0198d70412f02a0a14a38fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68c14062ddb3bfcbd7a9957fc3d211a2"><td class="memItemLeft" align="right" valign="top"><a id="a68c14062ddb3bfcbd7a9957fc3d211a2"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>end_vertices_cnt</b> = 100000</td></tr>
 <tr class="separator:a68c14062ddb3bfcbd7a9957fc3d211a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1ffbabe05d708b11769fdc3d0004dba"><td class="memItemLeft" align="right" valign="top"><a id="af1ffbabe05d708b11769fdc3d0004dba"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>edges_per_vertex</b> = 3</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>edges_per_vertex</b> = 2</td></tr>
 <tr class="separator:af1ffbabe05d708b11769fdc3d0004dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>Объявления и описания членов класса находятся в файле:<ul>
@@ -122,7 +119,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>edges_per_vertex</b
 <hr class="footer"/><address class="footer"><small>
 Создано системой &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.18
+</a> 1.8.13
 </small></address>
 </body>
 </html>

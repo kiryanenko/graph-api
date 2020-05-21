@@ -318,7 +318,7 @@ namespace SPU_GRAPH
     }
 
     void
-    SpuUltraGraph::add_target(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex) {
+    SpuUltraGraph::connect_target(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex) {
         if (!has_vertex(vertex) || !has_vertex(edge)) {
             throw NotFound();
         }
@@ -337,7 +337,7 @@ namespace SPU_GRAPH
     }
 
     void
-    SpuUltraGraph::add_source(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex) {
+    SpuUltraGraph::connect_source(SpuUltraGraph::edge_descriptor edge, SpuUltraGraph::vertex_descriptor vertex) {
         if (!has_vertex(vertex) || !has_vertex(edge)) {
             throw NotFound();
         }
@@ -406,9 +406,9 @@ namespace SPU_GRAPH
         auto from_edge_key = edge_key(0, 0, from);
         auto to_edge_key = edge_key(0, 1, to);
         for (auto edge_id : parallel_edges(from, to)) {
-            disconnect_source(from, edge_id);
-            disconnect_target(from, edge_id);
-            if (source_cnt(edge_id) == 0 || target_cnt(edge_id) == 0) {
+            disconnect_source(edge_id, from);
+            disconnect_target(edge_id, from);
+            if (num_sources(edge_id) == 0 || num_targets(edge_id) == 0) {
                 remove_edge(edge_id);
             }
         }
@@ -423,14 +423,14 @@ namespace SPU_GRAPH
     /// Если после ребро не соединено ни с одной вершиной, то оно удаляется
     void SpuUltraGraph::clear_vertex(SpuUltraGraph::vertex_descriptor v, bool remove_edges) {
         for (auto e : out_edges(v)) {
-            disconnect_source(v, e);
-            if (remove_edges && source_cnt(e) == 0) {
+            disconnect_source(e, v);
+            if (remove_edges && num_sources(e) == 0) {
                 remove_edge(e);
             }
         }
         for (auto e : in_edges(v)) {
-            disconnect_target(v, e);
-            if (remove_edges && target_cnt(e) == 0) {
+            disconnect_target(e, v);
+            if (remove_edges && num_targets(e) == 0) {
                 remove_edge(e);
             }
         }
@@ -463,25 +463,25 @@ namespace SPU_GRAPH
 
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::inc_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
-        auto cnt = target_cnt(e) + val;
+        auto cnt = num_targets(e) + val;
         _edge_struct.insert(target_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::dec_target_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
-        auto cnt = target_cnt(e) - val;
+        auto cnt = num_targets(e) - val;
         _edge_struct.insert(target_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::inc_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
-        auto cnt = source_cnt(e) + val;
+        auto cnt = num_sources(e) + val;
         _edge_struct.insert(source_cnt_key(e), cnt);
         return cnt;
     }
 
     SpuUltraGraph::edges_size_type SpuUltraGraph::dec_source_cnt(SpuUltraGraph::edge_descriptor e, SpuUltraGraph::edges_size_type val) {
-        auto cnt = source_cnt(e) - val;
+        auto cnt = num_sources(e) - val;
         _edge_struct.insert(source_cnt_key(e), cnt);
         return cnt;
     }
@@ -561,7 +561,8 @@ namespace SPU_GRAPH
         return res.value;
     }
 
-    SpuUltraGraph::edges_size_type SpuUltraGraph::source_cnt(SpuUltraGraph::edge_descriptor e) {
+    // Возвращает количество вершин «источников» для ребра e.
+    SpuUltraGraph::degree_size_type SpuUltraGraph::num_sources(SpuUltraGraph::edge_descriptor e) const {
         auto key = source_cnt_key(e);
         auto res = _edge_struct.search(key);
         if (res.status == ERR) {
@@ -570,7 +571,8 @@ namespace SPU_GRAPH
         return res.value;
     }
 
-    SpuUltraGraph::edges_size_type SpuUltraGraph::target_cnt(SpuUltraGraph::edge_descriptor e) {
+    // Возвращает количество вершин «стоков» для ребра e
+    SpuUltraGraph::degree_size_type SpuUltraGraph::num_targets(SpuUltraGraph::edge_descriptor e) const {
         auto key = target_cnt_key(e);
         auto res = _edge_struct.search(key);
         if (res.status == ERR) {
@@ -595,7 +597,7 @@ namespace SPU_GRAPH
         return data;
     }
 
-    void SpuUltraGraph::disconnect_source(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::edge_descriptor e) {
+    void SpuUltraGraph::disconnect_source(edge_descriptor e, vertex_descriptor v) {
         auto v_key = vertex_key(v, 0, e);
         if (_vertex_struct.search(v_key).status == OK) {
             _vertex_struct.del(v_key);
@@ -608,7 +610,7 @@ namespace SPU_GRAPH
         }
     }
 
-    void SpuUltraGraph::disconnect_target(SpuUltraGraph::vertex_descriptor v, SpuUltraGraph::edge_descriptor e) {
+    void SpuUltraGraph::disconnect_target(edge_descriptor e, vertex_descriptor v) {
         auto v_key = vertex_key(v, 1, e);
         if (_vertex_struct.search(v_key).status == OK) {
             _vertex_struct.del(v_key);

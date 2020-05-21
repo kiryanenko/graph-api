@@ -75,8 +75,8 @@ int main()
     cout << "Кол-во ребер = " << graph.num_edges() << endl;
     cout << "Кол-во исходящих ребер у вершины v1 = " << graph.out_degree(v1) << endl;
     cout << "Кол-во входящих ребер у вершины v1 = " << graph.in_degree(v1) << endl;
-    cout << "Кол-во вершин 'источников' у ребра e12 = " << graph.source_cnt(e12) << endl;
-    cout << "Кол-во вершин 'стоков' у ребра e12 = " << graph.target_cnt(e12) << endl;
+    cout << "Кол-во вершин 'источников' у ребра e12 = " << graph.num_sources(e12) << endl;
+    cout << "Кол-во вершин 'стоков' у ребра e12 = " << graph.num_targets(e12) << endl;
 
 
     // Удаление вершины

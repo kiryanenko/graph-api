@@ -1,14 +1,17 @@
 var searchData=
 [
-  ['abstractfields_0',['AbstractFields',['../class_s_p_u_1_1_abstract_fields.html',1,'SPU']]],
-  ['abstractfields_3c_20u8_20_3e_1',['AbstractFields&lt; u8 &gt;',['../class_s_p_u_1_1_abstract_fields.html',1,'SPU']]],
-  ['abstractfields_3c_20void_20_3e_2',['AbstractFields&lt; void &gt;',['../class_s_p_u_1_1_abstract_fields_3_01void_01_4.html',1,'SPU']]],
-  ['abstractstructure_3',['AbstractStructure',['../class_s_p_u_1_1_abstract_structure.html',1,'SPU']]],
-  ['adjacency_5fiterator_4',['adjacency_iterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ae50dab54e277cf22d3e318d468e7585c',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacent_5fvertices_5',['adjacent_vertices',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a54da90f2ff56cd153a0b23521316e24d',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacentedges_6',['AdjacentEdges',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges.html',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacentedgesiterator_7',['AdjacentEdgesIterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacentedgesiterator_3c_200_20_3e_8',['AdjacentEdgesIterator&lt; 0 &gt;',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacentvertices_9',['AdjacentVertices',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices.html',1,'SPU_GRAPH::SpuUltraGraph']]],
-  ['adjacentverticesiterator_10',['AdjacentVerticesIterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html',1,'SPU_GRAPH::SpuUltraGraph::AdjacentVerticesIterator'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html#a925cadcc4cf9412ffad955f052bbfe85',1,'SPU_GRAPH::SpuUltraGraph::AdjacentVerticesIterator::AdjacentVerticesIterator()']]]
+  ['abstractfields',['AbstractFields',['../class_s_p_u_1_1_abstract_fields.html',1,'SPU']]],
+  ['abstractfields_3c_20keynamet_20_3e',['AbstractFields&lt; KeyNameT &gt;',['../class_s_p_u_1_1_abstract_fields.html',1,'SPU']]],
+  ['abstractfields_3c_20valuenamet_20_3e',['AbstractFields&lt; ValueNameT &gt;',['../class_s_p_u_1_1_abstract_fields.html',1,'SPU']]],
+  ['abstractfields_3c_20void_20_3e',['AbstractFields&lt; void &gt;',['../class_s_p_u_1_1_abstract_fields_3_01void_01_4.html',1,'SPU']]],
+  ['abstractstructure',['AbstractStructure',['../class_s_p_u_1_1_abstract_structure.html',1,'SPU']]],
+  ['add_5fedge',['add_edge',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a5d1dccd777a9686e72b775ebc3151936',1,'SPU_GRAPH::SpuUltraGraph::add_edge()'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a92ccccf0d18bd2dd146b605ae32a5ae1',1,'SPU_GRAPH::SpuUltraGraph::add_edge(value_t value)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a74ca9423994b1dc3804d5fe62bb1a097',1,'SPU_GRAPH::SpuUltraGraph::add_edge(edge_descriptor id)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a8a869529155dcb1e380f8fb3a16720ee',1,'SPU_GRAPH::SpuUltraGraph::add_edge(edge_descriptor id, value_t value)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#acf32b6a942095ea0c61b52b6596c8ecb',1,'SPU_GRAPH::SpuUltraGraph::add_edge(vertex_descriptor from, vertex_descriptor to)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a498c64e2dafbb4b294367ec325536b4f',1,'SPU_GRAPH::SpuUltraGraph::add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ab5389e1991a4c62b9da22b9dfd9e21f6',1,'SPU_GRAPH::SpuUltraGraph::add_edge(edge_descriptor id, vertex_descriptor from, vertex_descriptor to, value_t value)']]],
+  ['add_5fvertex',['add_vertex',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a2b2210821bf0f6bce69fe8ec2756b2f7',1,'SPU_GRAPH::SpuUltraGraph::add_vertex()'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a8c5c1c97abc61017a5e188cd7975e688',1,'SPU_GRAPH::SpuUltraGraph::add_vertex(value_t value)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a0ab2bed50a562ddb4b3a3718cf7a50ab',1,'SPU_GRAPH::SpuUltraGraph::add_vertex(vertex_descriptor id)'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a66c63dc4bf4c8a47abd2974f4e16a83c',1,'SPU_GRAPH::SpuUltraGraph::add_vertex(vertex_descriptor id, value_t value)']]],
+  ['adjacency_5fiterator',['adjacency_iterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#ae50dab54e277cf22d3e318d468e7585c',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacent_5fvertices',['adjacent_vertices',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph.html#a54da90f2ff56cd153a0b23521316e24d',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacentedges',['AdjacentEdges',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges.html',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacentedgesiterator',['AdjacentEdgesIterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacentedgesiterator_3c_200_20_3e',['AdjacentEdgesIterator&lt; 0 &gt;',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_edges_iterator.html',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacentvertices',['AdjacentVertices',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices.html',1,'SPU_GRAPH::SpuUltraGraph']]],
+  ['adjacentverticesiterator',['AdjacentVerticesIterator',['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html',1,'SPU_GRAPH::SpuUltraGraph::AdjacentVerticesIterator'],['../class_s_p_u___g_r_a_p_h_1_1_spu_ultra_graph_1_1_adjacent_vertices_iterator.html#a925cadcc4cf9412ffad955f052bbfe85',1,'SPU_GRAPH::SpuUltraGraph::AdjacentVerticesIterator::AdjacentVerticesIterator()']]]
 ];

@@ -1,17 +1,10 @@
-\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{book}
+\documentclass[twoside]{book}
 
-%% moved from doxygen.sty due to workaround for LaTex 2019 version and unmaintained tabu package
-\usepackage{ifthen}
-\ifx\requestedLaTeXdate\undefined
-\usepackage{array}
-\else
-\usepackage{array}[=2016-10-06]
-\fi
-%%
 % Packages required by doxygen
 \usepackage{fixltx2e}
 \usepackage{calc}
 \usepackage{doxygen}
+\usepackage[export]{adjustbox} % also loads graphicx
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage{makeidx}
@@ -21,7 +14,6 @@
 \usepackage{textcomp}
 \usepackage[nointegrals]{wasysym}
 \usepackage[table]{xcolor}
-\usepackage{ifpdf,ifxetex}
 
 % NLS support packages
 \usepackage[T2A]{fontenc}
@@ -44,13 +36,6 @@
 }
 \newcommand{\+}{\discretionary{\mbox{\scriptsize$\hookleftarrow$}}{}{}}
 
-% Arguments of doxygenemoji:
-% 1) ':<text>:' form of the emoji, already "LaTeX"-escaped
-% 2) file with the name of the emoji without the .png extension
-% in case image exist use this otherwise use the ':<text>:' form
-\newcommand{\doxygenemoji}[2]{%
-  \IfFileExists{./#2.png}{\raisebox{-0.1em}{\includegraphics[height=0.9em]{./#2.png}}}{#1}%
-}
 % Page & text layout
 \usepackage{geometry}
 \geometry{%
@@ -65,9 +50,7 @@
 \hbadness=750
 \setlength{\emergencystretch}{15pt}
 \setlength{\parindent}{0cm}
-\newcommand{\doxynormalparskip}{\setlength{\parskip}{3ex plus 2ex minus 2ex}}
-\newcommand{\doxytocparskip}{\setlength{\parskip}{1ex plus 0ex minus 0ex}}
-\doxynormalparskip
+\setlength{\parskip}{3ex plus 2ex minus 2ex}
 \makeatletter
 \renewcommand{\paragraph}{%
   \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
@@ -79,10 +62,6 @@
     \normalfont\normalsize\bfseries\SS@subparafont%
   }%
 }
-\makeatother
-
-\makeatletter
-\newcommand\hrulefilll{\leavevmode\leaders\hrule\hskip 0pt plus 1filll\kern\z@}
 \makeatother
 
 % Headers & footers
@@ -115,22 +94,13 @@
 \setcounter{secnumdepth}{5}
 \makeindex
 
-\usepackage{newunicodechar}
-  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
-  \newunicodechar{²}{${}^{2}$}% Superscript two
-  \newunicodechar{³}{${}^{3}$}% Superscript three
-
 % Hyperlinks (required, but should be loaded last)
+\usepackage{ifpdf}
 \ifpdf
   \usepackage[pdftex,pagebackref=true]{hyperref}
 \else
-  \ifxetex
-    \usepackage[pagebackref=true]{hyperref}
-  \else
-    \usepackage[ps2pdf,pagebackref=true]{hyperref}
-  \fi
+  \usepackage[ps2pdf,pagebackref=true]{hyperref}
 \fi
-
 \hypersetup{%
   colorlinks=true,%
   linkcolor=blue,%
@@ -146,9 +116,6 @@
 \usepackage{caption}
 \captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
 
-\usepackage{etoc}
-\etocsettocstyle{\doxytocparskip}{\doxynormalparskip}
-\renewcommand{\numberline}[1]{#1~}
 %===== C O N T E N T S =====
 
 \begin{document}
@@ -162,9 +129,9 @@
 \begin{titlepage}
 \vspace*{7cm}
 \begin{center}%
-{\Large Библиотека программного интерфейса для обработки графов \\[1ex]\large 0.\+2 }\\
+{\Large Библиотека программного интерфейса для обработки графов \\[1ex]\large 0.\+3 }\\
 \vspace*{1cm}
-{\large Создано системой Doxygen 1.8.18}\\
+{\large Создано системой Doxygen 1.8.13}\\
 \end{center}
 \end{titlepage}
 \clearemptydoublepage
@@ -176,9 +143,9 @@
 
 %--- Begin generated contents ---
 \chapter{Принципы обработки графовых моделей для системы с набором дискретной математики}
-\label{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
-\Hypertarget{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
-\input{md_docs__xC3_x90_xC2_x93_xC3_x91_xC2_x80_xC3_x90_xC2_xB0_xC3_x91_xC2_x84_xC3_x90_xC2_xBE_xC3_x90f53e7fcf051908d6ad51fe907e366e01}
+\label{md_docs__xD0_x93_xD1_x80_xD0_xB0_xD1_x84_xD0_xBE_xD0_xB2_xD1_x8B_xD0_xB5__xD0_xBC_xD0_xBE_xD0_xB4_xD0_xB5_xD0_xBB_xD0_xB8}
+\Hypertarget{md_docs__xD0_x93_xD1_x80_xD0_xB0_xD1_x84_xD0_xBE_xD0_xB2_xD1_x8B_xD0_xB5__xD0_xBC_xD0_xBE_xD0_xB4_xD0_xB5_xD0_xBB_xD0_xB8}
+\input{md_docs__xD0_x93_xD1_x80_xD0_xB0_xD1_x84_xD0_xBE_xD0_xB2_xD1_x8B_xD0_xB5__xD0_xBC_xD0_xBE_xD0_xB4_xD0_xB5_xD0_xBB_xD0_xB8}
 \chapter{Библиотека элементов программного интерфейса для обработки графов}
 \label{md__r_e_a_d_m_e}
 \Hypertarget{md__r_e_a_d_m_e}
@@ -275,7 +242,7 @@
 \newpage
 \phantomsection
 \clearemptydoublepage
-\addcontentsline{toc}{chapter}{\indexname}
+\addcontentsline{toc}{chapter}{Алфавитный указатель}
 \printindex
 
 \end{document}
