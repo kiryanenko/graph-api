@@ -67,5 +67,12 @@ int main()
     adjacency_list_test.is_mutable_test = false;
     adjacency_list_test.add_edge_func = add_weight_edge;
     adjacency_list_test.start();
+
+    cout << "adjacency_matrix performance test" << endl;
+    cout << "==========================================" << endl;
+    GraphPerformanceTest<AdjacencyMatrixGraph> adjacency_matrix_test(dijkstra_test, "dijkstra_test_adjacency_matrix.csv");
+    adjacency_matrix_test.is_mutable_test = false;
+    adjacency_matrix_test.add_edge_func = add_weight_edge;
+    adjacency_matrix_test.start();
     return 0;
 }

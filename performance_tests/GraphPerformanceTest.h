@@ -6,6 +6,7 @@
 #define GRAPH_API_GRAPHPERFORMANCETEST_H
 
 #include <fstream>
+#include <boost/graph/adjacency_matrix.hpp>
 #include "utils.h"
 
 using namespace std;
@@ -23,6 +24,8 @@ public:
 
     bool should_fill = true;
     bool is_mutable_test = true;
+    G* (*create_graph_func)(size_t vertices_cnt) = nullptr;
+    vertex_t (*add_vertex_func)(G&) = nullptr;
     pair<edge_t, bool> (*add_edge_func)(vertex_t, vertex_t, G&) = nullptr;
 
     size_t start_vertices_cnt = 1000;
@@ -92,6 +95,7 @@ private:
         cout << time_info() << "Start filling a graph..." << endl;
 
         fill_options<G> opts;
+        opts.add_vertex_func = add_vertex_func;
         opts.add_edge_func = add_edge_func;
 
         auto start_time = clock();
@@ -104,7 +108,7 @@ private:
     double run_avg_tests(size_t vertices_cnt = 0) {
         G *graph;
         if (!is_mutable_test) {
-            graph = new G;
+            graph = create_graph(vertices_cnt);
             if (should_fill) {
                 fill(*graph, vertices_cnt);
             }
@@ -115,7 +119,7 @@ private:
         auto start_time = clock();
         for (size_t i = 0; i < avg_iterations_cnt; ++i) {
             if (is_mutable_test) {
-                graph = new G;
+                graph = create_graph(vertices_cnt);
                 if (should_fill) {
                     fill(*graph, vertices_cnt);
                 }
@@ -139,6 +143,10 @@ private:
         return avg_time;
     }
 
+    G* create_graph(size_t vertices_cnt) {
+        return create_graph_func ? create_graph_func(vertices_cnt) : new G;
+    }
+
     double run_test(G &graph) {
         auto start_time = clock();
         test_func(graph);
@@ -160,6 +168,12 @@ private:
         f.close();
     }
 };
+
+
+template<>
+AdjacencyMatrixGraph* GraphPerformanceTest<AdjacencyMatrixGraph>::create_graph(size_t vertices_cnt) {
+    return new AdjacencyMatrixGraph(vertices_cnt);
+}
 
 
 #endif //GRAPH_API_GRAPHPERFORMANCETEST_H
