@@ -611,6 +611,9 @@ namespace SPU_GRAPH
         /// Метод для отладки. Распечатывает структуру edge
         void print_edge_struct() const;
 
+        /// Возвращает специальный идентификтор вершины, который не относится к любой вершине объекта графа
+        static inline vertex_descriptor null_vertex() { return 0; }
+
     protected:
         Fields vertex_key(id_t vertex = 0, uint8_t incidence = 0, id_t edge = 0) const;
         Fields edge_key(id_t edge = 0, uint8_t incidence = 0, id_t vertex = 0) const;

@@ -70,7 +70,7 @@ int main()
     GraphPerformanceTest<AdjacencyMatrixGraph> adjacency_matrix_test(kruskal_test, "kruskal_test_adjacency_matrix.csv");
     adjacency_matrix_test.is_mutable_test = false;
     adjacency_matrix_test.add_edge_func = add_weight_edge;
-    adjacency_matrix_test.end_vertices_cnt = 25000;
+    adjacency_matrix_test.end_vertices_cnt = 20000;
     adjacency_matrix_test.start();
     return 0;
 }
