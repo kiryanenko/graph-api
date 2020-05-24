@@ -59,3 +59,6 @@ target_link_libraries(kruskal_perf graph_api ${Boost_LIBRARIES})
 
 add_executable(depth_first_perf performance_tests/depth_first.cpp ${performance_test_sources})
 target_link_libraries(depth_first_perf graph_api ${Boost_LIBRARIES})
+
+add_executable(breadth_first_perf performance_tests/breadth_first.cpp ${performance_test_sources})
+target_link_libraries(breadth_first_perf graph_api ${Boost_LIBRARIES})
